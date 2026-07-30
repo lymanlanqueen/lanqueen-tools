@@ -182,6 +182,18 @@
           </div>
         </div>
 
+        <!-- Curtain Height -->
+        <div class="row">
+          <label>窗帘高度 <span class="en">/ Curtain Height</span> <span style="color:#dc2626;font-size:12px;">*必填</span></label>
+          <div class="ig">
+            <input type="number" id="height" min="0" step="1" value="280" inputmode="decimal" placeholder="输入窗帘高度（影响最大挂钩数）">
+            <span class="unit-sel" style="display:flex;align-items:center;padding:0 12px;background:#f3f4f6;border:1.5px solid #e5e7eb;border-radius:10px;font-size:13px;color:#6b7280;">cm</span>
+          </div>
+          <div style="margin-top:6px;font-size:12px;color:#6b7280;">
+            根据高度和褶用料自动计算最大挂钩数限制
+          </div>
+        </div>
+
         <!-- Opening Type -->
         <div class="row">
           <label>开合方式 <span class="en">/ Opening Type</span></label>
@@ -255,6 +267,9 @@
           </div>
 
           <div id="fold-info-row" style="margin-top:10px; background:#fff; border:1.5px dashed var(--rule); border-radius:8px; padding:9px 12px; font-size:12px; color:#475569; font-family:'Courier New',monospace; line-height:1.8;"></div>
+
+          <!-- 设备限制警告 -->
+          <div id="limit-warning"></div>
 
           <div class="split-row" id="split">
             <div class="split-box">
@@ -372,7 +387,19 @@
           <div class="tip">褶用料 = 相邻两个挂钩之间的距离（cm）</div>
         </div>
 
+        <!-- Curtain Height (reverse) -->
+        <div class="row">
+          <label>窗帘高度 <span class="en">/ Curtain Height</span> <span style="color:#dc2626;font-size:12px;">*必填</span></label>
+          <div class="ig">
+            <input type="number" id="rev-height" min="0" step="1" value="280" inputmode="decimal" placeholder="输入窗帘高度（影响最大挂钩数）">
+            <span class="unit-sel" style="display:flex;align-items:center;padding:0 12px;background:#f3f4f6;border:1.5px solid #e5e7eb;border-radius:10px;font-size:13px;color:#6b7280;">cm</span>
+          </div>
+          <div class="tip">根据高度和褶用料自动计算最大挂钩数限制</div>
+        </div>
+
         <!-- Runner Count Input (reverse) -->
+        <div class="row">
+          <label>挂钩数量 <span class="en">/ Runner Count</span></label>
           <div class="ig">
             <input type="number" id="rev-runners" min="4" step="2" value="42" inputmode="numeric" placeholder="输入挂钩数量，如 42">
           </div>
@@ -392,6 +419,9 @@
 
         <!-- Error box (shown when invalid) -->
         <div class="rev-error" id="rev-error">⚠️ 输入的挂钩数量无效，请检查</div>
+
+        <!-- Limit warning -->
+        <div id="rev-limit-warning"></div>
 
         <!-- Valid result -->
         <div class="rev-result" id="rev-result">
@@ -459,6 +489,40 @@ var REV_PITCH = 6;
 var REV_FOLD  = 22;
 var REV_OPEN  = 'single';
 var LOSS      = 15;
+
+// ─── 最大褶位数限制表（受加工设备限制）────────────────────────────────
+// 结构：{ 褶用料: [ { maxHeight: 高度上限, maxFolds: 单开最大褶位数 }, ... ] }
+// 双开 = 单开 × 2
+var MAX_FOLDS_LIMIT = {
+  22: [
+    { maxHeight: 300, maxFolds: 71 },    // ≤300cm
+    { maxHeight: 350, maxFolds: 50 },    // 301-350cm
+    { maxHeight: Infinity, maxFolds: 32 } // >350cm
+  ],
+  24: [
+    { maxHeight: 300, maxFolds: 82 },    // ≤300cm
+    { maxHeight: 350, maxFolds: 38 },    // 301-350cm
+    { maxHeight: Infinity, maxFolds: 32 } // >350cm
+  ],
+  30: [
+    { maxHeight: 360, maxFolds: 52 },    // ≤360cm
+    { maxHeight: Infinity, maxFolds: 34 } // >360cm（361以上）
+  ]
+};
+
+// 获取最大褶位数限制
+function getMaxFoldsLimit(foldMat, height, isDouble) {
+  var limits = MAX_FOLDS_LIMIT[foldMat];
+  if (!limits) return Infinity; // 未知褶用料，无限制
+  
+  for (var i = 0; i < limits.length; i++) {
+    if (height <= limits[i].maxHeight) {
+      return isDouble ? limits[i].maxFolds * 2 : limits[i].maxFolds;
+    }
+  }
+  return isDouble ? limits[limits.length - 1].maxFolds * 2 : limits[limits.length - 1].maxFolds;
+}
+
 // ─── 当前显示单位（cm/mm），所有显示数字按这个单位呈现，核心算法仍以 cm 为基准 ───
 var CUR_UNIT = 'cm';  // 跟 select 默认值保持一致
 var UNIT_RATIO = { cm: 1, mm: 0.1 };
@@ -512,10 +576,15 @@ function $f(id) { return document.getElementById(id); }
 
 function computeFwd() {
   var rawLen = parseFloat($f('length').value) || 0;
+  var height = parseFloat($f('height').value) || 0;
   var unit   = $f('unit').value;
   CUR_UNIT  = unit;
   var L      = unit === 'mm' ? rawLen / 10 : rawLen;
   var isDbl  = OPEN_TYPE === 'double';
+  
+  // 获取最大褶位数限制
+  var maxFoldsLimit = getMaxFoldsLimit(FOLD_MAT, height, isDbl);
+  var maxRunnersLimit = maxFoldsLimit * 2; // 挂钩数 = 褶位数 × 2
   var loss   = isDbl ? 30 : 15;
 
   $f('ptag').textContent = isDbl ? '双开 Double' : '单开 Single';
@@ -559,6 +628,25 @@ function computeFwd() {
   var mult = L > 0 ? round1(fab.Wf_pure / L) : 0;
   $f('multiplier').textContent = mult + 'x';
 
+  // 检查是否超出设备限制
+  var limitWarning = '';
+  if (folds > maxFoldsLimit) {
+    limitWarning = '<div style="margin-top:12px;padding:12px 14px;background:#fee2e2;border:1.5px solid #fecaca;border-radius:10px;color:#dc2626;font-size:13px;">'
+      + '<b>⚠️ 超出设备加工限制</b><br>'
+      + '当前参数：褶用料 ' + FOLD_MAT + 'cm + 高度 ' + height + 'cm + ' + (isDbl ? '双开' : '单开') + '<br>'
+      + '计算褶位数：' + folds + ' 个 &nbsp;|&nbsp; 限制：' + maxFoldsLimit + ' 个<br>'
+      + '<b>建议：减小轨道宽度、改用更大褶用料，或联系生产部门对接特殊情况</b>'
+      + '</div>';
+  } else if (height > 0) {
+    limitWarning = '<div style="margin-top:12px;padding:10px 12px;background:#d1fae5;border:1.5px solid #a7f3d0;border-radius:10px;color:#059669;font-size:12px;">'
+      + '✓ 当前参数在设备限制范围内（最大 ' + maxFoldsLimit + ' 褶）'
+      + '</div>';
+  }
+  // 显示限制警告（如果存在limit-warning元素）
+  if ($f('limit-warning')) {
+    $f('limit-warning').innerHTML = limitWarning;
+  }
+
   // Steps
   var stepLines = [];
   stepLines.push('【挂钩计算】');
@@ -585,7 +673,9 @@ function computeFwd() {
 // Build lookup: L → N_total for current settings
 function buildRevLookup(isDouble, pitch) {
   var map = {}; // N_total -> [{L}]
-  for (var L = 1; L <= 600; L++) {
+  // 扩大遍历范围以支持最大设备限制（164褶 × 2 = 328颗挂钩）
+  // 按最大间距10cm计算，需要约 328 × 10 = 3280cm 轨道宽度
+  for (var L = 1; L <= 4000; L++) {
     var N0   = Math.ceil(L / pitch);
     var N1   = isDouble ? N0 + 3 : N0 + 2;
     var total, half;
@@ -603,9 +693,14 @@ function buildRevLookup(isDouble, pitch) {
 
 function computeRev() {
   var N      = parseInt($f('rev-runners').value) || 0;
+  var height = parseFloat($f('rev-height').value) || 0;
   var isDbl  = REV_OPEN === 'double';
   var pitch  = REV_PITCH;
   var loss   = isDbl ? 30 : 15;
+  
+  // 获取最大褶位数限制
+  var maxFoldsLimit = getMaxFoldsLimit(REV_FOLD, height, isDbl);
+  var maxRunnersLimit = maxFoldsLimit * 2; // 挂钩数 = 褶位数 × 2
 
   var lookup = buildRevLookup(isDbl, pitch);
   var validLs = lookup[N] || [];
@@ -657,9 +752,9 @@ function computeRev() {
     } else {
       // 数字符合规则，但在当前参数下无有效轨道宽度
       var maxRunner = allRunners.length > 0 ? allRunners[allRunners.length - 1] : 0;
-      errHtml = '⚠️ 无匹配轨道：<b>' + N + '</b> 颗挂钩在当前参数下无有效轨道宽度<br>'
+      errHtml = '⚠️ 超出计算范围：<b>' + N + '</b> 颗挂钩超出系统计算范围<br>'
         + '<span style="color:#6b7280;font-weight:400;font-size:12px;display:inline-block;margin-top:6px;">'
-        + '📏 当前参数下最大支持 <b>' + maxRunner + '</b> 颗挂钩，请尝试调整「挂钩间距」或切换「单开/双开」' + suggestHtml
+        + '📏 当前参数下最大支持 <b>' + maxRunner + '</b> 颗挂钩' + suggestHtml
         + '</span>';
     }
     errEl.innerHTML = errHtml;
@@ -670,6 +765,26 @@ function computeRev() {
 
   errEl.classList.remove('show');
   resEl.classList.add('show');
+
+  // 检查是否超出设备限制
+  var folds = N / 2;
+  var revLimitWarning = '';
+  if (folds > maxFoldsLimit) {
+    revLimitWarning = '<div style="margin:12px 0;padding:12px 14px;background:#fee2e2;border:1.5px solid #fecaca;border-radius:10px;color:#dc2626;font-size:13px;">'
+      + '<b>⚠️ 超出设备加工限制</b><br>'
+      + '当前参数：褶用料 ' + REV_FOLD + 'cm + 高度 ' + height + 'cm + ' + (isDbl ? '双开' : '单开') + '<br>'
+      + '计算褶位数：' + folds + ' 个 &nbsp;|&nbsp; 限制：' + maxFoldsLimit + ' 个<br>'
+      + '<b>建议：减少挂钩数量、改用更大褶用料，或联系生产部门对接特殊情况</b>'
+      + '</div>';
+  } else if (height > 0) {
+    revLimitWarning = '<div style="margin:10px 0;padding:10px 12px;background:#d1fae5;border:1.5px solid #a7f3d0;border-radius:10px;color:#059669;font-size:12px;">'
+      + '✓ 当前参数在设备限制范围内（最大 ' + maxFoldsLimit + ' 褶）'
+      + '</div>';
+  }
+  // 显示限制警告（如果存在rev-limit-warning元素）
+  if ($f('rev-limit-warning')) {
+    $f('rev-limit-warning').innerHTML = revLimitWarning;
+  }
 
   var minL = validLs[0];
   var maxL = validLs[validLs.length - 1];
@@ -731,7 +846,7 @@ function switchTab(tab) {
 }
 
 // ─── Forward Events ───────────────────────────────────────────────
-['length','unit'].forEach(function(id) {
+['length','unit','height'].forEach(function(id) {
   $f(id).addEventListener('input',  function(){ CUR_UNIT = $f('unit').value; computeFwd(); });
   $f(id).addEventListener('change', function(){ CUR_UNIT = $f('unit').value; computeFwd(); });
 });
@@ -793,6 +908,8 @@ document.querySelectorAll('[data-rev-fold]').forEach(function(pill) {
 
 $f('rev-runners').addEventListener('input', computeRev);
 $f('rev-runners').addEventListener('change', computeRev);
+$f('rev-height').addEventListener('input', computeRev);
+$f('rev-height').addEventListener('change', computeRev);
 
 // ─── Init ─────────────────────────────────────────────────────────
 computeFwd();
