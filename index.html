@@ -1,0 +1,802 @@
+﻿<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LANQUEEN 天际帘 · 褶位挂钩计算器 v3</title>
+<style>
+  :root{ --ink:#1f2937; --indigo:#4338ca; --indigo2:#3730a3; --indigo-light:#6366f1;
+         --muted:#6b7280; --line:#e5e7eb; --soft:#f8fafc; --soft-indigo:#eef2ff; --rule:#c7d2fe;
+         --green:#059669; --green-light:#d1fae5; --amber:#d97706; --amber-light:#fef3c7;
+         --red:#dc2626; --red-light:#fee2e2; }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  body{ background:linear-gradient(135deg,#f1f3f9,#eef2ff);
+        color:var(--ink); font-family:'PingFang SC','Helvetica Neue',Helvetica,Arial,sans-serif;
+        min-height:100vh; display:flex; align-items:flex-start; justify-content:center;
+        padding:20px 12px 60px; }
+  .page{ width:560px; max-width:100%; }
+
+  /* ── Header ── */
+  .header{ text-align:center; margin-bottom:18px; }
+  .brand{ font-size:11px; letter-spacing:.4em; font-weight:700; color:var(--indigo); text-transform:uppercase; }
+  .title{ font-size:22px; font-weight:800; color:var(--ink); letter-spacing:.04em; margin-top:4px; }
+  .subtitle{ font-size:12px; color:var(--muted); margin-top:3px; }
+  .ver{ display:inline-block; background:#fee2e2; color:#dc2626; font-size:11px; font-weight:700; padding:2px 10px; border-radius:20px; margin-top:8px; }
+  .tag{ display:inline-block; background:var(--soft-indigo); color:var(--indigo2);
+        font-size:11px; font-weight:700; padding:3px 12px; border-radius:20px; margin-top:6px; }
+
+  /* ── Card ── */
+  .card{ background:#fff; border:1px solid var(--line); border-radius:16px;
+         box-shadow:0 6px 28px rgba(30,41,59,.07); overflow:hidden; margin-bottom:14px; }
+  .card-hd{ background:linear-gradient(135deg,#4338ca,#3730a3); color:#fff; padding:15px 20px; }
+  .card-hd h2{ font-size:15px; font-weight:800; letter-spacing:.02em; }
+  .card-hd p{ font-size:11.5px; opacity:.8; margin-top:3px; }
+  .card-bd{ padding:16px 20px; }
+
+  /* ── Tab Switcher ── */
+  .tab-bar{ display:flex; gap:0; background:#fff; border:1.5px solid var(--line);
+            border-radius:12px; padding:4px; margin-bottom:14px; overflow:hidden; }
+  .tab{ flex:1; padding:10px 8px; text-align:center; font-size:14px; font-weight:700;
+        cursor:pointer; border-radius:9px; color:var(--muted); transition:all .2s;
+        border:none; background:none; font-family:inherit; }
+  .tab:hover{ color:var(--indigo); }
+  .tab.active{ background:var(--indigo); color:#fff; box-shadow:0 2px 8px rgba(67,56,202,.3); }
+
+  /* ── Form ── */
+  .row{ margin-bottom:14px; }
+  label{ display:block; font-size:12.5px; font-weight:700; margin-bottom:6px; color:var(--ink); }
+  label .en{ color:var(--muted); font-weight:400; font-size:11px; }
+  label .hint{ color:var(--muted); font-weight:400; font-size:11px; }
+  .ig{ display:flex; gap:8px; flex-wrap:wrap; }
+  input[type=number]{ flex:1; font-size:17px; font-weight:600; padding:9px 12px;
+        border:1.5px solid var(--line); border-radius:9px; outline:none; color:#111827;
+        font-family:inherit; min-width:80px; }
+  input[type=number]:focus{ border-color:var(--indigo); box-shadow:0 0 0 3px rgba(67,56,202,.13); }
+  input[type=number]:hover{ border-color:var(--indigo-light); }
+  select{ font-size:13.5px; padding:9px 12px; border:1.5px solid var(--line); border-radius:9px;
+          background:#fff; color:#111827; font-family:inherit; cursor:pointer; outline:none; }
+  select:focus{ border-color:var(--indigo); box-shadow:0 0 0 3px rgba(67,56,202,.13); }
+  .unit-sel{ width:110px; }
+  .full{ width:100%; }
+
+  /* ── Pill Group ── */
+  .pill-group{ display:flex; gap:7px; flex-wrap:wrap; }
+  .pill{ flex:1; min-width:60px; background:var(--soft); border:1.5px solid var(--line);
+         border-radius:9px; padding:9px 4px; text-align:center; cursor:pointer;
+         transition:all .18s; font-size:13px; font-weight:600; color:var(--muted); }
+  .pill:hover{ border-color:var(--indigo-light); background:var(--soft-indigo); color:var(--indigo); }
+  .pill.selected{ border-color:var(--indigo); background:var(--soft-indigo); color:var(--indigo); font-weight:800; }
+  .pill .sub{ display:block; font-size:10px; font-weight:400; margin-top:2px; color:inherit; opacity:.75; }
+  .pill .rec{ display:none; font-size:9px; color:#fff; background:var(--green); border-radius:3px; padding:1px 5px; margin-top:3px; font-weight:700; }
+  .pill.selected .rec{ display:inline-block; }
+
+  .tip{ font-size:11.5px; color:var(--muted); margin-top:6px; line-height:1.5; }
+
+  /* ── Output ── */
+  .out{ margin-top:4px; background:var(--soft-indigo); border:1.5px solid var(--rule); border-radius:12px; padding:16px 18px; }
+  .panel-tag{ display:inline-block; font-size:11.5px; font-weight:700; color:var(--indigo2);
+              background:#fff; border:1.5px solid var(--rule); border-radius:20px; padding:3px 13px; }
+
+  /* ── Result Grid ── */
+  .result-grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px; }
+  .res-box{ background:#fff; border:1.5px solid var(--rule); border-radius:10px; padding:12px 14px; text-align:center; }
+  .res-box.highlight{ border-color:var(--indigo); background:var(--soft-indigo); }
+  .res-box .lbl{ font-size:11px; color:var(--muted); font-weight:700; }
+  .res-box .val{ font-size:38px; font-weight:800; color:var(--indigo); line-height:1.1; margin-top:4px; font-variant-numeric:tabular-nums; }
+  .res-box .val.green{ color:var(--green); }
+  .res-box .unit{ font-size:12px; color:var(--muted); font-weight:600; }
+  .res-box .sub{ font-size:11px; color:var(--muted); margin-top:3px; }
+
+  /* ── Fabric Result Strip ── */
+  .fabric-strip{ margin-top:12px; background:#fff; border:1.5px solid var(--rule); border-radius:10px; padding:12px 14px; }
+  .fabric-strip .fl{ display:flex; gap:8px; flex-wrap:wrap; }
+  .fabric-strip .fi{ flex:1; min-width:110px; background:var(--soft); border:1.5px solid var(--line); border-radius:8px; padding:8px 10px; }
+  .fabric-strip .fi .lbl{ font-size:10.5px; color:var(--muted); font-weight:700; }
+  .fabric-strip .fi .v{ font-size:22px; font-weight:800; color:var(--indigo); margin-top:3px; font-variant-numeric:tabular-nums; }
+  .fabric-strip .fi .s{ font-size:10.5px; color:var(--muted); margin-top:1px; }
+  .fabric-strip .formula-line{ margin-top:10px; background:var(--soft-indigo); border:1px dashed var(--rule); border-radius:7px; padding:8px 12px; font-size:12px; color:#475569; font-family:'Courier New',monospace; line-height:1.8; }
+
+  /* ── Split ── */
+  .split-row{ display:none; gap:10px; margin-top:10px; }
+  .split-row.show{ display:flex; }
+  .split-box{ flex:1; background:#fff; border:1.5px solid var(--rule); border-radius:10px; padding:10px 12px; text-align:center; }
+  .split-box .t{ font-size:11px; color:var(--muted); font-weight:700; }
+  .split-box .v{ font-size:24px; font-weight:800; color:var(--indigo2); margin-top:2px; font-variant-numeric:tabular-nums; }
+
+  /* ── Reverse Result ── */
+  .rev-result{ display:none; margin-top:12px; }
+  .rev-result.show{ display:block; }
+  .rev-main{ background:#fff; border:2px solid var(--indigo); border-radius:12px; padding:18px 20px; text-align:center; }
+  .rev-main .lbl{ font-size:12px; color:var(--muted); font-weight:700; }
+  .rev-main .val{ font-size:36px; font-weight:800; color:var(--indigo); margin-top:6px; font-variant-numeric:tabular-nums; }
+  .rev-main .sub{ font-size:12px; color:var(--muted); margin-top:4px; }
+  .rev-range{ margin-top:10px; background:var(--soft-indigo); border:1px dashed var(--rule); border-radius:10px; padding:12px 14px; font-size:12px; color:#475569; font-family:'Courier New',monospace; line-height:1.9; }
+  .rev-error{ display:none; margin-top:12px; background:#fff; border:1.5px solid #fca5a5; border-radius:10px; padding:14px; text-align:center; font-size:13px; color:#dc2626; font-weight:700; }
+  .rev-error.show{ display:block; }
+
+  /* ── Table ── */
+  .table-wrap{ overflow-x:auto; }
+  table{ width:100%; border-collapse:collapse; font-size:12px; }
+  th{ background:#f1f3f9; padding:8px 10px; text-align:center; border:1px solid var(--line); font-weight:700; font-size:11px; }
+  td{ padding:7px 10px; border:1px solid var(--line); text-align:center; }
+  td:first-child{ text-align:left; font-weight:600; }
+  tr:hover td{ background:#f8faff; }
+  .badge{ display:inline-block; font-size:10px; font-weight:700; padding:1px 6px; border-radius:4px; }
+  .badge-indigo{ background:#eef2ff; color:#4338ca; }
+  .badge-green{ background:#d1fae5; color:#059669; }
+  .badge-amber{ background:#fef3c7; color:#d97706; }
+
+  /* ── Footer ── */
+  .footer{ text-align:center; font-size:10.5px; color:#9aa1ad; line-height:1.7;
+           background:#fff; border:1px solid var(--line); border-radius:12px; padding:12px 18px; }
+  .footer b{ color:var(--indigo2); }
+
+  /* ── Section visibility ── */
+  .sec{ display:none; }
+  .sec.active{ display:block; }
+
+  @media(max-width:480px){
+    .res-box .val{ font-size:30px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="brand">LANQUEEN</div>
+    <div class="title">天际帘（SWAVE）褶位挂钩计算器</div>
+    <div class="subtitle">Runner / Fold Calculator</div>
+    <div class="ver">v3 · 正向+反向计算</div>
+    <div class="tag">内部工具 · 仅供订单参考</div>
+  </div>
+
+  <!-- Tab Switcher -->
+  <div class="tab-bar">
+    <button class="tab active" id="tab-fwd" onclick="switchTab('fwd')">📐 正向计算</button>
+    <button class="tab" id="tab-rev" onclick="switchTab('rev')">🔄 反向计算</button>
+  </div>
+
+  <!-- ── FORWARD SECTION ── -->
+  <div class="sec active" id="sec-fwd">
+
+    <!-- INPUT CARD -->
+    <div class="card">
+      <div class="card-hd">
+        <h2>📥 输入参数（正向）</h2>
+        <p>已知轨道宽度 → 计算挂钩数量与面料</p>
+      </div>
+      <div class="card-bd">
+
+        <!-- Track Length -->
+        <div class="row">
+          <label>轨道总长 <span class="en">/ Track Length</span></label>
+          <div class="ig">
+            <input type="number" id="length" min="0" step="1" value="240" inputmode="decimal" placeholder="输入轨道宽度">
+            <select id="unit" class="unit-sel" onchange="onUnitChange()">
+              <option value="cm" selected>cm（厘米）</option>
+              <option value="mm">mm（毫米）</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Opening Type -->
+        <div class="row">
+          <label>开合方式 <span class="en">/ Opening Type</span></label>
+          <div class="pill-group">
+            <div class="pill selected" id="open-single" data-open="single">
+              单开
+              <span class="sub">Single</span>
+              <span class="rec">推荐</span>
+            </div>
+            <div class="pill" id="open-double" data-open="double">
+              双开
+              <span class="sub">Double</span>
+              <span class="rec">推荐</span>
+            </div>
+          </div>
+          <div class="tip">单开 = 一幅窗帘；双开 = 两幅窗帘从中间对开</div>
+        </div>
+
+        <!-- Runner Pitch -->
+        <div class="row">
+          <label>滑轮间距 <span class="en">/ Runner Pitch</span></label>
+          <div class="pill-group">
+            <div class="pill" data-pitch="5.4">5.4cm<span class="sub">紧密</span></div>
+            <div class="pill selected" data-pitch="6">6cm<span class="sub">标准 ★</span><span class="rec">推荐</span></div>
+            <div class="pill" data-pitch="7">7cm<span class="sub">适中</span></div>
+            <div class="pill" data-pitch="8">8cm<span class="sub">常规</span></div>
+            <div class="pill" data-pitch="9">9cm<span class="sub">宽松</span></div>
+            <div class="pill" data-pitch="10">10cm<span class="sub">极宽</span></div>
+          </div>
+          <div class="tip">相邻两颗挂钩之间的中心距（cm）</div>
+        </div>
+
+        <!-- Fold Material -->
+        <div class="row">
+          <label>褶用料 <span class="en">/ Fabric per Fold</span></label>
+          <div class="pill-group">
+            <div class="pill selected" data-fold="22">22cm<span class="sub">小褶 ★</span><span class="rec">推荐</span></div>
+            <div class="pill" data-fold="24">24cm<span class="sub">标准褶</span><span class="rec">推荐</span></div>
+            <div class="pill" data-fold="30">30cm<span class="sub">大褶</span><span class="rec">推荐</span></div>
+          </div>
+          <div class="tip">相邻两个褶峰之间的实际用料数量（cm）</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- RESULT CARD -->
+    <div class="card">
+      <div class="card-hd">
+        <h2>📤 计算结果</h2>
+        <p>挂钩数量 · 褶数 · 面料宽度 · 成品倍率</p>
+      </div>
+      <div class="card-bd">
+
+        <div class="out">
+          <span class="panel-tag" id="ptag">单开 Single</span>
+
+          <div class="result-grid">
+            <div class="res-box highlight">
+              <div class="lbl">挂钩总数</div>
+              <div class="val" id="total">42</div>
+              <div class="unit">颗 / runners</div>
+              <div class="sub" id="total-sub">整组数量</div>
+            </div>
+            <div class="res-box">
+              <div class="lbl">褶数</div>
+              <div class="val green" id="folds-count">21</div>
+              <div class="unit">个褶</div>
+              <div class="sub" id="folds-sub">挂钩数 ÷ 2</div>
+            </div>
+          </div>
+
+          <div id="fold-info-row" style="margin-top:10px; background:#fff; border:1.5px dashed var(--rule); border-radius:8px; padding:9px 12px; font-size:12px; color:#475569; font-family:'Courier New',monospace; line-height:1.8;"></div>
+
+          <div class="split-row" id="split">
+            <div class="split-box">
+              <div class="t">左片 Left</div>
+              <div class="v" id="left">—</div>
+            </div>
+            <div class="split-box">
+              <div class="t">右片 Right</div>
+              <div class="v" id="right">—</div>
+            </div>
+          </div>
+
+          <!-- Fabric -->
+          <div class="fabric-strip" style="margin-top:12px;">
+            <div style="font-size:12px;font-weight:700;color:var(--indigo);margin-bottom:8px;">📐 面料计算</div>
+            <div class="fl">
+              <div class="fi">
+                <div class="lbl">褶数</div>
+                <div class="v" id="fab-folds">—</div>
+                <div class="s">个</div>
+              </div>
+              <div class="fi">
+                <div class="lbl">褶用料</div>
+                <div class="v" id="fab-per">—</div>
+                <div class="s">cm/褶</div>
+              </div>
+              <div class="fi">
+                <div class="lbl">损耗加位</div>
+                <div class="v" id="fab-loss">+15</div>
+                <div class="s" id="fab-loss-unit">cm（单开）</div>
+              </div>
+            </div>
+            <div class="formula-line" id="fab-formula">W_f = 褶数 × 褶用料 + 损耗</div>
+            <div style="margin-top:10px; background:var(--soft-indigo); border:1.5px solid var(--rule); border-radius:10px; padding:12px 14px; text-align:center;">
+              <div style="font-size:11px;color:var(--muted);font-weight:700;">面料宽度 W_f</div>
+              <div style="font-size:38px; font-weight:800; color:var(--indigo); font-variant-numeric:tabular-nums; margin-top:4px;" id="fabric-val">—</div>
+              <div style="font-size:12px; color:var(--muted); margin-top:3px;">cm</div>
+            </div>
+          </div>
+
+          <!-- Multiplier -->
+          <div style="margin-top:12px; background:#fff; border:1.5px solid var(--rule); border-radius:10px; padding:12px 14px;">
+            <div style="display:flex; gap:10px; align-items:center;">
+              <div style="flex:1; text-align:center;">
+                <div style="font-size:11px;color:var(--muted);font-weight:700;">成品倍率</div>
+                <div style="font-size:30px;font-weight:800;color:var(--green);font-variant-numeric:tabular-nums;margin-top:4px;" id="multiplier">2.0</div>
+                <div style="font-size:11px;color:var(--muted);">面料宽度 ÷ 轨道宽度</div>
+              </div>
+              <div style="width:1px;height:50px;background:var(--line);"></div>
+              <div style="flex:1; text-align:center;">
+                <div style="font-size:11px;color:var(--muted);font-weight:700;">面料宽度</div>
+                <div style="font-size:30px;font-weight:800;color:var(--indigo);font-variant-numeric:tabular-nums;margin-top:4px;" id="mult-fabric">477</div>
+                <div style="font-size:11px;color:var(--muted);">cm</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Steps -->
+          <div style="margin-top:12px; background:#fff; border:1.5px dashed var(--rule); border-radius:9px; padding:10px 13px; font-size:12px; color:#475569; font-family:'Courier New',monospace; line-height:1.8;" id="steps"></div>
+
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /sec-fwd -->
+
+  <!-- ── REVERSE SECTION ── -->
+  <div class="sec" id="sec-rev">
+
+    <div class="card">
+      <div class="card-hd" style="background:linear-gradient(135deg,#059669,#047857);">
+        <h2>🔄 反向计算</h2>
+        <p>已知挂钩数量 → 推算适用的轨道长度范围</p>
+      </div>
+      <div class="card-bd">
+
+        <!-- Opening Type (reverse) -->
+        <div class="row">
+          <label>开合方式 <span class="en">/ Opening Type</span></label>
+          <div class="pill-group">
+            <div class="pill selected" id="rev-open-single" data-rev-open="single">
+              单开
+              <span class="sub">Single</span>
+            </div>
+            <div class="pill" id="rev-open-double" data-rev-open="double">
+              双开
+              <span class="sub">Double</span>
+            </div>
+          </div>
+          <div class="tip">单开 = 一幅窗帘；双开 = 两幅窗帘从中间对开</div>
+        </div>
+
+        <!-- Runner Pitch (reverse) -->
+        <div class="row">
+          <label>滑轮间距 <span class="en">/ Runner Pitch</span></label>
+          <div class="pill-group">
+            <div class="pill" data-rev-pitch="5.4">5.4cm<span class="sub">紧密</span></div>
+            <div class="pill selected" data-rev-pitch="6">6cm<span class="sub">标准 ★</span><span class="rec">推荐</span></div>
+            <div class="pill" data-rev-pitch="7">7cm<span class="sub">适中</span></div>
+            <div class="pill" data-rev-pitch="8">8cm<span class="sub">常规</span></div>
+            <div class="pill" data-rev-pitch="9">9cm<span class="sub">宽松</span></div>
+            <div class="pill" data-rev-pitch="10">10cm<span class="sub">极宽</span></div>
+          </div>
+        </div>
+
+        <!-- Runner Count Input -->
+                <!-- Fold Material (reverse) -->
+        <div class="row">
+          <label>褶用料 <span class="en">/ Fabric per Fold</span></label>
+          <div class="pill-group">
+            <div class="pill selected" data-rev-fold="22">22cm<span class="sub">小褶 ★</span><span class="rec">推荐</span></div>
+            <div class="pill" data-rev-fold="24">24cm<span class="sub">标准褶</span><span class="rec">推荐</span></div>
+            <div class="pill" data-rev-fold="30">30cm<span class="sub">大褶</span><span class="rec">推荐</span></div>
+          </div>
+          <div class="tip">褶用料 = 相邻两个挂钩之间的距离（cm）</div>
+        </div>
+
+        <!-- Runner Count Input (reverse) -->
+          <div class="ig">
+            <input type="number" id="rev-runners" min="4" step="2" value="42" inputmode="numeric" placeholder="输入挂钩数量，如 42">
+          </div>
+          <div class="tip" id="rev-runner-tip">输入实际数好的挂钩数量，单开必须为偶数&nbsp;/&nbsp;双开必须为 4 的倍数</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Reverse Result Card -->
+    <div class="card">
+      <div class="card-hd" style="background:linear-gradient(135deg,#059669,#047857);">
+        <h2>📐 反向计算结果</h2>
+        <p>挂钩数量 → 适用轨道长度</p>
+      </div>
+      <div class="card-bd">
+
+        <!-- Error box (shown when invalid) -->
+        <div class="rev-error" id="rev-error">⚠️ 输入的挂钩数量无效，请检查</div>
+
+        <!-- Valid result -->
+        <div class="rev-result" id="rev-result">
+
+          <!-- Main result: L range -->
+          <div class="rev-main">
+            <div class="lbl">适用轨道宽度范围</div>
+            <div class="val" id="rev-range-val">180 ~ 240 cm</div>
+            <div class="sub" id="rev-range-sub">此挂钩数量对应的轨道宽度区间</div>
+          </div>
+
+          <!-- Detail rows -->
+          <div class="rev-range" id="rev-range-detail"></div>
+
+          <!-- Fabric for median L -->
+          <div style="margin-top:12px; background:#fff; border:1.5px solid #a7f3d0; border-radius:10px; padding:12px 14px;">
+            <div style="font-size:12px;font-weight:700;color:#065f46;margin-bottom:8px;">📐 以中间值计算面料（仅供参考）</div>
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+              <div style="flex:1;min-width:80px;background:#f0fdf4;border:1px solid #a7f3d0;border-radius:7px;padding:8px;text-align:center;">
+                <div style="font-size:10px;color:#6b7280;font-weight:700;">轨道宽度</div>
+                <div style="font-size:20px;font-weight:800;color:#059669;margin-top:3px;" id="rev-mid-l">210</div>
+                <div style="font-size:10px;color:#6b7280;">cm</div>
+              </div>
+              <div style="flex:1;min-width:80px;background:#f0fdf4;border:1px solid #a7f3d0;border-radius:7px;padding:8px;text-align:center;">
+                <div style="font-size:10px;color:#6b7280;font-weight:700;">褶数</div>
+                <div style="font-size:20px;font-weight:800;color:#059669;margin-top:3px;" id="rev-mid-folds">21</div>
+                <div style="font-size:10px;color:#6b7280;">个</div>
+              </div>
+              <div style="flex:1;min-width:80px;background:#f0fdf4;border:1px solid #a7f3d0;border-radius:7px;padding:8px;text-align:center;">
+                <div style="font-size:10px;color:#6b7280;font-weight:700;">面料宽度</div>
+                <div style="font-size:20px;font-weight:800;color:#059669;margin-top:3px;" id="rev-mid-fabric">477</div>
+                <div style="font-size:10px;color:#6b7280;">cm</div>
+              </div>
+              <div style="flex:1;min-width:80px;background:#f0fdf4;border:1px solid #a7f3d0;border-radius:7px;padding:8px;text-align:center;">
+                <div style="font-size:10px;color:#6b7280;font-weight:700;">成品倍率</div>
+                <div style="font-size:20px;font-weight:800;color:#059669;margin-top:3px;" id="rev-mid-mult">2.3</div>
+                <div style="font-size:10px;color:#6b7280;">x</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /sec-rev -->
+
+  <!-- Footer -->
+  <div class="footer">
+    依据标准 <b>SW-STD-001 · v3.0</b><br>
+    正向：轨道宽度 → 走珠/褶数/面料 &nbsp;|&nbsp; 反向：挂钩数量 → 适用轨道宽度<br>
+    滑轮间距（Runner Pitch）：5.4 / 6★ / 7 / 8 / 9 / 10 cm &nbsp;|&nbsp; 褶用料：22★ / 24 / 30 cm<br>
+    面料宽度 = 褶数 × 褶用料 + 损耗（单开+15cm / 双开+30cm）<br>
+    <b>LANQUEEN · v3 测试版 · 仅供订单参考</b>
+  </div>
+
+</div>
+
+<script>
+// ─── State ────────────────────────────────────────────────────────
+var PITCH     = 6;
+var FOLD_MAT  = 22;
+var OPEN_TYPE = 'single';
+var REV_PITCH = 6;
+var REV_FOLD  = 22;
+var REV_OPEN  = 'single';
+var LOSS      = 15;
+// ─── 当前显示单位（cm/mm），所有显示数字按这个单位呈现，核心算法仍以 cm 为基准 ───
+var CUR_UNIT = 'cm';  // 跟 select 默认值保持一致
+var UNIT_RATIO = { cm: 1, mm: 0.1 };
+function uFromCm(cmv) { return +(cmv * UNIT_RATIO[CUR_UNIT]).toFixed(2); }
+function fmtL(cmv, withUnit) {
+  var v = uFromCm(cmv);
+  var s = (CUR_UNIT === 'cm' || CUR_UNIT === 'mm') ? Math.round(v * 10) / 10 : Math.round(v * 100) / 100;
+  return withUnit ? (s + ' ' + CUR_UNIT) : (s + '');
+}
+
+function onUnitChange() {
+  CUR_UNIT = document.getElementById('unit').value;
+  computeFwd();
+  computeRev();
+}
+
+// 🔁 切单位时已有的 cm 字符串「230 cm」会自动变成「230 cm」或「2300 mm」等等
+// 因为接下来把每个 .cm-suffix span 替换成 <span class="u-suffix">cur unit</span>
+var PANEL_W   = 280;
+
+// ─── Core Forward Formulas ────────────────────────────────────────
+function round1(x) { return Math.round(x * 10) / 10; }
+
+function calcN0(L) { return Math.ceil(L / PITCH); }
+
+function calcRunners(L, isDouble) {
+  var N0   = calcN0(L);
+  var N1   = isDouble ? N0 + 3 : N0 + 2;
+  var total, half;
+  if (isDouble) {
+    var base = (N1 % 2 === 0) ? N1 : N1 + 1;
+    total = (Math.floor(base / 2) % 2 === 0) ? base : base + 2;
+    half  = total / 2;
+  } else {
+    total = (N1 % 2 === 0) ? N1 : N1 + 1;
+    half  = null;
+  }
+  return { N0: N0, N1: N1, total: total, half: half };
+}
+
+function calcFabricFwd(r_total, isDouble) {
+  var folds = r_total / 2;
+  var loss  = isDouble ? 30 : 15;
+  var Wf_pure = folds * FOLD_MAT;        // 纯面料宽度（不含损耗，用于倍率计算）
+  var Wf    = Wf_pure + loss;            // 总面料宽度（含损耗，用于显示）
+  return { folds: folds, loss: loss, Wf: Wf, Wf_pure: Wf_pure };
+}
+
+// ─── Forward Compute ──────────────────────────────────────────────
+function $f(id) { return document.getElementById(id); }
+
+function computeFwd() {
+  var rawLen = parseFloat($f('length').value) || 0;
+  var unit   = $f('unit').value;
+  CUR_UNIT  = unit;
+  var L      = unit === 'mm' ? rawLen / 10 : rawLen;
+  var isDbl  = OPEN_TYPE === 'double';
+  var loss   = isDbl ? 30 : 15;
+
+  $f('ptag').textContent = isDbl ? '双开 Double' : '单开 Single';
+
+  var r = calcRunners(L, isDbl);
+  $f('total').textContent = r.total;
+  $f('total-sub').textContent = isDbl ? '左/右各 ' + r.half + ' 颗' : '整组数量';
+
+  if (isDbl) {
+    $f('split').classList.add('show');
+    $f('left').textContent  = r.half;
+    $f('right').textContent = r.half;
+  } else {
+    $f('split').classList.remove('show');
+    $f('left').textContent  = '—';
+    $f('right').textContent = '—';
+  }
+
+  var folds = r.total / 2;
+  $f('folds-count').textContent = folds;
+  $f('folds-sub').textContent = r.total + ' ÷ 2 = ' + folds;
+
+  var foldInfo = '褶数 = 挂钩数 ÷ 2 = ' + r.total + ' ÷ 2 = ' + folds
+    + ' 个褶 &nbsp;|&nbsp; 每褶 ' + FOLD_MAT + ' ' + CUR_UNIT
+    + ' &nbsp;|&nbsp; 损耗 = +' + loss + ' ' + CUR_UNIT + '（' + (isDbl ? '双开' : '单开') + '）';
+  $f('fold-info-row').innerHTML = foldInfo;
+
+  var fab = calcFabricFwd(r.total, isDbl);
+  $f('fab-folds').textContent = fab.folds;
+  $f('fab-per').textContent   = FOLD_MAT;
+  $f('fab-loss').textContent  = '+' + fab.loss;
+  $f('fab-loss-unit').textContent = isDbl ? 'cm（双开）' : 'cm（单开）';
+
+  var fabFormula = 'W_f = ' + fab.folds + ' × ' + FOLD_MAT + ' + ' + fab.loss
+    + ' = ' + (fab.folds * FOLD_MAT) + ' + ' + fab.loss + ' = <b style="color:#4338ca;font-size:14px;">' + fab.Wf + ' cm</b>';
+  $f('fab-formula').innerHTML = fabFormula;
+
+  $f('fabric-val').textContent  = fab.Wf;
+  $f('mult-fabric').textContent = fab.Wf;
+
+  var mult = L > 0 ? round1(fab.Wf_pure / L) : 0;
+  $f('multiplier').textContent = mult + 'x';
+
+  // Steps
+  var stepLines = [];
+  stepLines.push('【挂钩计算】');
+  stepLines.push('N₀ = ⌈' + L + ' / ' + PITCH + '⌉ = ' + r.N0);
+  stepLines.push('N₁ = N₀ + ' + (isDbl ? '3' : '2') + ' = ' + r.N1);
+  if (isDbl) {
+    var base = (r.N1 % 2 === 0) ? r.N1 : r.N1 + 1;
+    var tot  = (Math.floor(base / 2) % 2 === 0) ? base : base + 2;
+    stepLines.push('N基 = ' + base + ' &nbsp;|&nbsp; N总 = ' + tot + ' &nbsp;|&nbsp; 左/右 = ' + (tot / 2) + '颗');
+  } else {
+    stepLines.push('N₁为' + (r.total % 2 === 0 ? '偶数' : '奇数+1') + ' → N总 = ' + r.total + ' 颗');
+  }
+  stepLines.push('');
+  stepLines.push('【面料计算】');
+  stepLines.push('褶数 = 挂钩数 ÷ 2 = ' + r.total + ' ÷ 2 = ' + folds);
+  stepLines.push('W_f = ' + folds + ' × ' + FOLD_MAT + ' + ' + fab.loss + ' = ' + uFromCm(fab.Wf) + ' ' + CUR_UNIT + ' &nbsp;<span style="color:#9ca3af;font-size:11px;">（原 ' + fab.Wf + ' cm）</span>');
+  stepLines.push('');
+  stepLines.push('【成品倍率】');
+  stepLines.push('M = 纯面料 ÷ L = ' + fab.Wf_pure + ' ÷ ' + L + ' = ' + mult + 'x  &nbsp;<span style="color:#9ca3af;font-size:11px;">（损耗不计入倍率）</span>');
+  $f('steps').innerHTML = stepLines.join('<br>');
+}
+
+// ─── Reverse Compute ──────────────────────────────────────────────
+// Build lookup: L → N_total for current settings
+function buildRevLookup(isDouble, pitch) {
+  var map = {}; // N_total -> [{L}]
+  for (var L = 1; L <= 600; L++) {
+    var N0   = Math.ceil(L / pitch);
+    var N1   = isDouble ? N0 + 3 : N0 + 2;
+    var total, half;
+    if (isDouble) {
+      var base = (N1 % 2 === 0) ? N1 : N1 + 1;
+      total = (Math.floor(base / 2) % 2 === 0) ? base : base + 2;
+    } else {
+      total = (N1 % 2 === 0) ? N1 : N1 + 1;
+    }
+    if (!map[total]) map[total] = [];
+    map[total].push(L);
+  }
+  return map;
+}
+
+function computeRev() {
+  var N      = parseInt($f('rev-runners').value) || 0;
+  var isDbl  = REV_OPEN === 'double';
+  var pitch  = REV_PITCH;
+  var loss   = isDbl ? 30 : 15;
+
+  var lookup = buildRevLookup(isDbl, pitch);
+  var validLs = lookup[N] || [];
+
+  var errEl   = $f('rev-error');
+  var resEl   = $f('rev-result');
+  var detailEl= $f('rev-range-detail');
+
+  // 校验规则：单开偶数 / 双开4倍数
+  var isValid = N >= 4 && (
+    (!isDbl && N % 2 === 0) ||
+    ( isDbl && N % 4 === 0)
+  );
+
+  // 找最近合法值
+  var nearestBelow = null, nearestAbove = null;
+  var allRunners = Object.keys(lookup).map(Number).sort(function(a,b){return a-b;});
+  for (var i = 0; i < allRunners.length; i++) {
+    var rn = allRunners[i];
+    if (rn > N) break;
+    if (isDbl ? (rn % 4 === 0 && rn >= 4) : (rn % 2 === 0 && rn >= 4)) {
+      nearestBelow = rn;
+    }
+  }
+  for (var j = 0; j < allRunners.length; j++) {
+    var rn2 = allRunners[j];
+    if (rn2 <= N) continue;
+    if (isDbl ? (rn2 % 4 === 0) : (rn2 % 2 === 0)) {
+      nearestAbove = rn2;
+      break;
+    }
+  }
+
+  // 无效 → 提示 + 给出最近合法值
+  if (!isValid || validLs.length === 0) {
+    var suggestHtml = '';
+    if (nearestBelow !== null) suggestHtml += '&nbsp;|&nbsp; ⬇️ 下方最近：<b>' + nearestBelow + '</b> 颗';
+    if (nearestAbove !== null) suggestHtml += '&nbsp;|&nbsp; ⬆️ 上方最近：<b>' + nearestAbove + '</b> 颗';
+    
+    var errHtml;
+    if (!isValid) {
+      // 数字本身不符合规则
+      var ruleText = isDbl ? '双开必须为 4 的倍数' : '单开必须为偶数';
+      errHtml = '⚠️ 输入无效：<b>' + N + '</b> 颗挂钩在'
+        + ' <b>' + (isDbl ? '双开' : '单开') + '</b> 模式下不符合规则<br>'
+        + '<span style="color:#6b7280;font-weight:400;font-size:12px;display:inline-block;margin-top:6px;">'
+        + '📏 规则：' + ruleText + suggestHtml
+        + '</span>';
+    } else {
+      // 数字符合规则，但在当前参数下无有效轨道宽度
+      var maxRunner = allRunners.length > 0 ? allRunners[allRunners.length - 1] : 0;
+      errHtml = '⚠️ 无匹配轨道：<b>' + N + '</b> 颗挂钩在当前参数下无有效轨道宽度<br>'
+        + '<span style="color:#6b7280;font-weight:400;font-size:12px;display:inline-block;margin-top:6px;">'
+        + '📏 当前参数下最大支持 <b>' + maxRunner + '</b> 颗挂钩，请尝试调整「挂钩间距」或切换「单开/双开」' + suggestHtml
+        + '</span>';
+    }
+    errEl.innerHTML = errHtml;
+    errEl.classList.add('show');
+    resEl.classList.remove('show');
+    return;
+  }
+
+  errEl.classList.remove('show');
+  resEl.classList.add('show');
+
+  var minL = validLs[0];
+  var maxL = validLs[validLs.length - 1];
+  var midL = validLs[Math.floor(validLs.length / 2) - 1] || validLs[0];
+
+  // Display L range
+  $f('rev-range-val').innerHTML = uFromCm(minL) + ' ~ ' + uFromCm(maxL) + ' ' + CUR_UNIT + ' &nbsp;<span style="color:#9ca3af;font-size:11px;">（原 ' + minL + '~' + maxL + ' cm）</span>';
+  $f('rev-range-sub').innerHTML =
+    '共 ' + validLs.length + ' 个有效轨道宽度值（间距 ' + pitch + 'cm）'
+    + ' &nbsp;·&nbsp; <b style="color:#065f46;">' + (isDbl ? '双开4倍数' : '单开偶数') + '</b>';
+
+  // Detail formula
+  var folds = N / 2;
+  var foldMat = REV_FOLD;
+  var isDbl_rev = isDbl;
+  var Wf_mid_pure = folds * foldMat;           // 纯面料宽度（不含损耗）
+  var Wf_mid = Wf_mid_pure + loss;             // 总面料宽度（含损耗）
+  var mult_mid = round1(Wf_mid_pure / midL);   // 倍率用纯面料计算
+
+  var detailLines = [];
+  detailLines.push('【挂钩 → 轨道逆向推导】');
+  detailLines.push('已知挂钩数 N = ' + N + ' 颗（' + (isDbl ? '双开' : '单开') + '）');
+  detailLines.push('挂钩间距 P = ' + pitch + ' ' + CUR_UNIT + ' &nbsp;<span style="color:#9ca3af;font-size:11px;">（原 ' + pitch + ' cm）</span>');
+  detailLines.push('');
+  detailLines.push('验证公式（以最小值 L=' + minL + 'cm 为例）：');
+  var N0_ex = Math.ceil(minL / pitch);
+  var N1_ex = isDbl ? N0_ex + 3 : N0_ex + 2;
+  var tot_ex = isDbl
+    ? ((Math.floor(((N1_ex%2===0?N1_ex:N1_ex+1)/2)%2===0)?(N1_ex%2===0?N1_ex:N1_ex+1):(N1_ex%2===0?N1_ex:N1_ex+1)+2))
+    : (N1_ex%2===0?N1_ex:N1_ex+1);
+  detailLines.push('N₀ = ⌈' + minL + ' / ' + pitch + '⌉ = ' + N0_ex);
+  detailLines.push('N₁ = N₀ + ' + (isDbl ? '3' : '2') + ' = ' + N1_ex);
+  detailLines.push('N总 = ' + tot_ex + ' 颗 ✓（与输入 ' + N + ' 颗匹配）');
+  detailLines.push('');
+  detailLines.push('【以中间值 L=' + midL + 'cm 计算面料】');
+  detailLines.push('褶数 = ' + N + ' ÷ 2 = ' + folds);
+  detailLines.push('W_f（总）= ' + folds + ' × ' + foldMat + ' + ' + loss + ' = ' + uFromCm(Wf_mid) + ' ' + CUR_UNIT + ' &nbsp;<span style="color:#9ca3af;font-size:11px;">（原 ' + Wf_mid + ' cm）</span>');
+  detailLines.push('成品倍率 = 纯面料 ÷ L = ' + Wf_mid_pure + ' ÷ ' + midL + ' = ' + mult_mid + 'x  &nbsp;<span style="color:#9ca3af;font-size:11px;">（损耗不计入倍率）</span>');
+  $f('rev-range-detail').innerHTML = detailLines.join('<br>');
+
+  // Mid L fabric info
+  $f('rev-mid-l').textContent     = midL;
+  $f('rev-mid-folds').textContent = folds;
+  $f('rev-mid-fabric').textContent = Wf_mid;
+  $f('rev-mid-mult').textContent  = mult_mid + 'x';
+}
+
+// ─── Tab Switching ────────────────────────────────────────────────
+function switchTab(tab) {
+  document.getElementById('tab-fwd').classList.toggle('active', tab === 'fwd');
+  document.getElementById('tab-rev').classList.toggle('active', tab === 'rev');
+  document.getElementById('sec-fwd').classList.toggle('active', tab === 'fwd');
+  document.getElementById('sec-rev').classList.toggle('active', tab === 'rev');
+  if (tab === 'rev') {
+    computeRev();
+  } else {
+    computeFwd();
+  }
+}
+
+// ─── Forward Events ───────────────────────────────────────────────
+['length','unit'].forEach(function(id) {
+  $f(id).addEventListener('input',  function(){ CUR_UNIT = $f('unit').value; computeFwd(); });
+  $f(id).addEventListener('change', function(){ CUR_UNIT = $f('unit').value; computeFwd(); });
+});
+
+function setOpen(type) {
+  OPEN_TYPE = type;
+  LOSS = type === 'double' ? 30 : 15;
+  document.getElementById('open-single').classList.toggle('selected', type === 'single');
+  document.getElementById('open-double').classList.toggle('selected', type === 'double');
+  computeFwd();
+}
+document.getElementById('open-single').addEventListener('click', function(){ setOpen('single'); });
+document.getElementById('open-double').addEventListener('click', function(){ setOpen('double'); });
+
+document.querySelectorAll('[data-pitch]').forEach(function(pill) {
+  pill.addEventListener('click', function() {
+    document.querySelectorAll('[data-pitch]').forEach(function(p){ p.classList.remove('selected'); });
+    pill.classList.add('selected');
+    PITCH = parseFloat(pill.getAttribute('data-pitch'));
+    computeFwd();
+  });
+});
+
+document.querySelectorAll('[data-fold]').forEach(function(pill) {
+  pill.addEventListener('click', function() {
+    document.querySelectorAll('[data-fold]').forEach(function(p){ p.classList.remove('selected'); });
+    pill.classList.add('selected');
+    FOLD_MAT = parseFloat(pill.getAttribute('data-fold'));
+    computeFwd();
+  });
+});
+
+// ─── Reverse Events ───────────────────────────────────────────────
+function setRevOpen(type) {
+  REV_OPEN = type;
+  document.getElementById('rev-open-single').classList.toggle('selected', type === 'single');
+  document.getElementById('rev-open-double').classList.toggle('selected', type === 'double');
+  computeRev();
+}
+document.getElementById('rev-open-single').addEventListener('click', function(){ setRevOpen('single'); });
+document.getElementById('rev-open-double').addEventListener('click', function(){ setRevOpen('double'); });
+
+document.querySelectorAll('[data-rev-pitch]').forEach(function(pill) {
+  pill.addEventListener('click', function() {
+    document.querySelectorAll('[data-rev-pitch]').forEach(function(p){ p.classList.remove('selected'); });
+    pill.classList.add('selected');
+    REV_PITCH = parseFloat(pill.getAttribute('data-rev-pitch'));
+    computeRev();
+  });
+});
+document.querySelectorAll('[data-rev-fold]').forEach(function(pill) {
+  pill.addEventListener('click', function() {
+    document.querySelectorAll('[data-rev-fold]').forEach(function(p){ p.classList.remove('selected'); });
+    pill.classList.add('selected');
+    REV_FOLD = parseFloat(pill.getAttribute('data-rev-fold'));
+    computeRev();
+  });
+});
+
+$f('rev-runners').addEventListener('input', computeRev);
+$f('rev-runners').addEventListener('change', computeRev);
+
+// ─── Init ─────────────────────────────────────────────────────────
+computeFwd();
+</script>
+
+</body>
+</html>
