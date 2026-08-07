@@ -1,0 +1,1349 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--
+  ╔═══════════════════════════════════════════════════════════════════════════╗
+  ║  LANQUEEN 天际帘 · 褶位挂钩计算器 v3                                        ║
+  ║  LANQUEEN SWAVE Runner/Fold Calculator v3                                 ║
+  ║                                                                           ║
+  ║  功能 Features:                                                           ║
+  ║  - 正向计算：轨道宽度 → 挂钩数量/褶数/面料宽度                            ║
+  ║    Forward: Track length → Runner count / Folds / Fabric width            ║
+  ║  - 反向计算：挂钩数量 → 适用轨道宽度范围                                   ║
+  ║    Reverse: Runner count → Valid track length range                       ║
+  ║  - 设备限制检查：根据高度和褶用料自动计算最大褶位数                        ║
+  ║    Equipment limit check: Auto-calculate max folds by height & material    ║
+  ║                                                                           ║
+  ║  作者 Author: LANQUEEN R&D Team                                           ║
+  ║  版本 Version: v3.0 双语注释版 / Bilingual Commented Edition               ║
+  ╚═══════════════════════════════════════════════════════════════════════════╝
+-->
+<title>LANQUEEN 天际帘 · 褶位挂钩计算器 v3</title>
+<style>
+  /* ═══════════════════════════════════════════════════════════════════════════
+     CSS 样式定义 / CSS Style Definitions
+     ═══════════════════════════════════════════════════════════════════════════ */
+  
+  /* ── 颜色变量定义 / Color Variables ── */
+  :root{ 
+    --ink:#1f2937;              /* 主文字色 / Primary text color */
+    --indigo:#4338ca;           /* 主品牌色 / Primary brand color */
+    --indigo2:#3730a3;          /* 品牌色深色 / Darker brand color */
+    --indigo-light:#6366f1;     /* 品牌色浅色 / Lighter brand color */
+    --muted:#6b7280;            /* 次要文字色 / Secondary text color */
+    --line:#e5e7eb;             /* 边框色 / Border color */
+    --soft:#f8fafc;             /* 柔和背景 / Soft background */
+    --soft-indigo:#eef2ff;      /* 品牌色背景 / Brand background */
+    --rule:#c7d2fe;             /* 规则线色 / Rule line color */
+    --green:#059669;            /* 成功色 / Success color */
+    --green-light:#d1fae5;      /* 成功背景 / Success background */
+    --amber:#d97706;            /* 警告色 / Warning color */
+    --amber-light:#fef3c7;      /* 警告背景 / Warning background */
+    --red:#dc2626;              /* 错误色 / Error color */
+    --red-light:#fee2e2;        /* 错误背景 / Error background */
+  }
+  
+  /* ── 全局重置 / Global Reset ── */
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  
+  /* ── 页面主体样式 / Page Body Styles ── */
+  body{ 
+    background:linear-gradient(135deg,#f1f3f9,#eef2ff);
+    color:var(--ink); 
+    font-family:'PingFang SC','Helvetica Neue',Helvetica,Arial,sans-serif;
+    min-height:100vh; 
+    display:flex; 
+    align-items:flex-start; 
+    justify-content:center;
+    padding:20px 12px 60px; 
+  }
+  
+  /* ── 页面容器 / Page Container ── */
+  .page{ width:560px; max-width:100%; }
+
+  /* ───────────────────────────────────────────────────────────────────────
+     页眉样式 / Header Styles
+     ─────────────────────────────────────────────────────────────────────── */
+  .header{ text-align:center; margin-bottom:18px; }
+  .brand{ font-size:11px; letter-spacing:.4em; font-weight:700; color:var(--indigo); text-transform:uppercase; }
+  .title{ font-size:22px; font-weight:800; color:var(--ink); letter-spacing:.04em; margin-top:4px; }
+  .subtitle{ font-size:12px; color:var(--muted); margin-top:3px; }
+  .ver{ display:inline-block; background:#fee2e2; color:#dc2626; font-size:11px; font-weight:700; padding:2px 10px; border-radius:20px; margin-top:8px; }
+  .tag{ display:inline-block; background:var(--soft-indigo); color:var(--indigo2);
+        font-size:11px; font-weight:700; padding:3px 12px; border-radius:20px; margin-top:6px; }
+
+  /* ───────────────────────────────────────────────────────────────────────
+     卡片样式 / Card Styles
+     ─────────────────────────────────────────────────────────────────────── */
+  .card{ 
+    background:#fff; 
+    border:1px solid var(--line); 
+    border-radius:16px;
+    box-shadow:0 6px 28px rgba(30,41,59,.07); 
+    overflow:hidden; 
+    margin-bottom:14px; 
+  }
+  .card-hd{ background:linear-gradient(135deg,#4338ca,#3730a3); color:#fff; padding:15px 20px; }
+  .card-hd h2{ font-size:15px; font-weight:800; letter-spacing:.02em; }
+  .card-hd p{ font-size:11.5px; opacity:.8; margin-top:3px; }
+  .card-bd{ padding:16px 20px; }
+
+  /* ───────────────────────────────────────────────────────────────────────
+     标签切换器 / Tab Switcher
+     ─────────────────────────────────────────────────────────────────────── */
+  .tab-bar{ 
+    display:flex; 
+    gap:0; 
+    background:#fff; 
+    border:1.5px solid var(--line);
+    border-radius:12px; 
+    padding:4px; 
+    margin-bottom:14px; 
+    overflow:hidden; 
+  }
+  .tab{ 
+    flex:1; 
+    padding:10px 8px; 
+    text-align:center; 
+    font-size:14px; 
+    font-weight:700;
+    cursor:pointer; 
+    border-radius:9px; 
+    color:var(--muted); 
+    transition:all .2s;
+    border:none; 
+    background:none; 
+    font-family:inherit; 
+  }
+  .tab:hover{ color:var(--indigo); }
+  .tab.active{ background:var(--indigo); color:#fff; box-shadow:0 2px 8px rgba(67,56,202,.3); }
+
+  /* ───────────────────────────────────────────────────────────────────────
+     表单元素样式 / Form Element Styles
+     ─────────────────────────────────────────────────────────────────────── */
+  .row{ margin-bottom:14px; }
+  label{ display:block; font-size:12.5px; font-weight:700; margin-bottom:6px; color:var(--ink); }
+  label .en{ color:var(--muted); font-weight:400; font-size:11px; }
+  label .hint{ color:var(--muted); font-weight:400; font-size:11px; }
+  
+  /* 输入组 / Input Group */
+  .ig{ display:flex; gap:8px; flex-wrap:wrap; }
+  input[type=number]{ 
+    flex:1; 
+    font-size:17px; 
+    font-weight:600; 
+    padding:9px 12px;
+    border:1.5px solid var(--line); 
+    border-radius:9px; 
+    outline:none; 
+    color:#111827;
+    font-family:inherit; 
+    min-width:80px; 
+  }
+  input[type=number]:focus{ border-color:var(--indigo); box-shadow:0 0 0 3px rgba(67,56,202,.13); }
+  input[type=number]:hover{ border-color:var(--indigo-light); }
+  
+  select{ 
+    font-size:13.5px; 
+    padding:9px 12px; 
+    border:1.5px solid var(--line); 
+    border-radius:9px;
+    background:#fff; 
+    color:#111827; 
+    font-family:inherit; 
+    cursor:pointer; 
+    outline:none; 
+  }
+  select:focus{ border-color:var(--indigo); box-shadow:0 0 0 3px rgba(67,56,202,.13); }
+  .unit-sel{ width:110px; }
+  .full{ width:100%; }
+
+  /* ───────────────────────────────────────────────────────────────────────
+     药丸按钮组 / Pill Button Group
+     ─────────────────────────────────────────────────────────────────────── */
+  .pill-group{ display:flex; gap:7px; flex-wrap:wrap; }
+  .pill{ 
+    flex:1; 
+    min-width:60px; 
+    background:var(--soft); 
+    border:1.5px solid var(--line);
+    border-radius:9px; 
+    padding:9px 4px; 
+    text-align:center; 
+    cursor:pointer;
+    transition:all .18s; 
+    font-size:13px; 
+    font-weight:600; 
+    color:var(--muted); 
+  }
+  .pill:hover{ border-color:var(--indigo-light); background:var(--soft-indigo); color:var(--indigo); }
+  .pill.selected{ border-color:var(--indigo); background:var(--soft-indigo); color:var(--indigo); font-weight:800; }
+  .pill .sub{ display:block; font-size:10px; font-weight:400; margin-top:2px; color:inherit; opacity:.75; }
+  .pill .rec{ display:none; font-size:9px; color:#fff; background:var(--green); border-radius:3px; padding:1px 5px; margin-top:3px; font-weight:700; }
+  .pill.selected .rec{ display:inline-block; }
+
+  .tip{ font-size:11.5px; color:var(--muted); margin-top:6px; line-height:1.5; }
+
+  /* ───────────────────────────────────────────────────────────────────────
+     输出面板样式 / Output Panel Styles
+     ─────────────────────────────────────────────────────────────────────── */
+  .out{ margin-top:4px; background:var(--soft-indigo); border:1.5px solid var(--rule); border-radius:12px; padding:16px 18px; }
+  .panel-tag{ 
+    display:inline-block; 
+    font-size:11.5px; 
+    font-weight:700; 
+    color:var(--indigo2);
+    background:#fff; 
+    border:1.5px solid var(--rule); 
+    border-radius:20px; 
+    padding:3px 13px; 
+  }
+
+  /* ───────────────────────────────────────────────────────────────────────
+     结果网格 / Result Grid
+     ─────────────────────────────────────────────────────────────────────── */
+  .result-grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px; }
+  .res-box{ background:#fff; border:1.5px solid var(--rule); border-radius:10px; padding:12px 14px; text-align:center; }
+  .res-box.highlight{ border-color:var(--indigo); background:var(--soft-indigo); }
+  .res-box .lbl{ font-size:11px; color:var(--muted); font-weight:700; }
+  .res-box .val{ font-size:38px; font-weight:800; color:var(--indigo); line-height:1.1; margin-top:4px; font-variant-numeric:tabular-nums; }
+  .res-box .val.green{ color:var(--green); }
+  .res-box .unit{ font-size:12px; color:var(--muted); font-weight:600; }
+  .res-box .sub{ font-size:11px; color:var(--muted); margin-top:3px; }
+
+  /* ───────────────────────────────────────────────────────────────────────
+     面料计算条 / Fabric Calculation Strip
+     ─────────────────────────────────────────────────────────────────────── */
+  .fabric-strip{ margin-top:12px; background:#fff; border:1.5px solid var(--rule); border-radius:10px; padding:12px 14px; }
+  .fabric-strip .fl{ display:flex; gap:8px; flex-wrap:wrap; }
+  .fabric-strip .fi{ flex:1; min-width:110px; background:var(--soft); border:1.5px solid var(--line); border-radius:8px; padding:8px 10px; }
+  .fabric-strip .fi .lbl{ font-size:10.5px; color:var(--muted); font-weight:700; }
+  .fabric-strip .fi .v{ font-size:22px; font-weight:800; color:var(--indigo); margin-top:3px; font-variant-numeric:tabular-nums; }
+  .fabric-strip .fi .s{ font-size:10.5px; color:var(--muted); margin-top:1px; }
+  .fabric-strip .formula-line{ margin-top:10px; background:var(--soft-indigo); border:1px dashed var(--rule); border-radius:7px; padding:8px 12px; font-size:12px; color:#475569; font-family:'Courier New',monospace; line-height:1.8; }
+
+  /* ───────────────────────────────────────────────────────────────────────
+     双开分片显示 / Split Display for Double Opening
+     ─────────────────────────────────────────────────────────────────────── */
+  .split-row{ display:none; gap:10px; margin-top:10px; }
+  .split-row.show{ display:flex; }
+  .split-box{ flex:1; background:#fff; border:1.5px solid var(--rule); border-radius:10px; padding:10px 12px; text-align:center; }
+  .split-box .t{ font-size:11px; color:var(--muted); font-weight:700; }
+  .split-box .v{ font-size:24px; font-weight:800; color:var(--indigo2); margin-top:2px; font-variant-numeric:tabular-nums; }
+
+  /* ───────────────────────────────────────────────────────────────────────
+     反向计算结果 / Reverse Calculation Results
+     ─────────────────────────────────────────────────────────────────────── */
+  .rev-result{ display:none; margin-top:12px; }
+  .rev-result.show{ display:block; }
+  .rev-main{ background:#fff; border:2px solid var(--indigo); border-radius:12px; padding:18px 20px; text-align:center; }
+  .rev-main .lbl{ font-size:12px; color:var(--muted); font-weight:700; }
+  .rev-main .val{ font-size:36px; font-weight:800; color:var(--indigo); margin-top:6px; font-variant-numeric:tabular-nums; }
+  .rev-main .sub{ font-size:12px; color:var(--muted); margin-top:4px; }
+  .rev-range{ margin-top:10px; background:var(--soft-indigo); border:1px dashed var(--rule); border-radius:10px; padding:12px 14px; font-size:12px; color:#475569; font-family:'Courier New',monospace; line-height:1.9; }
+  .rev-error{ display:none; margin-top:12px; background:#fff; border:1.5px solid #fca5a5; border-radius:10px; padding:14px; text-align:center; font-size:13px; color:#dc2626; font-weight:700; }
+  .rev-error.show{ display:block; }
+
+  /* ───────────────────────────────────────────────────────────────────────
+     数据表格 / Data Table
+     ─────────────────────────────────────────────────────────────────────── */
+  .table-wrap{ overflow-x:auto; }
+  table{ width:100%; border-collapse:collapse; font-size:12px; }
+  th{ background:#f1f3f9; padding:8px 10px; text-align:center; border:1px solid var(--line); font-weight:700; font-size:11px; }
+  td{ padding:7px 10px; border:1px solid var(--line); text-align:center; }
+  td:first-child{ text-align:left; font-weight:600; }
+  tr:hover td{ background:#f8faff; }
+  .badge{ display:inline-block; font-size:10px; font-weight:700; padding:1px 6px; border-radius:4px; }
+  .badge-indigo{ background:#eef2ff; color:#4338ca; }
+  .badge-green{ background:#d1fae5; color:#059669; }
+  .badge-amber{ background:#fef3c7; color:#d97706; }
+
+  /* ───────────────────────────────────────────────────────────────────────
+     页脚样式 / Footer Styles
+     ─────────────────────────────────────────────────────────────────────── */
+  .footer{ 
+    text-align:center; 
+    font-size:10.5px; 
+    color:#9aa1ad; 
+    line-height:1.7;
+    background:#fff; 
+    border:1px solid var(--line); 
+    border-radius:12px; 
+    padding:12px 18px; 
+  }
+  .footer b{ color:var(--indigo2); }
+
+  /* ───────────────────────────────────────────────────────────────────────
+     区域显示控制 / Section Visibility Control
+     ─────────────────────────────────────────────────────────────────────── */
+  .sec{ display:none; }
+  .sec.active{ display:block; }
+
+  /* ───────────────────────────────────────────────────────────────────────
+     响应式适配 / Responsive Adaptation
+     ─────────────────────────────────────────────────────────────────────── */
+  @media(max-width:480px){
+    .res-box .val{ font-size:30px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       页眉 / Header
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <div class="header">
+    <div class="brand">LANQUEEN</div>
+    <!-- 标题支持双语显示 / Bilingual Title Support -->
+    <div class="title">天际帘（SWAVE）褶位挂钩计算器</div>
+    <div class="subtitle">Runner / Fold Calculator</div>
+    <div class="ver">v3 · 正向+反向计算 / Forward+Reverse</div>
+    <div class="tag">内部工具 · 仅供订单参考 / Internal Tool Only</div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       标签切换器 / Tab Switcher
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <div class="tab-bar">
+    <button class="tab active" id="tab-fwd" onclick="switchTab('fwd')">📐 正向计算 / Forward</button>
+    <button class="tab" id="tab-rev" onclick="switchTab('rev')">🔄 反向计算 / Reverse</button>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       正向计算区域 / FORWARD CALCULATION SECTION
+       输入：轨道宽度 → 输出：挂钩数量、褶数、面料宽度、褶皱比例
+       Input: Track length → Output: Runner count, Folds, Fabric width, Pleat Ratio
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <div class="sec active" id="sec-fwd">
+
+    <!-- ── 输入参数卡片 / Input Parameters Card ── -->
+    <div class="card">
+      <div class="card-hd">
+        <h2>📥 输入参数（正向）/ Input (Forward)</h2>
+        <p>已知轨道宽度 → 计算挂钩数量与面料 / Track length → Runners & Fabric</p>
+      </div>
+      <div class="card-bd">
+
+        <!-- 轨道总长输入 / Track Length Input -->
+        <div class="row">
+          <label>轨道总长 <span class="en">/ Track Length</span></label>
+          <div class="ig">
+            <input type="number" id="length" min="0" step="1" value="240" inputmode="decimal" placeholder="输入轨道宽度 / Enter track width">
+            <select id="unit" class="unit-sel" onchange="onUnitChange()">
+              <option value="cm" selected>cm（厘米）</option>
+              <option value="mm">mm（毫米）</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- 窗帘高度输入 / Curtain Height Input -->
+        <!-- 必填项，用于计算设备加工限制 / Required for equipment limit calculation -->
+        <div class="row">
+          <label>窗帘高度 <span class="en">/ Curtain Height</span> <span style="color:#dc2626;font-size:12px;">*必填 / Required</span></label>
+          <div class="ig">
+            <input type="number" id="height" min="0" step="1" value="280" inputmode="decimal" placeholder="输入窗帘高度 / Enter curtain height">
+            <span class="unit-sel" style="display:flex;align-items:center;padding:0 12px;background:#f3f4f6;border:1.5px solid #e5e7eb;border-radius:10px;font-size:13px;color:#6b7280;">cm</span>
+          </div>
+          <div style="margin-top:6px;font-size:12px;color:#6b7280;">
+            根据高度和褶用料自动计算最大挂钩数限制 / Auto-calculate max runner limit by height & fold material
+          </div>
+        </div>
+
+        <!-- 开合方式选择 / Opening Type Selection -->
+        <!-- 单开=一幅窗帘，双开=两幅窗帘从中间对开 -->
+        <div class="row">
+          <label>开合方式 <span class="en">/ Opening Type</span></label>
+          <div class="pill-group">
+            <div class="pill selected" id="open-single" data-open="single">
+              单开
+              <span class="sub">Single</span>
+              <span class="rec">推荐</span>
+            </div>
+            <div class="pill" id="open-double" data-open="double">
+              双开
+              <span class="sub">Double</span>
+              <span class="rec">推荐</span>
+            </div>
+          </div>
+          <div class="tip">单开 = 一幅窗帘；双开 = 两幅窗帘从中间对开 / Single=1 panel; Double=2 panels split from center</div>
+        </div>
+
+        <!-- 滑轮间距选择 / Runner Pitch Selection -->
+        <!-- 相邻两颗挂钩之间的中心距离 / Center distance between adjacent runners -->
+        <div class="row">
+          <label>滑轮间距 <span class="en">/ Runner Pitch</span></label>
+          <div class="pill-group">
+            <div class="pill" data-pitch="5.4">5.4cm<span class="sub">紧密/Tight</span></div>
+            <div class="pill selected" data-pitch="6">6cm<span class="sub">标准/Standard ★</span><span class="rec">推荐</span></div>
+            <div class="pill" data-pitch="7">7cm<span class="sub">适中/Medium</span></div>
+            <div class="pill" data-pitch="8">8cm<span class="sub">常规/Regular</span></div>
+            <div class="pill" data-pitch="9">9cm<span class="sub">宽松/Loose</span></div>
+            <div class="pill" data-pitch="10">10cm<span class="sub">极宽/Extra Wide</span></div>
+          </div>
+          <div class="tip">相邻两颗挂钩之间的中心距（cm）/ Center distance between adjacent runners (cm)</div>
+        </div>
+
+        <!-- 褶用料选择 / Fold Material Selection -->
+        <!-- 每个褶所需的实际面料长度 / Actual fabric length per fold -->
+        <div class="row">
+          <label>褶用料 <span class="en">/ Fabric per Fold</span></label>
+          <div class="pill-group">
+            <div class="pill selected" data-fold="22">22cm<span class="sub">小褶/Small ★</span><span class="rec">推荐</span></div>
+            <div class="pill" data-fold="24">24cm<span class="sub">标准褶/Standard</span><span class="rec">推荐</span></div>
+            <div class="pill" data-fold="30">30cm<span class="sub">大褶/Large</span><span class="rec">推荐</span></div>
+          </div>
+          <div class="tip">相邻两个褶峰之间的实际用料数量（cm）/ Fabric used between adjacent fold peaks (cm)</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── 计算结果卡片 / Calculation Results Card ── -->
+    <div class="card">
+      <div class="card-hd">
+        <h2>📤 计算结果 / Calculation Results</h2>
+        <p>挂钩数量 · 褶数 · 面料宽度 · 褶皱比例 / Runners · Folds · Fabric · Pleat Ratio</p>
+      </div>
+      <div class="card-bd">
+
+        <div class="out">
+          <!-- 当前模式标签 / Current Mode Tag -->
+          <span class="panel-tag" id="ptag">单开 Single</span>
+
+          <!-- 主要结果网格 / Main Results Grid -->
+          <div class="result-grid">
+            <!-- 挂钩总数 / Total Runners -->
+            <div class="res-box highlight">
+              <div class="lbl">挂钩总数 / Total Runners</div>
+              <div class="val" id="total">42</div>
+              <div class="unit">颗 / runners</div>
+              <div class="sub" id="total-sub">整组数量 / Total count</div>
+            </div>
+            <!-- 褶数 / Folds -->
+            <div class="res-box">
+              <div class="lbl">褶数 / Folds</div>
+              <div class="val green" id="folds-count">21</div>
+              <div class="unit">个褶 / folds</div>
+              <div class="sub" id="folds-sub">挂钩数 ÷ 2</div>
+            </div>
+          </div>
+
+          <!-- 褶数信息行 / Fold Info Row -->
+          <div id="fold-info-row" style="margin-top:10px; background:#fff; border:1.5px dashed var(--rule); border-radius:8px; padding:9px 12px; font-size:12px; color:#475569; font-family:'Courier New',monospace; line-height:1.8;"></div>
+
+          <!-- 设备限制警告 / Equipment Limit Warning -->
+          <div id="limit-warning"></div>
+
+          <!-- 双开分片显示 / Split Display for Double Opening -->
+          <div class="split-row" id="split">
+            <div class="split-box">
+              <div class="t">左片 / Left</div>
+              <div class="v" id="left">—</div>
+            </div>
+            <div class="split-box">
+              <div class="t">右片 / Right</div>
+              <div class="v" id="right">—</div>
+            </div>
+          </div>
+
+          <!-- 面料计算区域 / Fabric Calculation Area -->
+          <div class="fabric-strip" style="margin-top:12px;">
+            <div style="font-size:12px;font-weight:700;color:var(--indigo);margin-bottom:8px;">📐 面料计算 / Fabric Calculation</div>
+            <div class="fl">
+              <div class="fi">
+                <div class="lbl">褶数 / Folds</div>
+                <div class="v" id="fab-folds">—</div>
+                <div class="s">个 / folds</div>
+              </div>
+              <div class="fi">
+                <div class="lbl">褶用料 / Material</div>
+                <div class="v" id="fab-per">—</div>
+                <div class="s">cm/褶 / per fold</div>
+              </div>
+              <div class="fi">
+                <div class="lbl">损耗加位 / Loss</div>
+                <div class="v" id="fab-loss">+15</div>
+                <div class="s" id="fab-loss-unit">cm（单开）</div>
+              </div>
+            </div>
+            <!-- 公式行 / Formula Line -->
+            <div class="formula-line" id="fab-formula">W_f = 褶数 × 褶用料 + 损耗</div>
+            <!-- 面料宽度结果 / Fabric Width Result -->
+            <div style="margin-top:10px; background:var(--soft-indigo); border:1.5px solid var(--rule); border-radius:10px; padding:12px 14px; text-align:center;">
+              <div style="font-size:11px;color:var(--muted);font-weight:700;">面料宽度 / Fabric Width (W_f)</div>
+              <div style="font-size:38px; font-weight:800; color:var(--indigo); font-variant-numeric:tabular-nums; margin-top:4px;" id="fabric-val">—</div>
+              <div style="font-size:12px; color:var(--muted); margin-top:3px;">cm</div>
+            </div>
+          </div>
+
+          <!-- 褶皱比例区域 / Pleat Ratio Area -->
+          <div style="margin-top:12px; background:#fff; border:1.5px solid var(--rule); border-radius:10px; padding:12px 14px;">
+            <div style="display:flex; gap:10px; align-items:center;">
+              <!-- 褶皱比例 / Pleat Ratio -->
+              <div style="flex:1; text-align:center;">
+                <div style="font-size:11px;color:var(--muted);font-weight:700;">褶皱比例 / Pleat Ratio</div>
+                <div style="font-size:30px;font-weight:800;color:var(--green);font-variant-numeric:tabular-nums;margin-top:4px;" id="pleat-ratio">2.0</div>
+                <div style="font-size:11px;color:var(--muted);">褶皱比例 = 面料宽度 ÷ 轨道宽度</div>
+              </div>
+              <div style="width:1px;height:50px;background:var(--line);"></div>
+              <!-- 面料宽度 / Fabric Width -->
+              <div style="flex:1; text-align:center;">
+                <div style="font-size:11px;color:var(--muted);font-weight:700;">面料宽度 / Fabric</div>
+                <div style="font-size:30px;font-weight:800;color:var(--indigo);font-variant-numeric:tabular-nums;margin-top:4px;" id="mult-fabric">477</div>
+                <div style="font-size:11px;color:var(--muted);">cm</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 计算步骤详解 / Calculation Steps Detail -->
+          <div style="margin-top:12px; background:#fff; border:1.5px dashed var(--rule); border-radius:9px; padding:10px 13px; font-size:12px; color:#475569; font-family:'Courier New',monospace; line-height:1.8;" id="steps"></div>
+
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /sec-fwd 正向计算区域结束 -->
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       反向计算区域 / REVERSE CALCULATION SECTION
+       输入：挂钩数量 → 输出：适用轨道宽度范围
+       Input: Runner count → Output: Valid track length range
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <div class="sec" id="sec-rev">
+
+    <div class="card">
+      <div class="card-hd" style="background:linear-gradient(135deg,#059669,#047857);">
+        <h2>🔄 反向计算 / Reverse Calculation</h2>
+        <p>已知挂钩数量 → 推算适用的轨道长度范围 / Runners → Valid track range</p>
+      </div>
+      <div class="card-bd">
+
+        <!-- 开合方式选择（反向）/ Opening Type (Reverse) -->
+        <div class="row">
+          <label>开合方式 <span class="en">/ Opening Type</span></label>
+          <div class="pill-group">
+            <div class="pill selected" id="rev-open-single" data-rev-open="single">
+              单开
+              <span class="sub">Single</span>
+            </div>
+            <div class="pill" id="rev-open-double" data-rev-open="double">
+              双开
+              <span class="sub">Double</span>
+            </div>
+          </div>
+          <div class="tip">单开 = 一幅窗帘；双开 = 两幅窗帘从中间对开</div>
+        </div>
+
+        <!-- 滑轮间距选择（反向）/ Runner Pitch (Reverse) -->
+        <div class="row">
+          <label>滑轮间距 <span class="en">/ Runner Pitch</span></label>
+          <div class="pill-group">
+            <div class="pill" data-rev-pitch="5.4">5.4cm<span class="sub">紧密</span></div>
+            <div class="pill selected" data-rev-pitch="6">6cm<span class="sub">标准 ★</span><span class="rec">推荐</span></div>
+            <div class="pill" data-rev-pitch="7">7cm<span class="sub">适中</span></div>
+            <div class="pill" data-rev-pitch="8">8cm<span class="sub">常规</span></div>
+            <div class="pill" data-rev-pitch="9">9cm<span class="sub">宽松</span></div>
+            <div class="pill" data-rev-pitch="10">10cm<span class="sub">极宽</span></div>
+          </div>
+        </div>
+
+        <!-- 褶用料选择（反向）/ Fold Material (Reverse) -->
+        <div class="row">
+          <label>褶用料 <span class="en">/ Fabric per Fold</span></label>
+          <div class="pill-group">
+            <div class="pill selected" data-rev-fold="22">22cm<span class="sub">小褶 ★</span><span class="rec">推荐</span></div>
+            <div class="pill" data-rev-fold="24">24cm<span class="sub">标准褶</span><span class="rec">推荐</span></div>
+            <div class="pill" data-rev-fold="30">30cm<span class="sub">大褶</span><span class="rec">推荐</span></div>
+          </div>
+          <div class="tip">褶用料 = 相邻两个挂钩之间的距离（cm）/ Fabric per fold = Distance between adjacent folds</div>
+        </div>
+
+        <!-- 窗帘高度输入（反向）/ Curtain Height (Reverse) -->
+        <div class="row">
+          <label>窗帘高度 <span class="en">/ Curtain Height</span> <span style="color:#dc2626;font-size:12px;">*必填 / Required</span></label>
+          <div class="ig">
+            <input type="number" id="rev-height" min="0" step="1" value="280" inputmode="decimal" placeholder="输入窗帘高度 / Enter curtain height">
+            <span class="unit-sel" style="display:flex;align-items:center;padding:0 12px;background:#f3f4f6;border:1.5px solid #e5e7eb;border-radius:10px;font-size:13px;color:#6b7280;">cm</span>
+          </div>
+          <div class="tip">根据高度和褶用料自动计算最大挂钩数限制</div>
+        </div>
+
+        <!-- 挂钩数量输入（反向）/ Runner Count Input (Reverse) -->
+        <div class="row">
+          <label>挂钩数量 <span class="en">/ Runner Count</span></label>
+          <div class="ig">
+            <input type="number" id="rev-runners" min="4" step="2" value="42" inputmode="numeric" placeholder="输入挂钩数量 / Enter runner count">
+          </div>
+          <div class="tip" id="rev-runner-tip">输入实际数好的挂钩数量，单开必须为偶数&nbsp;/&nbsp;双开必须为 4 的倍数 / Single: even; Double: multiple of 4</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── 反向计算结果卡片 / Reverse Results Card ── -->
+    <div class="card">
+      <div class="card-hd" style="background:linear-gradient(135deg,#059669,#047857);">
+        <h2>📐 反向计算结果 / Reverse Results</h2>
+        <p>挂钩数量 → 适用轨道长度 / Runners → Valid track range</p>
+      </div>
+      <div class="card-bd">
+
+        <!-- 错误提示框 / Error Box -->
+        <div class="rev-error" id="rev-error">⚠️ 输入的挂钩数量无效，请检查 / Invalid runner count</div>
+
+        <!-- 设备限制警告 / Equipment Limit Warning -->
+        <div id="rev-limit-warning"></div>
+
+        <!-- 有效结果 / Valid Result -->
+        <div class="rev-result" id="rev-result">
+
+          <!-- 主要结果：轨道宽度范围 / Main Result: Track Length Range -->
+          <div class="rev-main">
+            <div class="lbl">适用轨道宽度范围 / Valid Track Length Range</div>
+            <div class="val" id="rev-range-val">180 ~ 240 cm</div>
+            <div class="sub" id="rev-range-sub">此挂钩数量对应的轨道宽度区间 / Track range for this runner count</div>
+          </div>
+
+          <!-- 详细公式行 / Detail Formula Lines -->
+          <div class="rev-range" id="rev-range-detail"></div>
+
+          <!-- 中间值面料计算 / Fabric Calculation for Median -->
+          <div style="margin-top:12px; background:#fff; border:1.5px solid #a7f3d0; border-radius:10px; padding:12px 14px;">
+            <div style="font-size:12px;font-weight:700;color:#065f46;margin-bottom:8px;">📐 以中间值计算面料（仅供参考）/ Fabric for Median (Reference Only)</div>
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+              <div style="flex:1;min-width:80px;background:#f0fdf4;border:1px solid #a7f3d0;border-radius:7px;padding:8px;text-align:center;">
+                <div style="font-size:10px;color:#6b7280;font-weight:700;">轨道宽度 / Track</div>
+                <div style="font-size:20px;font-weight:800;color:#059669;margin-top:3px;" id="rev-mid-l">210</div>
+                <div style="font-size:10px;color:#6b7280;">cm</div>
+              </div>
+              <div style="flex:1;min-width:80px;background:#f0fdf4;border:1px solid #a7f3d0;border-radius:7px;padding:8px;text-align:center;">
+                <div style="font-size:10px;color:#6b7280;font-weight:700;">褶数 / Folds</div>
+                <div style="font-size:20px;font-weight:800;color:#059669;margin-top:3px;" id="rev-mid-folds">21</div>
+                <div style="font-size:10px;color:#6b7280;">个 / folds</div>
+              </div>
+              <div style="flex:1;min-width:80px;background:#f0fdf4;border:1px solid #a7f3d0;border-radius:7px;padding:8px;text-align:center;">
+                <div style="font-size:10px;color:#6b7280;font-weight:700;">面料宽度 / Fabric</div>
+                <div style="font-size:20px;font-weight:800;color:#059669;margin-top:3px;" id="rev-mid-fabric">477</div>
+                <div style="font-size:10px;color:#6b7280;">cm</div>
+              </div>
+              <div style="flex:1;min-width:80px;background:#f0fdf4;border:1px solid #a7f3d0;border-radius:7px;padding:8px;text-align:center;">
+                <div style="font-size:10px;color:#6b7280;font-weight:700;">褶皱比例 / Ratio</div>
+                <div style="font-size:20px;font-weight:800;color:#059669;margin-top:3px;" id="rev-mid-ratio">2.3</div>
+                <div style="font-size:10px;color:#6b7280;">x</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /sec-rev 反向计算区域结束 -->
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       页脚 / Footer
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <div class="footer">
+    依据标准 / Based on <b>SW-STD-001 · v3.0</b><br>
+    正向：轨道宽度 → 走珠/褶数/面料 &nbsp;|&nbsp; 反向：挂钩数量 → 适用轨道宽度<br>
+    Forward: Track → Runners/Folds/Fabric &nbsp;|&nbsp; Reverse: Runners → Valid Track Range<br>
+    滑轮间距（Runner Pitch）：5.4 / 6★ / 7 / 8 / 9 / 10 cm &nbsp;|&nbsp; 褶用料：22★ / 24 / 30 cm<br>
+    面料宽度 = 褶数 × 褶用料 + 损耗（单开+15cm / 双开+30cm）<br>
+    Fabric = Folds × Material + Loss (Single+15cm / Double+30cm)<br>
+    <b>LANQUEEN · v3 双语注释版 · 仅供订单参考 / Internal Tool Only</b>
+  </div>
+
+</div>
+
+<script>
+// ════════════════════════════════════════════════════════════════════════════
+// JavaScript 核心计算逻辑 / JavaScript Core Calculation Logic
+// ════════════════════════════════════════════════════════════════════════════
+
+// ───────────────────────────────────────────────────────────────────────────
+// 全局状态变量 / Global State Variables
+// ───────────────────────────────────────────────────────────────────────────
+
+/** 滑轮间距（正向计算）/ Runner Pitch (Forward Calculation)
+ *  相邻两颗挂钩之间的中心距离 / Center distance between adjacent runners */
+var PITCH     = 6;
+
+/** 褶用料（正向计算）/ Fold Material (Forward Calculation)
+ *  每个褶所需的实际面料长度 / Actual fabric length per fold */
+var FOLD_MAT  = 22;
+
+/** 开合方式（正向计算）/ Opening Type (Forward Calculation)
+ *  'single'=单开（一幅窗帘）, 'double'=双开（两幅窗帘从中间对开）
+ *  'single'=Single panel, 'double'=Two panels split from center */
+var OPEN_TYPE = 'single';
+
+/** 滑轮间距（反向计算）/ Runner Pitch (Reverse Calculation) */
+var REV_PITCH = 6;
+
+/** 褶用料（反向计算）/ Fold Material (Reverse Calculation) */
+var REV_FOLD  = 22;
+
+/** 开合方式（反向计算）/ Opening Type (Reverse Calculation) */
+var REV_OPEN  = 'single';
+
+/** 损耗加位 / Loss Allowance
+ *  单开=15cm, 双开=30cm / Single=15cm, Double=30cm */
+var LOSS      = 15;
+
+// ───────────────────────────────────────────────────────────────────────────
+// 设备加工限制表 / Equipment Processing Limits Table
+// ───────────────────────────────────────────────────────────────────────────
+
+/**
+ * 最大褶位数限制表（受加工设备限制）
+ * Maximum folds limit table (restricted by processing equipment)
+ * 
+ * 结构说明 / Structure:
+ * { 
+ *   褶用料: [ { maxHeight: 高度上限, maxFolds: 单开最大褶位数 }, ... ]
+ *   foldMaterial: [ { maxHeight: height limit, maxFolds: max folds for single opening }, ... ]
+ * }
+ * 
+ * 双开限制 = 单开限制 × 2 / Double opening limit = Single opening limit × 2
+ */
+var MAX_FOLDS_LIMIT = {
+  // 22cm 褶用料（小褶）/ 22cm fold material (small fold)
+  22: [
+    { maxHeight: 300, maxFolds: 71 },    // ≤300cm
+    { maxHeight: 350, maxFolds: 50 },    // 301-350cm
+    { maxHeight: Infinity, maxFolds: 32 } // >350cm
+  ],
+  // 24cm 褶用料（标准褶）/ 24cm fold material (standard fold)
+  24: [
+    { maxHeight: 300, maxFolds: 82 },    // ≤300cm
+    { maxHeight: 350, maxFolds: 38 },    // 301-350cm
+    { maxHeight: Infinity, maxFolds: 32 } // >350cm
+  ],
+  // 30cm 褶用料（大褶）/ 30cm fold material (large fold)
+  30: [
+    { maxHeight: 360, maxFolds: 52 },    // ≤360cm
+    { maxHeight: Infinity, maxFolds: 34 } // >360cm（361以上）
+  ]
+};
+
+/**
+ * 获取最大褶位数限制 / Get maximum folds limit
+ * 
+ * @param {number} foldMat - 褶用料 / Fold material (22/24/30)
+ * @param {number} height - 窗帘高度 / Curtain height (cm)
+ * @param {boolean} isDouble - 是否双开 / Is double opening
+ * @returns {number} 最大褶位数 / Maximum folds
+ * 
+ * 计算逻辑 / Calculation Logic:
+ * 1. 查找对应褶用料的限制数组 / Find limit array for fold material
+ * 2. 根据高度匹配限制档位 / Match limit tier by height
+ * 3. 如果是双开，返回单开限制×2 / If double opening, return single limit × 2
+ */
+function getMaxFoldsLimit(foldMat, height, isDouble) {
+  var limits = MAX_FOLDS_LIMIT[foldMat];
+  if (!limits) return Infinity; // 未知褶用料，无限制 / Unknown material, no limit
+  
+  // 遍历限制数组，找到第一个高度满足条件的档位
+  // Iterate limit array, find first tier where height is within range
+  for (var i = 0; i < limits.length; i++) {
+    if (height <= limits[i].maxHeight) {
+      return isDouble ? limits[i].maxFolds * 2 : limits[i].maxFolds;
+    }
+  }
+  // 使用最后一个档位 / Use last tier
+  return isDouble ? limits[limits.length - 1].maxFolds * 2 : limits[limits.length - 1].maxFolds;
+}
+
+// ───────────────────────────────────────────────────────────────────────────
+// 单位转换工具 / Unit Conversion Utilities
+// ───────────────────────────────────────────────────────────────────────────
+
+/**
+ * 当前显示单位 / Current display unit
+ * 所有显示数字按这个单位呈现，核心算法仍以 cm 为基准
+ * All display values use this unit, core algorithms still use cm as base
+ */
+var CUR_UNIT = 'cm';  // 与 select 默认值保持一致 / Keep consistent with select default
+
+/**
+ * 单位换算比例 / Unit conversion ratio
+ * cm=1, mm=0.1 (显示值=cm值×比例)
+ */
+var UNIT_RATIO = { cm: 1, mm: 0.1 };
+
+/**
+ * 从 cm 转换到当前单位 / Convert from cm to current unit
+ * @param {number} cmv - cm 值 / Value in cm
+ * @returns {number} 当前单位的值 / Value in current unit
+ */
+function uFromCm(cmv) { 
+  return +(cmv * UNIT_RATIO[CUR_UNIT]).toFixed(2); 
+}
+
+/**
+ * 格式化长度值 / Format length value
+ * @param {number} cmv - cm 值 / Value in cm
+ * @param {boolean} withUnit - 是否包含单位 / Include unit
+ * @returns {string} 格式化后的字符串 / Formatted string
+ */
+function fmtL(cmv, withUnit) {
+  var v = uFromCm(cmv);
+  var s = (CUR_UNIT === 'cm' || CUR_UNIT === 'mm') ? Math.round(v * 10) / 10 : Math.round(v * 100) / 100;
+  return withUnit ? (s + ' ' + CUR_UNIT) : (s + '');
+}
+
+/**
+ * 单位切换事件处理 / Unit change event handler
+ * 切换单位后重新计算所有结果 / Recalculate all results after unit change
+ */
+function onUnitChange() {
+  CUR_UNIT = document.getElementById('unit').value;
+  computeFwd();  // 重新计算正向 / Recalculate forward
+  computeRev();  // 重新计算反向 / Recalculate reverse
+}
+
+// ───────────────────────────────────────────────────────────────────────────
+// 核心正向计算公式 / Core Forward Calculation Formulas
+// ───────────────────────────────────────────────────────────────────────────
+
+/**
+ * 四舍五入到小数点后1位 / Round to 1 decimal place
+ * @param {number} x - 输入值 / Input value
+ * @returns {number} 四舍五入后的值 / Rounded value
+ */
+function round1(x) { return Math.round(x * 10) / 10; }
+
+/**
+ * 计算初始挂钩数 N₀ / Calculate initial runner count N₀
+ * 
+ * 公式 / Formula: N₀ = ⌈L / P⌉
+ * L = 轨道长度, P = 滑轮间距
+ * 
+ * @param {number} L - 轨道长度(cm) / Track length (cm)
+ * @returns {number} 初始挂钩数 / Initial runner count
+ */
+function calcN0(L) { return Math.ceil(L / PITCH); }
+
+/**
+ * 计算挂钩数量和褶数 / Calculate runner count and folds
+ * 
+ * 正向计算核心算法 / Forward calculation core algorithm:
+ * 
+ * 【单开模式 / Single Opening】
+ * N₁ = N₀ + 2
+ * N总 = N₁ 为偶数？N₁ : N₁ + 1
+ * 
+ * 【双开模式 / Double Opening】
+ * N₁ = N₀ + 3
+ * N基 = N₁ 为偶数？N₁ : N₁ + 1
+ * N总 = (N基/2 为偶数)？N基 : N基 + 2
+ * 左片 = 右片 = N总 / 2
+ * 
+ * @param {number} L - 轨道长度(cm) / Track length (cm)
+ * @param {boolean} isDouble - 是否双开 / Is double opening
+ * @returns {object} { N0: 初始挂钩数, N1: 调整后挂钩数, total: 总挂钩数, half: 双开时每片挂钩数 }
+ */
+function calcRunners(L, isDouble) {
+  var N0   = calcN0(L);                      // 初始挂钩数 / Initial runner count
+  var N1   = isDouble ? N0 + 3 : N0 + 2;     // 调整挂钩数 / Adjusted runner count
+  var total, half;
+  
+  if (isDouble) {
+    // 双开模式：需要确保总挂钩数为4的倍数（左右各偶数）
+    // Double mode: Total must be multiple of 4 (both sides even)
+    var base = (N1 % 2 === 0) ? N1 : N1 + 1;
+    total = (Math.floor(base / 2) % 2 === 0) ? base : base + 2;
+    half  = total / 2;
+  } else {
+    // 单开模式：只需确保总挂钩数为偶数
+    // Single mode: Total must be even
+    total = (N1 % 2 === 0) ? N1 : N1 + 1;
+    half  = null;
+  }
+  return { N0: N0, N1: N1, total: total, half: half };
+}
+
+/**
+ * 计算面料宽度和褶皱比例 / Calculate fabric width and pleat ratio
+ * 
+ * 公式 / Formulas:
+ * - 褶数 = 挂钩数 ÷ 2
+ * - 纯面料宽度（用于褶皱比例）= 褶数 × 褶用料
+ * - 总面料宽度（用于显示）= 纯面料宽度 + 损耗
+ * - 褶皱比例 = 纯面料宽度 ÷ 轨道长度
+ * 
+ * 注意：损耗不计入褶皱比例计算 / Note: Loss is NOT included in pleat ratio calculation
+ * 
+ * @param {number} r_total - 总挂钩数 / Total runner count
+ * @param {boolean} isDouble - 是否双开 / Is double opening
+ * @returns {object} { folds: 褶数, loss: 损耗, Wf: 总面料宽度, Wf_pure: 纯面料宽度 }
+ */
+function calcFabricFwd(r_total, isDouble) {
+  var folds = r_total / 2;                    // 褶数 = 挂钩数 ÷ 2
+  var loss  = isDouble ? 30 : 15;             // 损耗：双开30cm，单开15cm
+  var Wf_pure = folds * FOLD_MAT;             // 纯面料宽度（不含损耗）
+  var Wf    = Wf_pure + loss;                 // 总面料宽度（含损耗）
+  return { folds: folds, loss: loss, Wf: Wf, Wf_pure: Wf_pure };
+}
+
+// ───────────────────────────────────────────────────────────────────────────
+// 正向计算主函数 / Forward Calculation Main Function
+// ───────────────────────────────────────────────────────────────────────────
+
+/**
+ * DOM 元素快捷访问 / DOM element quick access
+ * @param {string} id - 元素ID / Element ID
+ * @returns {HTMLElement} DOM元素 / DOM element
+ */
+function $f(id) { return document.getElementById(id); }
+
+/**
+ * 正向计算主函数 / Forward calculation main function
+ * 
+ * 计算流程 / Calculation Flow:
+ * 1. 读取输入参数（轨道长度、高度、单位）
+ * 2. 计算挂钩数量和褶数
+ * 3. 计算面料宽度和褶皱比例
+ * 4. 检查设备限制
+ * 5. 更新UI显示
+ */
+function computeFwd() {
+  // ── 读取输入参数 / Read Input Parameters ──
+  var rawLen = parseFloat($f('length').value) || 0;   // 轨道长度原始值
+  var height = parseFloat($f('height').value) || 0;   // 窗帘高度
+  var unit   = $f('unit').value;                       // 单位
+  CUR_UNIT  = unit;                                    // 更新全局单位
+  
+  // 单位转换：所有输入统一转换为 cm
+  // Unit conversion: All inputs converted to cm
+  var L      = unit === 'mm' ? rawLen / 10 : rawLen;  // 轨道长度(cm)
+  var isDbl  = OPEN_TYPE === 'double';                 // 是否双开
+  
+  // ── 获取设备限制 / Get Equipment Limits ──
+  var maxFoldsLimit = getMaxFoldsLimit(FOLD_MAT, height, isDbl);
+  var maxRunnersLimit = maxFoldsLimit * 2;             // 挂钩数 = 褶位数 × 2
+  var loss   = isDbl ? 30 : 15;                        // 损耗加位
+
+  // ── 更新模式标签 / Update Mode Tag ──
+  $f('ptag').textContent = isDbl ? '双开 Double' : '单开 Single';
+
+  // ── 计算挂钩数量 / Calculate Runner Count ──
+  var r = calcRunners(L, isDbl);
+  $f('total').textContent = r.total;
+  $f('total-sub').textContent = isDbl ? '左/右各 ' + r.half + ' 颗' : '整组数量';
+
+  // ── 双开分片显示 / Split Display for Double Opening ──
+  if (isDbl) {
+    $f('split').classList.add('show');
+    $f('left').textContent  = r.half;
+    $f('right').textContent = r.half;
+  } else {
+    $f('split').classList.remove('show');
+    $f('left').textContent  = '—';
+    $f('right').textContent = '—';
+  }
+
+  // ── 计算褶数 / Calculate Folds ──
+  var folds = r.total / 2;
+  $f('folds-count').textContent = folds;
+  $f('folds-sub').textContent = r.total + ' ÷ 2 = ' + folds;
+
+  // ── 更新褶数信息行 / Update Fold Info Row ──
+  var foldInfo = '褶数 = 挂钩数 ÷ 2 = ' + r.total + ' ÷ 2 = ' + folds
+    + ' 个褶 &nbsp;|&nbsp; 每褶 ' + FOLD_MAT + ' ' + CUR_UNIT
+    + ' &nbsp;|&nbsp; 损耗 = +' + loss + ' ' + CUR_UNIT + '（' + (isDbl ? '双开' : '单开') + '）';
+  $f('fold-info-row').innerHTML = foldInfo;
+
+  // ── 计算面料 / Calculate Fabric ──
+  var fab = calcFabricFwd(r.total, isDbl);
+  $f('fab-folds').textContent = fab.folds;
+  $f('fab-per').textContent   = FOLD_MAT;
+  $f('fab-loss').textContent  = '+' + fab.loss;
+  $f('fab-loss-unit').textContent = isDbl ? 'cm（双开）' : 'cm（单开）';
+
+  // ── 更新面料公式行 / Update Fabric Formula Line ──
+  var fabFormula = 'W_f = ' + fab.folds + ' × ' + FOLD_MAT + ' + ' + fab.loss
+    + ' = ' + (fab.folds * FOLD_MAT) + ' + ' + fab.loss + ' = <b style="color:#4338ca;font-size:14px;">' + fab.Wf + ' cm</b>';
+  $f('fab-formula').innerHTML = fabFormula;
+
+  // ── 更新面料宽度显示 / Update Fabric Width Display ──
+  $f('fabric-val').textContent  = fab.Wf;
+  $f('mult-fabric').textContent = fab.Wf;
+
+  // ── 计算褶皱比例 / Calculate Pleat Ratio ──
+  // 注意：使用纯面料宽度（不含损耗）计算褶皱比例
+  // Note: Use pure fabric width (without loss) for pleat ratio calculation
+  var ratio = L > 0 ? round1(fab.Wf_pure / L) : 0;
+  $f('pleat-ratio').textContent = ratio + 'x';
+
+  // ── 检查设备限制 / Check Equipment Limits ──
+  var limitWarning = '';
+  if (folds > maxFoldsLimit) {
+    // 超出限制 / Exceeds Limit
+    limitWarning = '<div style="margin-top:12px;padding:12px 14px;background:#fee2e2;border:1.5px solid #fecaca;border-radius:10px;color:#dc2626;font-size:13px;">'
+      + '<b>⚠️ 超出设备加工限制 / Exceeds Equipment Limit</b><br>'
+      + '当前参数 / Current: 褶用料 ' + FOLD_MAT + 'cm + 高度 ' + height + 'cm + ' + (isDbl ? '双开/Double' : '单开/Single') + '<br>'
+      + '计算褶位数 / Calculated: ' + folds + ' 个 &nbsp;|&nbsp; 限制 / Limit: ' + maxFoldsLimit + ' 个<br>'
+      + '<b>建议 / Suggestion: 减小轨道宽度、改用更大褶用料，或联系生产部门对接特殊情况</b><br>'
+      + '<span style="font-size:11px;color:#6b7280;">Reduce track width, use larger fold material, or contact production department for special cases</span>'
+      + '</div>';
+  } else if (height > 0) {
+    // 在限制范围内 / Within Limit
+    limitWarning = '<div style="margin-top:12px;padding:10px 12px;background:#d1fae5;border:1.5px solid #a7f3d0;border-radius:10px;color:#059669;font-size:12px;">'
+      + '✓ 当前参数在设备限制范围内（最大 ' + maxFoldsLimit + ' 褶）/ Within equipment limit (max ' + maxFoldsLimit + ' folds)'
+      + '</div>';
+  }
+  
+  // 显示限制警告 / Display Limit Warning
+  if ($f('limit-warning')) {
+    $f('limit-warning').innerHTML = limitWarning;
+  }
+
+  // ── 生成计算步骤详解 / Generate Calculation Steps ──
+  var stepLines = [];
+  stepLines.push('【挂钩计算 / Runner Calculation】');
+  stepLines.push('N₀ = ⌈' + L + ' / ' + PITCH + '⌉ = ' + r.N0);
+  stepLines.push('N₁ = N₀ + ' + (isDbl ? '3' : '2') + ' = ' + r.N1);
+  if (isDbl) {
+    var base = (r.N1 % 2 === 0) ? r.N1 : r.N1 + 1;
+    var tot  = (Math.floor(base / 2) % 2 === 0) ? base : base + 2;
+    stepLines.push('N基 = ' + base + ' &nbsp;|&nbsp; N总 = ' + tot + ' &nbsp;|&nbsp; 左/右 = ' + (tot / 2) + '颗');
+  } else {
+    stepLines.push('N₁为' + (r.total % 2 === 0 ? '偶数/even' : '奇数+1/odd+1') + ' → N总 = ' + r.total + ' 颗');
+  }
+  stepLines.push('');
+  stepLines.push('【面料计算 / Fabric Calculation】');
+  stepLines.push('褶数 = 挂钩数 ÷ 2 = ' + r.total + ' ÷ 2 = ' + folds);
+  stepLines.push('W_f = ' + folds + ' × ' + FOLD_MAT + ' + ' + fab.loss + ' = ' + uFromCm(fab.Wf) + ' ' + CUR_UNIT + ' &nbsp;<span style="color:#9ca3af;font-size:11px;">（原 ' + fab.Wf + ' cm）</span>');
+  stepLines.push('');
+  stepLines.push('【褶皱比例 / Pleat Ratio】');
+  stepLines.push('R = 纯面料 ÷ L = ' + fab.Wf_pure + ' ÷ ' + L + ' = ' + ratio + 'x  &nbsp;<span style="color:#9ca3af;font-size:11px;">（损耗不计入褶皱比例 / Loss not included）</span>');
+  $f('steps').innerHTML = stepLines.join('<br>');
+}
+
+// ───────────────────────────────────────────────────────────────────────────
+// 反向计算逻辑 / Reverse Calculation Logic
+// ───────────────────────────────────────────────────────────────────────────
+
+/**
+ * 构建反向查找表 / Build Reverse Lookup Table
+ * 
+ * 遍历所有可能的轨道长度（1~4000cm），计算对应的挂钩数量
+ * Iterate all possible track lengths (1~4000cm), calculate corresponding runner counts
+ * 
+ * 返回结构 / Return Structure:
+ * { N_total: [L1, L2, L3, ...] }
+ * 例如：{ 42: [180, 181, 182, ...], 44: [190, 191, ...] }
+ * 
+ * @param {boolean} isDouble - 是否双开 / Is double opening
+ * @param {number} pitch - 滑轮间距 / Runner pitch
+ * @returns {object} 挂钩数→轨道长度数组映射 / Runner count → track length array mapping
+ */
+function buildRevLookup(isDouble, pitch) {
+  var map = {}; // N_total -> [{L}]
+  
+  // 遍历范围：1~4000cm，支持最大设备限制（164褶 × 2 = 328颗挂钩）
+  // Range: 1~4000cm, supports max equipment limit (164 folds × 2 = 328 runners)
+  // 按最大间距10cm计算，需要约 328 × 10 = 3280cm 轨道宽度
+  for (var L = 1; L <= 4000; L++) {
+    var N0   = Math.ceil(L / pitch);
+    var N1   = isDouble ? N0 + 3 : N0 + 2;
+    var total, half;
+    
+    if (isDouble) {
+      var base = (N1 % 2 === 0) ? N1 : N1 + 1;
+      total = (Math.floor(base / 2) % 2 === 0) ? base : base + 2;
+    } else {
+      total = (N1 % 2 === 0) ? N1 : N1 + 1;
+    }
+    
+    if (!map[total]) map[total] = [];
+    map[total].push(L);
+  }
+  return map;
+}
+
+/**
+ * 反向计算主函数 / Reverse Calculation Main Function
+ * 
+ * 计算流程 / Calculation Flow:
+ * 1. 读取挂钩数量输入
+ * 2. 验证输入有效性（单开偶数，双开4倍数）
+ * 3. 查找对应的轨道长度范围
+ * 4. 检查设备限制
+ * 5. 更新UI显示
+ */
+function computeRev() {
+  // ── 读取输入参数 / Read Input Parameters ──
+  var N      = parseInt($f('rev-runners').value) || 0;  // 挂钩数量
+  var height = parseFloat($f('rev-height').value) || 0; // 窗帘高度
+  var isDbl  = REV_OPEN === 'double';                   // 是否双开
+  var pitch  = REV_PITCH;                               // 滑轮间距
+  var loss   = isDbl ? 30 : 15;                         // 损耗加位
+  
+  // ── 获取设备限制 / Get Equipment Limits ──
+  var maxFoldsLimit = getMaxFoldsLimit(REV_FOLD, height, isDbl);
+  var maxRunnersLimit = maxFoldsLimit * 2;              // 挂钩数 = 褶位数 × 2
+
+  // ── 构建查找表 / Build Lookup Table ──
+  var lookup = buildRevLookup(isDbl, pitch);
+  var validLs = lookup[N] || [];                        // 查找对应的轨道长度数组
+
+  // ── 获取DOM元素 / Get DOM Elements ──
+  var errEl   = $f('rev-error');
+  var resEl   = $f('rev-result');
+  var detailEl= $f('rev-range-detail');
+
+  // ── 输入验证 / Input Validation ──
+  // 单开必须为偶数，双开必须为4的倍数
+  // Single: must be even; Double: must be multiple of 4
+  var isValid = N >= 4 && (
+    (!isDbl && N % 2 === 0) ||
+    ( isDbl && N % 4 === 0)
+  );
+
+  // ── 查找最近的合法值 / Find Nearest Valid Values ──
+  var nearestBelow = null, nearestAbove = null;
+  var allRunners = Object.keys(lookup).map(Number).sort(function(a,b){return a-b;});
+  
+  // 向下查找 / Search Below
+  for (var i = 0; i < allRunners.length; i++) {
+    var rn = allRunners[i];
+    if (rn > N) break;
+    if (isDbl ? (rn % 4 === 0 && rn >= 4) : (rn % 2 === 0 && rn >= 4)) {
+      nearestBelow = rn;
+    }
+  }
+  
+  // 向上查找 / Search Above
+  for (var j = 0; j < allRunners.length; j++) {
+    var rn2 = allRunners[j];
+    if (rn2 <= N) continue;
+    if (isDbl ? (rn2 % 4 === 0) : (rn2 % 2 === 0)) {
+      nearestAbove = rn2;
+      break;
+    }
+  }
+
+  // ── 处理无效输入 / Handle Invalid Input ──
+  if (!isValid || validLs.length === 0) {
+    var suggestHtml = '';
+    if (nearestBelow !== null) suggestHtml += '&nbsp;|&nbsp; ⬇️ 下方最近/Nearest below：<b>' + nearestBelow + '</b> 颗';
+    if (nearestAbove !== null) suggestHtml += '&nbsp;|&nbsp; ⬆️ 上方最近/Nearest above：<b>' + nearestAbove + '</b> 颗';
+    
+    var errHtml;
+    if (!isValid) {
+      // 数字本身不符合规则 / Number itself is invalid
+      var ruleText = isDbl ? '双开必须为 4 的倍数 / Double: must be multiple of 4' : '单开必须为偶数 / Single: must be even';
+      errHtml = '⚠️ 输入无效 / Invalid Input：<b>' + N + '</b> 颗挂钩在'
+        + ' <b>' + (isDbl ? '双开/Double' : '单开/Single') + '</b> 模式下不符合规则<br>'
+        + '<span style="color:#6b7280;font-weight:400;font-size:12px;display:inline-block;margin-top:6px;">'
+        + '📏 规则 / Rule：' + ruleText + suggestHtml
+        + '</span>';
+    } else {
+      // 数字符合规则，但在当前参数下无有效轨道宽度
+      // Number is valid but no matching track length found
+      var maxRunner = allRunners.length > 0 ? allRunners[allRunners.length - 1] : 0;
+      errHtml = '⚠️ 超出计算范围 / Out of Range：<b>' + N + '</b> 颗挂钩超出系统计算范围<br>'
+        + '<span style="color:#6b7280;font-weight:400;font-size:12px;display:inline-block;margin-top:6px;">'
+        + '📏 当前参数下最大支持 / Max supported：<b>' + maxRunner + '</b> 颗挂钩' + suggestHtml
+        + '</span>';
+    }
+    errEl.innerHTML = errHtml;
+    errEl.classList.add('show');
+    resEl.classList.remove('show');
+    return;
+  }
+
+  // ── 显示有效结果 / Show Valid Result ──
+  errEl.classList.remove('show');
+  resEl.classList.add('show');
+
+  // ── 检查设备限制 / Check Equipment Limits ──
+  var folds = N / 2;
+  var revLimitWarning = '';
+  if (folds > maxFoldsLimit) {
+    // 超出限制 / Exceeds Limit
+    revLimitWarning = '<div style="margin:12px 0;padding:12px 14px;background:#fee2e2;border:1.5px solid #fecaca;border-radius:10px;color:#dc2626;font-size:13px;">'
+      + '<b>⚠️ 超出设备加工限制 / Exceeds Equipment Limit</b><br>'
+      + '当前参数 / Current: 褶用料 ' + REV_FOLD + 'cm + 高度 ' + height + 'cm + ' + (isDbl ? '双开/Double' : '单开/Single') + '<br>'
+      + '计算褶位数 / Calculated: ' + folds + ' 个 &nbsp;|&nbsp; 限制 / Limit: ' + maxFoldsLimit + ' 个<br>'
+      + '<b>建议 / Suggestion: 减少挂钩数量、改用更大褶用料，或联系生产部门对接特殊情况</b><br>'
+      + '<span style="font-size:11px;color:#6b7280;">Reduce runner count, use larger fold material, or contact production department</span>'
+      + '</div>';
+  } else if (height > 0) {
+    // 在限制范围内 / Within Limit
+    revLimitWarning = '<div style="margin:10px 0;padding:10px 12px;background:#d1fae5;border:1.5px solid #a7f3d0;border-radius:10px;color:#059669;font-size:12px;">'
+      + '✓ 当前参数在设备限制范围内（最大 ' + maxFoldsLimit + ' 褶）/ Within equipment limit (max ' + maxFoldsLimit + ' folds)'
+      + '</div>';
+  }
+  
+  // 显示限制警告 / Display Limit Warning
+  if ($f('rev-limit-warning')) {
+    $f('rev-limit-warning').innerHTML = revLimitWarning;
+  }
+
+  // ── 计算轨道长度范围 / Calculate Track Length Range ──
+  var minL = validLs[0];                                        // 最小值
+  var maxL = validLs[validLs.length - 1];                       // 最大值
+  var midL = validLs[Math.floor(validLs.length / 2) - 1] || validLs[0]; // 中间值
+
+  // ── 更新显示 / Update Display ──
+  $f('rev-range-val').innerHTML = uFromCm(minL) + ' ~ ' + uFromCm(maxL) + ' ' + CUR_UNIT + ' &nbsp;<span style="color:#9ca3af;font-size:11px;">（原 ' + minL + '~' + maxL + ' cm）</span>';
+  $f('rev-range-sub').innerHTML =
+    '共 ' + validLs.length + ' 个有效轨道宽度值（间距 ' + pitch + 'cm）/ ' + validLs.length + ' valid track lengths'
+    + ' &nbsp;·&nbsp; <b style="color:#065f46;">' + (isDbl ? '双开4倍数/Double×4' : '单开偶数/Single even') + '</b>';
+
+  // ── 生成详细公式 / Generate Detail Formula ──
+  var foldMat = REV_FOLD;
+  var Wf_mid_pure = folds * foldMat;           // 纯面料宽度（不含损耗）
+  var Wf_mid = Wf_mid_pure + loss;             // 总面料宽度（含损耗）
+  var ratio_mid = round1(Wf_mid_pure / midL);   // 褶皱比例用纯面料计算
+
+  var detailLines = [];
+  detailLines.push('【挂钩 → 轨道逆向推导 / Runners → Track Reverse】');
+  detailLines.push('已知挂钩数 / Known runners N = ' + N + ' 颗（' + (isDbl ? '双开/Double' : '单开/Single') + '）');
+  detailLines.push('挂钩间距 / Pitch P = ' + pitch + ' ' + CUR_UNIT + ' &nbsp;<span style="color:#9ca3af;font-size:11px;">（原 ' + pitch + ' cm）</span>');
+  detailLines.push('');
+  detailLines.push('验证公式（以最小值 / Verify with min L=' + minL + 'cm）:');
+  var N0_ex = Math.ceil(minL / pitch);
+  var N1_ex = isDbl ? N0_ex + 3 : N0_ex + 2;
+  var tot_ex = isDbl
+    ? ((Math.floor(((N1_ex%2===0?N1_ex:N1_ex+1)/2)%2===0)?(N1_ex%2===0?N1_ex:N1_ex+1):(N1_ex%2===0?N1_ex:N1_ex+1)+2))
+    : (N1_ex%2===0?N1_ex:N1_ex+1);
+  detailLines.push('N₀ = ⌈' + minL + ' / ' + pitch + '⌉ = ' + N0_ex);
+  detailLines.push('N₁ = N₀ + ' + (isDbl ? '3' : '2') + ' = ' + N1_ex);
+  detailLines.push('N总 = ' + tot_ex + ' 颗 ✓（与输入 ' + N + ' 颗匹配）/ Matches input');
+  detailLines.push('');
+  detailLines.push('【以中间值 L=' + midL + 'cm 计算面料 / Fabric for Median】');
+  detailLines.push('褶数 = ' + N + ' ÷ 2 = ' + folds);
+  detailLines.push('W_f（总）= ' + folds + ' × ' + foldMat + ' + ' + loss + ' = ' + uFromCm(Wf_mid) + ' ' + CUR_UNIT + ' &nbsp;<span style="color:#9ca3af;font-size:11px;">（原 ' + Wf_mid + ' cm）</span>');
+  detailLines.push('褶皱比例 = 纯面料 ÷ L = ' + Wf_mid_pure + ' ÷ ' + midL + ' = ' + ratio_mid + 'x  &nbsp;<span style="color:#9ca3af;font-size:11px;">（损耗不计入褶皱比例 / Loss not included）</span>');
+  $f('rev-range-detail').innerHTML = detailLines.join('<br>');
+
+  // ── 更新中间值面料信息 / Update Median Fabric Info ──
+  $f('rev-mid-l').textContent     = midL;
+  $f('rev-mid-folds').textContent = folds;
+  $f('rev-mid-fabric').textContent = Wf_mid;
+  $f('rev-mid-ratio').textContent  = ratio_mid + 'x';
+}
+
+// ───────────────────────────────────────────────────────────────────────────
+// 标签切换 / Tab Switching
+// ───────────────────────────────────────────────────────────────────────────
+
+/**
+ * 切换计算模式标签 / Switch calculation mode tab
+ * @param {string} tab - 'fwd' 正向计算 或 'rev' 反向计算
+ */
+function switchTab(tab) {
+  document.getElementById('tab-fwd').classList.toggle('active', tab === 'fwd');
+  document.getElementById('tab-rev').classList.toggle('active', tab === 'rev');
+  document.getElementById('sec-fwd').classList.toggle('active', tab === 'fwd');
+  document.getElementById('sec-rev').classList.toggle('active', tab === 'rev');
+  if (tab === 'rev') {
+    computeRev();  // 切换到反向计算时重新计算
+  } else {
+    computeFwd();  // 切换到正向计算时重新计算
+  }
+}
+
+// ───────────────────────────────────────────────────────────────────────────
+// 正向计算事件绑定 / Forward Calculation Event Bindings
+// ───────────────────────────────────────────────────────────────────────────
+
+// 输入框事件 / Input Field Events
+['length','unit','height'].forEach(function(id) {
+  $f(id).addEventListener('input',  function(){ CUR_UNIT = $f('unit').value; computeFwd(); });
+  $f(id).addEventListener('change', function(){ CUR_UNIT = $f('unit').value; computeFwd(); });
+});
+
+// 开合方式切换 / Opening Type Toggle
+function setOpen(type) {
+  OPEN_TYPE = type;
+  LOSS = type === 'double' ? 30 : 15;
+  document.getElementById('open-single').classList.toggle('selected', type === 'single');
+  document.getElementById('open-double').classList.toggle('selected', type === 'double');
+  computeFwd();
+}
+document.getElementById('open-single').addEventListener('click', function(){ setOpen('single'); });
+document.getElementById('open-double').addEventListener('click', function(){ setOpen('double'); });
+
+// 滑轮间距选择 / Runner Pitch Selection
+document.querySelectorAll('[data-pitch]').forEach(function(pill) {
+  pill.addEventListener('click', function() {
+    document.querySelectorAll('[data-pitch]').forEach(function(p){ p.classList.remove('selected'); });
+    pill.classList.add('selected');
+    PITCH = parseFloat(pill.getAttribute('data-pitch'));
+    computeFwd();
+  });
+});
+
+// 褶用料选择 / Fold Material Selection
+document.querySelectorAll('[data-fold]').forEach(function(pill) {
+  pill.addEventListener('click', function() {
+    document.querySelectorAll('[data-fold]').forEach(function(p){ p.classList.remove('selected'); });
+    pill.classList.add('selected');
+    FOLD_MAT = parseFloat(pill.getAttribute('data-fold'));
+    computeFwd();
+  });
+});
+
+// ───────────────────────────────────────────────────────────────────────────
+// 反向计算事件绑定 / Reverse Calculation Event Bindings
+// ───────────────────────────────────────────────────────────────────────────
+
+// 开合方式切换（反向）/ Opening Type Toggle (Reverse)
+function setRevOpen(type) {
+  REV_OPEN = type;
+  document.getElementById('rev-open-single').classList.toggle('selected', type === 'single');
+  document.getElementById('rev-open-double').classList.toggle('selected', type === 'double');
+  computeRev();
+}
+document.getElementById('rev-open-single').addEventListener('click', function(){ setRevOpen('single'); });
+document.getElementById('rev-open-double').addEventListener('click', function(){ setRevOpen('double'); });
+
+// 滑轮间距选择（反向）/ Runner Pitch Selection (Reverse)
+document.querySelectorAll('[data-rev-pitch]').forEach(function(pill) {
+  pill.addEventListener('click', function() {
+    document.querySelectorAll('[data-rev-pitch]').forEach(function(p){ p.classList.remove('selected'); });
+    pill.classList.add('selected');
+    REV_PITCH = parseFloat(pill.getAttribute('data-rev-pitch'));
+    computeRev();
+  });
+});
+
+// 褶用料选择（反向）/ Fold Material Selection (Reverse)
+document.querySelectorAll('[data-rev-fold]').forEach(function(pill) {
+  pill.addEventListener('click', function() {
+    document.querySelectorAll('[data-rev-fold]').forEach(function(p){ p.classList.remove('selected'); });
+    pill.classList.add('selected');
+    REV_FOLD = parseFloat(pill.getAttribute('data-rev-fold'));
+    computeRev();
+  });
+});
+
+// 挂钩数量输入事件 / Runner Count Input Events
+$f('rev-runners').addEventListener('input', computeRev);
+$f('rev-runners').addEventListener('change', computeRev);
+
+// 窗帘高度输入事件（反向）/ Curtain Height Input Events (Reverse)
+$f('rev-height').addEventListener('input', computeRev);
+$f('rev-height').addEventListener('change', computeRev);
+
+// ───────────────────────────────────────────────────────────────────────────
+// 初始化 / Initialization
+// ───────────────────────────────────────────────────────────────────────────
+
+// 页面加载后立即执行正向计算
+// Execute forward calculation immediately after page load
+computeFwd();
+
+</script>
+
+</body>
+</html>
