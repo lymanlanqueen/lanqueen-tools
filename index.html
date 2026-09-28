@@ -1,23 +1,23 @@
 <!DOCTYPE html>
-<html lang="zh" data-page-node-id="XOB7HMTAMBfLFl1fP2OSzE">
-<head data-page-node-id="8QskG9HELOI4cGfPD6LrOd">
-<meta charset="utf-8" data-page-node-id="9bbpiUYBqERrHbpiTn9DNM">
-<meta name="viewport" content="width=device-width, initial-scale=1" data-page-node-id="WC8E4VG556RpbKUmPizqhX">
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--
   ╔═══════════════════════════════════════════════════════════════════════════╗
   ║  LANQUEEN 天际帘 · 参数计算器 v3                                        ║
-  ║  LANQUEEN S-fold Parameter Calculator v3                             ║
+  ║  LANQUEEN S-fold Parameter Calculator v3                                 ║
   ║                                                                           ║
-  ║  Features:                                                           ║
-  ║  - Forward: track width → glider count / pleats / fabric width                            ║
-  ║    Forward: track width → glider count / pleats / fabric width            ║
-  ║  - Reverse: glider count → valid track width range                                   ║
-  ║    Reverse: glider count → valid track width range                       ║
-  ║  - Machine limit check: auto-calculates max pleat count by curtain drop & pleat depth                        ║
-  ║    Machine limit check: auto-calculates max pleat count by curtain drop &amp; pleat depth  ║
+  ║  功能 Features:                                                           ║
+  ║  - 正向计算：轨道宽度 → 滑轮数量/褶数/面料宽度                            ║
+  ║    Forward: Track width → Glider count / Pleats / Fabric width            ║
+  ║  - 反向计算：滑轮数量 → 适用轨道宽度范围                                   ║
+  ║    Reverse: Glider count → Valid track width range                       ║
+  ║  - 设备限制检查：根据高度和褶用料自动计算最大褶位数                        ║
+  ║    Equipment limit check: Auto-calculates max pleats by curtain drop & fabric per pleat    ║
   ║                                                                           ║
   ║  作者 Author: LANQUEEN R&D Team                                           ║
-  ║  Version: v3.0 bilingual edition               ║
+  ║  版本 Version: v3.0 双语注释版 / Bilingual Commented Edition               ║
   ╚═══════════════════════════════════════════════════════════════════════════╝
 -->
 <title>LANQUEEN 天际帘 · 参数计算器 v3</title>
@@ -289,218 +289,218 @@
   }
 </style>
 </head>
-<body data-page-node-id="6R6MUdNpjG4rvyfUr8cIU7">
+<body>
 
-<div class="page" data-page-node-id="bggHQeH5miocaG9d8HZzzo">
+<div class="page">
 
   <!-- ═══════════════════════════════════════════════════════════════════════
        页眉 / Header
        ═══════════════════════════════════════════════════════════════════════ -->
-  <div class="header" data-page-node-id="SriW54UaAm6LLX8eUchEQj">
-    <div class="brand" data-page-node-id="DTVU6T2qpXfxddllrq432s">LANQUEEN</div>
+  <div class="header">
+    <div class="brand">LANQUEEN</div>
     <!-- 标题支持双语显示 / Bilingual Title Support -->
-    <div class="title" data-page-node-id="n9atVZEwe0l7aKTwfhTXKr">天际帘（S-fold）参数计算器</div>
-    <div class="subtitle" data-page-node-id="epaAjm1mXPUeLECSmOt4PU">S-fold Parameter Calculator</div>
-    <div class="ver" data-page-node-id="mWgLjDOBeWfDkEvArI4kMM">v3 · Forward + Reverse / 正向+反向计算</div>
-    <div class="tag" data-page-node-id="BldpnBC8U05kZB7dGeF6Lt">Internal Use Only · For Order Reference / 内部工具 · 仅供订单参考</div>
+    <div class="title">天际帘（S-fold）参数计算器</div>
+    <div class="subtitle">S-fold Parameter Calculator</div>
+    <div class="ver">v3 · 正向+反向计算 / Forward+Reverse</div>
+    <div class="tag">内部工具 · 仅供订单参考 / Internal Tool Only</div>
   </div>
 
   <!-- ═══════════════════════════════════════════════════════════════════════
        标签切换器 / Tab Switcher
        ═══════════════════════════════════════════════════════════════════════ -->
-  <div class="tab-bar" data-page-node-id="K0RV0pewOIlMEKDcPoC8mY">
-    <button class="tab active" id="tab-fwd" onclick="switchTab('fwd')" data-page-node-id="Pyh3SdZe8lUnY8Dblluk9T">📐 Forward Calc / 正向计算</button>
-    <button class="tab" id="tab-rev" onclick="switchTab('rev')" data-page-node-id="F53qILfvyYpcJv570OaQGn">🔄 Reverse Calc / 反向计算</button>
+  <div class="tab-bar">
+    <button class="tab active" id="tab-fwd" onclick="switchTab('fwd')">📐 正向计算 / Forward</button>
+    <button class="tab" id="tab-rev" onclick="switchTab('rev')">🔄 反向计算 / Reverse</button>
   </div>
 
   <!-- ═══════════════════════════════════════════════════════════════════════
        正向计算区域 / FORWARD CALCULATION SECTION
-       输入：轨道宽度 → 输出：挂钩数量、褶数、面料宽度、褶皱比例
-       Input: Track width → Output: Glider count, Folds, Fabric width, Fullness Ratio
+       输入：轨道宽度 → 输出：滑轮数量、褶数、面料宽度、褶皱比例
+       Input: Track width → Output: Glider count, Pleats, Fabric width, Fullness
        ═══════════════════════════════════════════════════════════════════════ -->
-  <div class="sec active" id="sec-fwd" data-page-node-id="R8SMtDwEwFkGGzV284SZlo">
+  <div class="sec active" id="sec-fwd">
 
     <!-- ── 输入参数卡片 / Input Parameters Card ── -->
-    <div class="card" data-page-node-id="Ali5UkVUOpPszdgBQl5Ayv">
-      <div class="card-hd" data-page-node-id="8llKN5kGAkhDfb199EYgP8">
-        <h2 data-page-node-id="NVEUR4jAegNiXW25S1xUAx">📥 Input · Forward / 输入参数（正向）</h2>
-        <p data-page-node-id="ZvSzNVUgd1V9IrL8dA18wc">已知轨道宽度 → 计算滑轮数量与面料 / Track width → glider count, pleats &amp; fabric width</p>
+    <div class="card">
+      <div class="card-hd">
+        <h2>📥 输入参数（正向）/ Input (Forward)</h2>
+        <p>已知轨道宽度 → 计算滑轮数量与面料 / Track width → Gliders & Fabric</p>
       </div>
-      <div class="card-bd" data-page-node-id="l9IYniH3Vp7KAmZVUCSfMB">
+      <div class="card-bd">
 
-        <!-- 轨道总长输入 / Track Length Input -->
-        <div class="row" data-page-node-id="K13pHoOfW0DuLauyqVv63I">
-          <label data-page-node-id="HN9ZryBhbAsaPrmkGUtLBC">Track Width / 轨道宽度</label>
-          <div class="ig" data-page-node-id="xHIsI2gvaQbmOqqB1HaN2B">
-            <input type="number" id="length" min="0" step="1" value="240" inputmode="decimal" placeholder="Enter track width / 输入轨道宽度" data-page-node-id="akIvkEA02GozgQzIepzNOr">
-            <select id="unit" class="unit-sel" onchange="onUnitChange()" data-page-node-id="EAEBy1FWljfzRkHrXroxVf">
-              <option value="cm" selected data-page-node-id="BXxD9MY89z63ayH0vdHGxl">cm（厘米）</option>
-              <option value="mm" data-page-node-id="E3xBydqGISMtv2XrsQ3ncL">mm（毫米）</option>
+        <!-- 轨道宽度输入 / Track Width Input -->
+        <div class="row">
+          <label>轨道宽度 <span class="en">/ Track Width</span></label>
+          <div class="ig">
+            <input type="number" id="length" min="0" step="1" value="240" inputmode="decimal" placeholder="Enter track width / 输入轨道宽度">
+            <select id="unit" class="unit-sel" onchange="onUnitChange()">
+              <option value="cm" selected>cm（厘米）</option>
+              <option value="mm">mm（毫米）</option>
             </select>
           </div>
         </div>
 
         <!-- 窗帘高度输入 / Curtain Drop Input -->
         <!-- 必填项，用于计算设备加工限制 / Required for equipment limit calculation -->
-        <div class="row" data-page-node-id="WRE8P7inNHM1fInWfY7R7Q">
-          <label data-page-node-id="04LsQxt8CFCvsofy3guWod">Curtain Drop / 窗帘高度 <span style="color:#dc2626;font-size:12px;" data-page-node-id="LpotRAyXnfFEBOsG8WCvpk">*必填 / Required</span></label>
-          <div class="ig" data-page-node-id="X8kusuWz0uti1i8HKWG198">
-            <input type="number" id="height" min="0" step="1" value="280" inputmode="decimal" placeholder="Enter curtain drop / 输入窗帘高度" data-page-node-id="E4I4FrmVom0xRmaJht1f0I">
-            <span class="unit-sel" style="display:flex;align-items:center;padding:0 12px;background:#f3f4f6;border:1.5px solid #e5e7eb;border-radius:10px;font-size:13px;color:#6b7280;" data-page-node-id="ePMPJZHUwmMEFAjFkQlaae">cm</span>
+        <div class="row">
+          <label>窗帘高度 <span class="en">/ Curtain Drop</span> <span style="color:#dc2626;font-size:12px;">*必填 / Required</span></label>
+          <div class="ig">
+            <input type="number" id="height" min="0" step="1" value="280" inputmode="decimal" placeholder="Enter curtain drop / 输入窗帘高度">
+            <span class="unit-sel" style="display:flex;align-items:center;padding:0 12px;background:#f3f4f6;border:1.5px solid #e5e7eb;border-radius:10px;font-size:13px;color:#6b7280;">cm</span>
           </div>
-          <div style="margin-top:6px;font-size:12px;color:#6b7280;" data-page-node-id="8D6NgEhqmOgDgTiNA738mV">
-            根据窗帘高度和褶深自动计算最大滑轮数限制 / Auto-calculates the max glider count by curtain drop &amp; pleat depth
+          <div style="margin-top:6px;font-size:12px;color:#6b7280;">
+            根据高度和褶用料自动计算最大滑轮数限制 / Auto-calculates max glider limit by curtain drop & fabric per pleat
           </div>
         </div>
 
         <!-- 开合方式选择 / Draw Type Selection -->
         <!-- 单开=一幅窗帘，双开=两幅窗帘从中间对开 -->
-        <div class="row" data-page-node-id="uKJiKKlJkahVmkyBkGPmSD">
-          <label data-page-node-id="wjOAcGOwon7HToUp3CNnDj">Draw Type / 开合方式</label>
-          <div class="pill-group" data-page-node-id="SCwidZrIFhJrcVWuHRpvFA">
-            <div class="pill selected" id="open-single" data-open="single" data-page-node-id="XThK8F7FAb4aHsWe2cpecF">
-              One-Way Draw
-              <span class="sub" data-page-node-id="d2IZHCvxNhY04ZHh0VbJKs">单开</span>
-              <span class="rec" data-page-node-id="Qf0xR5a5448GxoKuwrJ7ei">推荐</span>
+        <div class="row">
+          <label>开合方式 <span class="en">/ Draw Type</span></label>
+          <div class="pill-group">
+            <div class="pill selected" id="open-single" data-open="single">
+              单开
+              <span class="sub">Single</span>
+              <span class="rec">推荐</span>
             </div>
-            <div class="pill" id="open-double" data-open="double" data-page-node-id="MFk2SZaP0hGDHHXXk8lFQk">
-              Center Split
-              <span class="sub" data-page-node-id="BLQ4D0dZ9EWuC59tZdLnOK">双开</span>
-              <span class="rec" data-page-node-id="gaV4MT0zDC54mlbB1QG8xf">推荐</span>
+            <div class="pill" id="open-double" data-open="double">
+              双开
+              <span class="sub">Double</span>
+              <span class="rec">推荐</span>
             </div>
           </div>
-          <div class="tip" data-page-node-id="reB3KzxkiyiiaxITNMXadi">单开 = 一幅窗帘（单向拉动）；双开 = 两幅窗帘从中间对开 / One-way draw = 1 panel; Center split = pair of panels</div>
+          <div class="tip">单开 = 一幅窗帘向一侧拉开；双开 = 两幅窗帘从中间对开 / One-way draw = 1 panel; Center split = 2 panels</div>
         </div>
 
         <!-- 滑轮间距选择 / Glider Pitch Selection -->
-        <!-- 相邻两颗挂钩之间的中心距离 / Center-to-center spacing of gliders/carriers -->
-        <div class="row" data-page-node-id="Ab9hFCiuc1M3yDXCJyrseD">
-          <label data-page-node-id="lYOxteLvQPevd87h2xZerH">Glider Pitch / 滑轮间距</label>
-          <div class="pill-group" data-page-node-id="RNh3yKnhY5D7t3iVDXKJTl">
-            <div class="pill" data-pitch="5.4" data-page-node-id="VcPO6O4pZEG5gc7XwBSGw0">5.4cm<span class="sub" data-page-node-id="ZZOOHSR6po8yevBifsPCN9">Tight</span></div>
-            <div class="pill selected" data-pitch="6" data-page-node-id="u1LGFg7p9V6A8s0SLz6l3y">6cm<span class="sub" data-page-node-id="DNOcBznNLC8eDs9rp0dolK">Standard ★</span><span class="rec" data-page-node-id="Dk7vS8vJPeBikiolHLs9ag">推荐</span></div>
-            <div class="pill" data-pitch="7" data-page-node-id="tXyWBBgSjpzK5JTzuODB8A">7cm<span class="sub" data-page-node-id="X5JfkkR0nHAoZwxVvPiYA9">Medium</span></div>
-            <div class="pill" data-pitch="8" data-page-node-id="N6iWZrUXUV04nmFcoY5gYX">8cm<span class="sub" data-page-node-id="nHXvx1ozXhjamj5wAWIlNA">Regular</span></div>
-            <div class="pill" data-pitch="9" data-page-node-id="DIbLEVzonKM7oE9wbCxjS0">9cm<span class="sub" data-page-node-id="IEI2KJ4hrkoVtORkxcV4Ju">Loose</span></div>
-            <div class="pill" data-pitch="10" data-page-node-id="uSwXgHSND7mWIczbx9Urje">10cm<span class="sub" data-page-node-id="G6ENrMBmzVjRRaHQx1o0Ns">Extra Wide</span></div>
+        <!-- 相邻两颗滑轮之间的中心距离 / Center-to-center distance of gliders -->
+        <div class="row">
+          <label>滑轮间距 <span class="en">/ Glider Pitch</span></label>
+          <div class="pill-group">
+            <div class="pill" data-pitch="5.4">5.4cm<span class="sub">紧密/Tight</span></div>
+            <div class="pill selected" data-pitch="6">6cm<span class="sub">标准/Standard ★</span><span class="rec">推荐</span></div>
+            <div class="pill" data-pitch="7">7cm<span class="sub">适中/Medium</span></div>
+            <div class="pill" data-pitch="8">8cm<span class="sub">常规/Regular</span></div>
+            <div class="pill" data-pitch="9">9cm<span class="sub">宽松/Loose</span></div>
+            <div class="pill" data-pitch="10">10cm<span class="sub">极宽/Extra Wide</span></div>
           </div>
-          <div class="tip" data-page-node-id="b1sBQAUhEms78Xps9igUEa">相邻两颗滑轮之间的中心距（cm）/ Center-to-center spacing of gliders/carriers (cm)</div>
+          <div class="tip">相邻两颗滑轮之间的中心距（cm）/ Center-to-center spacing of gliders (cm)</div>
         </div>
 
-        <!-- 褶用料选择 / Pleat Depth Selection -->
+        <!-- 褶用料选择 / Fabric per Pleat Selection -->
         <!-- 每个褶所需的实际面料长度 / Actual fabric length per pleat -->
-        <div class="row" data-page-node-id="EFyJbbi4DooTUwKCYpSKoW">
-          <label data-page-node-id="Yx2NSKDLE1KsM27WYruD4C">Pleat Depth / 褶用料</label>
-          <div class="pill-group" data-page-node-id="MsRSwz6RLawhWCb0WOurE8">
-            <div class="pill" data-fold="22" data-page-node-id="FNyej899qxlYS4lwDqCMdH">22cm<span class="sub" data-page-node-id="9NRfVhKGzvziFOLe7zq8hM">Small</span><span class="rec" data-page-node-id="kcYd0HOKVQKY0IFlntzcps">推荐</span></div>
-            <div class="pill selected" data-fold="24" data-page-node-id="YgXo5990vxqSag6fOriKKr">24cm<span class="sub" data-page-node-id="m1uuuFNp4n7H8Ns3aK27jz">Standard ★</span><span class="rec" data-page-node-id="cWnJlxBy0AqwjfKi7FjfKO">推荐</span></div>
-            <div class="pill" data-fold="30" data-page-node-id="ViD1oTXGz8JzTK24d9GadQ">30cm<span class="sub" data-page-node-id="yLRvizsOmTSeXCoRGlOx7c">Large</span><span class="rec" data-page-node-id="ss1SJqnyu2YRLGUgB8nM8b">推荐</span></div>
+        <div class="row">
+          <label>褶用料 <span class="en">/ Fabric per Fold</span></label>
+          <div class="pill-group">
+            <div class="pill" data-fold="22">22cm<span class="sub">小褶/Small</span><span class="rec">推荐</span></div>
+            <div class="pill selected" data-fold="24">24cm<span class="sub">标准褶/Standard ★</span><span class="rec">推荐</span></div>
+            <div class="pill" data-fold="30">30cm<span class="sub">大褶/Large</span><span class="rec">推荐</span></div>
           </div>
-          <div class="tip" data-page-node-id="azWAHm4oD6W7UQeDMubj6P">相邻两个褶峰之间的实际用料数量（cm）/ Fabric consumed per pleat, crest to crest (cm)</div>
+          <div class="tip">相邻两个褶峰之间的实际用料数量（cm）/ Actual fabric consumed per pleat (cm)</div>
         </div>
 
       </div>
     </div>
 
     <!-- ── 计算结果卡片 / Calculation Results Card ── -->
-    <div class="card" data-page-node-id="wTxY0rQ9JUzrqQGCyIwi3G">
-      <div class="card-hd" data-page-node-id="NhxKtYQSv32pE0DbHKM5LN">
-        <h2 data-page-node-id="vfcddh7kyDem4JRZXK2ts7">📤 Results / 计算结果</h2>
-        <p data-page-node-id="sEBfonNk4M0Y7Dym7xiiAA">滑轮数量 · 褶数 · 面料宽度 · 丰满度 / Gliders · Pleats · Fabric Width · Fullness</p>
+    <div class="card">
+      <div class="card-hd">
+        <h2>📤 计算结果 / Calculation Results</h2>
+        <p>滑轮数量 · 褶数 · 面料宽度 · 丰满度 / Gliders · Pleats · Fabric · Fullness</p>
       </div>
-      <div class="card-bd" data-page-node-id="eTASRjclvAhvtzmNrA93BK">
+      <div class="card-bd">
 
-        <div class="out" data-page-node-id="v8hkcQSldBKqeHrIXWzKqO">
+        <div class="out">
           <!-- 当前模式标签 / Current Mode Tag -->
-          <span class="panel-tag" id="ptag" data-page-node-id="khcvPBDxjczSzrlNnGa1mw">One-Way Draw</span>
+          <span class="panel-tag" id="ptag">单开 One-Way</span>
 
           <!-- 主要结果网格 / Main Results Grid -->
-          <div class="result-grid" data-page-node-id="o4Xenb5gfrUNJhw8yphHOz">
-            <!-- 挂钩总数 / Total Runners -->
-            <div class="res-box highlight" data-page-node-id="xUiNTkiBTfuWMPRH5MVDeL">
-              <div class="lbl" data-page-node-id="Brbu1WB2wfHcf8CbXHsM4C">Total Gliders / 滑轮总数</div>
-              <div class="val" id="total" data-page-node-id="DqSpqkfgvN4Wq4oaNSDwR1">42</div>
-              <div class="unit" data-page-node-id="TUfiK9sOtbOnP5TKHsdtsp">pcs / gliders</div>
-              <div class="sub" id="total-sub" data-page-node-id="xObA74oOf6TuacZBA4xK1t">整组数量 / Total count</div>
+          <div class="result-grid">
+            <!-- 滑轮总数 / Total Gliders -->
+            <div class="res-box highlight">
+              <div class="lbl">滑轮总数 / Total Gliders</div>
+              <div class="val" id="total">42</div>
+              <div class="unit">颗 / gliders</div>
+              <div class="sub" id="total-sub">整组数量 / Total</div>
             </div>
-            <!-- 褶数 / Folds -->
-            <div class="res-box" data-page-node-id="xxFm6HEbLPsjddBnEeoq29">
-              <div class="lbl" data-page-node-id="aftRyRYb4jAavTFsvpX8aw">Pleats / 褶数</div>
-              <div class="val green" id="folds-count" data-page-node-id="2fNAPokDwKg977lHBdu7oH">21</div>
-              <div class="unit" data-page-node-id="vbRtGK14qVlLbFFU6Z2SPc">pleats</div>
-              <div class="sub" id="folds-sub" data-page-node-id="uwULAsphmnxm1mruNnG3AH">挂钩数 ÷ 2</div>
+            <!-- 褶数 / Pleats -->
+            <div class="res-box">
+              <div class="lbl">褶数 / Pleats</div>
+              <div class="val green" id="folds-count">21</div>
+              <div class="unit">个褶 / pleats</div>
+              <div class="sub" id="folds-sub">滑轮数 ÷ 2</div>
             </div>
           </div>
 
           <!-- 褶数信息行 / Fold Info Row -->
-          <div id="fold-info-row" style="margin-top:10px; background:#fff; border:1.5px dashed var(--rule); border-radius:8px; padding:9px 12px; font-size:12px; color:#475569; font-family:'Courier New',monospace; line-height:1.8;" data-page-node-id="kovCoFbEU7iHQv2ExprAVQ"></div>
+          <div id="fold-info-row" style="margin-top:10px; background:#fff; border:1.5px dashed var(--rule); border-radius:8px; padding:9px 12px; font-size:12px; color:#475569; font-family:'Courier New',monospace; line-height:1.8;"></div>
 
           <!-- 设备限制警告 / Equipment Limit Warning -->
-          <div id="limit-warning" data-page-node-id="wMjJhG8dZbu8DEgazcNWFf"></div>
+          <div id="limit-warning"></div>
 
           <!-- 双开分片显示 / Panel Split for Center Split -->
-          <div class="split-row" id="split" data-page-node-id="s2DIhktYeNcBlUTHha9XCn">
-            <div class="split-box" data-page-node-id="xdJ3gNAIN1PQjA1JncFUpy">
-              <div class="t" data-page-node-id="gchTKnhLwI8COedA23EfPQ">Left Panel / 左片</div>
-              <div class="v" id="left" data-page-node-id="tAsxrQ5e9gN2sUIun7ff1B">—</div>
+          <div class="split-row" id="split">
+            <div class="split-box">
+              <div class="t">左片 / Left</div>
+              <div class="v" id="left">—</div>
             </div>
-            <div class="split-box" data-page-node-id="U9d0BwPS2z9P6Mx0HGpgNV">
-              <div class="t" data-page-node-id="VvBru91dY2nP4tNYs6n8cJ">Right Panel / 右片</div>
-              <div class="v" id="right" data-page-node-id="PX5cGh3bTPFGVP19QYPmzN">—</div>
+            <div class="split-box">
+              <div class="t">右片 / Right</div>
+              <div class="v" id="right">—</div>
             </div>
           </div>
 
           <!-- 面料计算区域 / Fabric Calculation Area -->
-          <div class="fabric-strip" style="margin-top:12px;" data-page-node-id="O4CAQIQSI7N8pN5f6hNbBp">
-            <div style="font-size:12px;font-weight:700;color:var(--indigo);margin-bottom:8px;" data-page-node-id="heEJ0EVqyE2uQFiTqBxHTQ">📐 Fabric Calculation / 面料计算</div>
-            <div class="fl" data-page-node-id="aeorgxdJwBX75dgvgpsxRQ">
-              <div class="fi" data-page-node-id="dHMza7LTkDZvZns5Poiwps">
-                <div class="lbl" data-page-node-id="Fo8LgQRqXE28OKuju2WZUX">Pleats / 褶数</div>
-                <div class="v" id="fab-folds" data-page-node-id="H3G1XloDaKtDBiUNDHN7jU">—</div>
-                <div class="s" data-page-node-id="WM9GZbpAbLHswXPjoxYTJv">pleats</div>
+          <div class="fabric-strip" style="margin-top:12px;">
+            <div style="font-size:12px;font-weight:700;color:var(--indigo);margin-bottom:8px;">📐 面料计算 / Fabric Calculation</div>
+            <div class="fl">
+              <div class="fi">
+                <div class="lbl">褶数 / Pleats</div>
+                <div class="v" id="fab-folds">—</div>
+                <div class="s">个 / pleats</div>
               </div>
-              <div class="fi" data-page-node-id="dvJrkbDwHXN2VQFzIk0VPo">
-                <div class="lbl" data-page-node-id="35AokBslWz9OZteEjZGT8s">Pleat Depth / 褶深</div>
-                <div class="v" id="fab-per" data-page-node-id="pE1Hrc5C8FFIilAz7g4gY4">—</div>
-                <div class="s" data-page-node-id="T2BwVwfeEjq0wrfWfwh6Ny">cm / per pleat</div>
+              <div class="fi">
+                <div class="lbl">褶用料 / Fabric per Pleat</div>
+                <div class="v" id="fab-per">—</div>
+                <div class="s">cm/褶 / per pleat</div>
               </div>
-              <div class="fi" data-page-node-id="0ofpk0FqfGg7aBKhO9E9Sw">
-                <div class="lbl" data-page-node-id="r6Zaf6CRvl7wqJUjOIiijN">Allowance / 损耗加位</div>
-                <div class="v" id="fab-loss" data-page-node-id="ggQJGRyPQLcNB9Yy26djem">+15</div>
-                <div class="s" id="fab-loss-unit" data-page-node-id="A6DDXTJKYltHJfnOUbHQb4">cm（单开）</div>
+              <div class="fi">
+                <div class="lbl">损耗加位 / Allowance</div>
+                <div class="v" id="fab-loss">+15</div>
+                <div class="s" id="fab-loss-unit">cm（单开）</div>
               </div>
             </div>
             <!-- 公式行 / Formula Line -->
-            <div class="formula-line" id="fab-formula" data-page-node-id="CSXeyhxL9EfiEAbfIZBKza">W_f = 褶数 × 褶用料 + 损耗</div>
+            <div class="formula-line" id="fab-formula">W_f = 褶数 × 褶用料 + 损耗</div>
             <!-- 面料宽度结果 / Fabric Width Result -->
-            <div style="margin-top:10px; background:var(--soft-indigo); border:1.5px solid var(--rule); border-radius:10px; padding:12px 14px; text-align:center;" data-page-node-id="tSWWXy2epGkLoHPwlnjHd0">
-              <div style="font-size:11px;color:var(--muted);font-weight:700;" data-page-node-id="KGXAvgfz2c1r1A9D8A9Z18">Fabric Width (W_f) / 面料宽度</div>
-              <div style="font-size:38px; font-weight:800; color:var(--indigo); font-variant-numeric:tabular-nums; margin-top:4px;" id="fabric-val" data-page-node-id="HOjp5rywM14BJbzjT2RYy8">—</div>
-              <div style="font-size:12px; color:var(--muted); margin-top:3px;" data-page-node-id="7uxwg5tA4wD4s3Li8YzEa7">cm</div>
+            <div style="margin-top:10px; background:var(--soft-indigo); border:1.5px solid var(--rule); border-radius:10px; padding:12px 14px; text-align:center;">
+              <div style="font-size:11px;color:var(--muted);font-weight:700;">面料宽度 / Fabric Width (W_f)</div>
+              <div style="font-size:38px; font-weight:800; color:var(--indigo); font-variant-numeric:tabular-nums; margin-top:4px;" id="fabric-val">—</div>
+              <div style="font-size:12px; color:var(--muted); margin-top:3px;">cm</div>
             </div>
           </div>
 
-          <!-- 褶皱比例区域 / Fullness Ratio Area -->
-          <div style="margin-top:12px; background:#fff; border:1.5px solid var(--rule); border-radius:10px; padding:12px 14px;" data-page-node-id="YvUomIdpVqbaM0aUCccl6o">
-            <div style="display:flex; gap:10px; align-items:center;" data-page-node-id="eaE16Y9kEZY3FNsCMpf6BV">
-              <!-- 褶皱比例 / Fullness Ratio -->
-              <div style="flex:1; text-align:center;" data-page-node-id="DQD9NxO0OwBtA4xuJVdKDn">
-                <div style="font-size:11px;color:var(--muted);font-weight:700;" data-page-node-id="r27niyuhczqu8Ss0DCyUdI">Fullness Ratio / 丰满度比例</div>
-                <div style="font-size:30px;font-weight:800;color:var(--green);font-variant-numeric:tabular-nums;margin-top:4px;" id="pleat-ratio" data-page-node-id="QweA8nGrYldZPo4A1cU4Uj">2.0</div>
-                <div style="font-size:11px;color:var(--muted);" data-page-node-id="IEy9ea6H1Oy1FxraNHAKrE">Fullness = fabric width ÷ track width</div>
+          <!-- 褶皱比例区域 / Pleat Ratio Area -->
+          <div style="margin-top:12px; background:#fff; border:1.5px solid var(--rule); border-radius:10px; padding:12px 14px;">
+            <div style="display:flex; gap:10px; align-items:center;">
+              <!-- 丰满度比例 / Fullness Ratio -->
+              <div style="flex:1; text-align:center;">
+                <div style="font-size:11px;color:var(--muted);font-weight:700;">丰满度比例 / Fullness Ratio</div>
+                <div style="font-size:30px;font-weight:800;color:var(--green);font-variant-numeric:tabular-nums;margin-top:4px;" id="pleat-ratio">2.0</div>
+                <div style="font-size:11px;color:var(--muted);">丰满度 = 面料净宽 ÷ 轨道宽度</div>
               </div>
-              <div style="width:1px;height:50px;background:var(--line);" data-page-node-id="vaSEYKMqFbAlvIxiwLGgSl"></div>
+              <div style="width:1px;height:50px;background:var(--line);"></div>
               <!-- 面料宽度 / Fabric Width -->
-              <div style="flex:1; text-align:center;" data-page-node-id="kix7HHSJV8itaLs4ko8NZ3">
-                <div style="font-size:11px;color:var(--muted);font-weight:700;" data-page-node-id="HMxnuDLcGqiXztijPfQOQj">Fabric Width / 面料宽度</div>
-                <div style="font-size:30px;font-weight:800;color:var(--indigo);font-variant-numeric:tabular-nums;margin-top:4px;" id="mult-fabric" data-page-node-id="xPelNC5bEFPKqOTVOVYDUJ">477</div>
-                <div style="font-size:11px;color:var(--muted);" data-page-node-id="r0HW6pWmmfCbsHSc1AsOE4">cm</div>
+              <div style="flex:1; text-align:center;">
+                <div style="font-size:11px;color:var(--muted);font-weight:700;">面料宽度 / Fabric</div>
+                <div style="font-size:30px;font-weight:800;color:var(--indigo);font-variant-numeric:tabular-nums;margin-top:4px;" id="mult-fabric">477</div>
+                <div style="font-size:11px;color:var(--muted);">cm</div>
               </div>
             </div>
           </div>
 
           <!-- 计算步骤详解 / Calculation Steps Detail -->
-          <div style="margin-top:12px; background:#fff; border:1.5px dashed var(--rule); border-radius:9px; padding:10px 13px; font-size:12px; color:#475569; font-family:'Courier New',monospace; line-height:1.8;" id="steps" data-page-node-id="00yrrIEb5GIJQet7yjLjaJ"></div>
+          <div style="margin-top:12px; background:#fff; border:1.5px dashed var(--rule); border-radius:9px; padding:10px 13px; font-size:12px; color:#475569; font-family:'Courier New',monospace; line-height:1.8;" id="steps"></div>
 
         </div>
       </div>
@@ -510,130 +510,130 @@
 
   <!-- ═══════════════════════════════════════════════════════════════════════
        反向计算区域 / REVERSE CALCULATION SECTION
-       输入：挂钩数量 → 输出：适用轨道宽度范围
-       Input: Glider count → Output: Valid track length range
+       输入：滑轮数量 → 输出：适用轨道宽度范围
+       Input: Glider count → Output: Valid track width range
        ═══════════════════════════════════════════════════════════════════════ -->
-  <div class="sec" id="sec-rev" data-page-node-id="M3GBbsHoqKbMjV9eaiYyYb">
+  <div class="sec" id="sec-rev">
 
-    <div class="card" data-page-node-id="HrdzGL7zgWcfsdP63LvDik">
-      <div class="card-hd" style="background:linear-gradient(135deg,#059669,#047857);" data-page-node-id="fzDuoHdhGfN8mdSfWks6ux">
-        <h2 data-page-node-id="MkSi9p9HEwakKuBfSqtQ4B">🔄 Reverse Calc / 反向计算</h2>
-        <p data-page-node-id="9edg3c4ckHoFabGD5gn7Rv">已知滑轮数量 → 推算适用的轨道宽度范围 / Gliders → valid track width range</p>
+    <div class="card">
+      <div class="card-hd" style="background:linear-gradient(135deg,#059669,#047857);">
+        <h2>🔄 反向计算 / Reverse Calculation</h2>
+        <p>已知滑轮数量 → 推算适用的轨道宽度范围 / Gliders → Valid track width range</p>
       </div>
-      <div class="card-bd" data-page-node-id="0KN982uHyHuluFJyjEcUHC">
+      <div class="card-bd">
 
         <!-- 开合方式选择（反向）/ Draw Type (Reverse) -->
-        <div class="row" data-page-node-id="BedqP7Gpe7d2GdBbttOsK3">
-          <label data-page-node-id="NRFHzfGhKHX340PFR52ef0">Draw Type / 开合方式</label>
-          <div class="pill-group" data-page-node-id="xcD7ibm0h5P0dHwFflWpwN">
-            <div class="pill selected" id="rev-open-single" data-rev-open="single" data-page-node-id="0y4PsCv0bDYnPmHPJrB81S">
-              One-Way Draw
-              <span class="sub" data-page-node-id="igM2KGWddGog2dFotztDWE">单开</span>
+        <div class="row">
+          <label>开合方式 <span class="en">/ Draw Type</span></label>
+          <div class="pill-group">
+            <div class="pill selected" id="rev-open-single" data-rev-open="single">
+              单开
+              <span class="sub">Single</span>
             </div>
-            <div class="pill" id="rev-open-double" data-rev-open="double" data-page-node-id="vPgMSHyCsbZF5bhor8pLze">
-              Center Split
-              <span class="sub" data-page-node-id="fY4RlMPPafZZOljAvMoNui">双开</span>
+            <div class="pill" id="rev-open-double" data-rev-open="double">
+              双开
+              <span class="sub">Double</span>
             </div>
           </div>
-          <div class="tip" data-page-node-id="X7t0BHpDbxiKemONJgvyfD">单开 = 一幅窗帘（单向拉动）；双开 = 两幅窗帘从中间对开</div>
+          <div class="tip">单开 = 一幅窗帘；双开 = 两幅窗帘从中间对开</div>
         </div>
 
         <!-- 滑轮间距选择（反向）/ Glider Pitch (Reverse) -->
-        <div class="row" data-page-node-id="qlMQV4BKGoItmRtaotaLAR">
-          <label data-page-node-id="QqvC472b94TcOWpHzXpH75">Glider Pitch / 滑轮间距</label>
-          <div class="pill-group" data-page-node-id="yuJaMdpn6Weqa93NFjudHU">
-            <div class="pill" data-rev-pitch="5.4" data-page-node-id="92xcAYfcnQSdEREGklxy6w">5.4cm<span class="sub" data-page-node-id="0PjOcIvOk3KNyJuhovP06B">Tight</span></div>
-            <div class="pill selected" data-rev-pitch="6" data-page-node-id="8UiV7673E8uwBcl26Fo0m4">6cm<span class="sub" data-page-node-id="0KulySDXcLnouU1gE90BXh">Standard ★</span><span class="rec" data-page-node-id="SuWNkHqLqpVyxIuKg9QOYi">推荐</span></div>
-            <div class="pill" data-rev-pitch="7" data-page-node-id="L3bm4lFNuGn56CGKmEFUU6">7cm<span class="sub" data-page-node-id="C4TvHRnUVN8Da7hocMGsLE">Medium</span></div>
-            <div class="pill" data-rev-pitch="8" data-page-node-id="GPuj9fGAGBR4Jh0z3W6k2Q">8cm<span class="sub" data-page-node-id="ucHoCtfQcEIwgoEOmXR5g2">Regular</span></div>
-            <div class="pill" data-rev-pitch="9" data-page-node-id="W74oBqPChgy3Mz6FXz4fEL">9cm<span class="sub" data-page-node-id="1wyEvBzLgUcKmwIFq6EnkX">Loose</span></div>
-            <div class="pill" data-rev-pitch="10" data-page-node-id="mKKH1hV9JYSHNMogNsnXmc">10cm<span class="sub" data-page-node-id="svEVptWNhAqZeUMiZvCv5W">Extra Wide</span></div>
+        <div class="row">
+          <label>滑轮间距 <span class="en">/ Glider Pitch</span></label>
+          <div class="pill-group">
+            <div class="pill" data-rev-pitch="5.4">5.4cm<span class="sub">紧密</span></div>
+            <div class="pill selected" data-rev-pitch="6">6cm<span class="sub">标准 ★</span><span class="rec">推荐</span></div>
+            <div class="pill" data-rev-pitch="7">7cm<span class="sub">适中</span></div>
+            <div class="pill" data-rev-pitch="8">8cm<span class="sub">常规</span></div>
+            <div class="pill" data-rev-pitch="9">9cm<span class="sub">宽松</span></div>
+            <div class="pill" data-rev-pitch="10">10cm<span class="sub">极宽</span></div>
           </div>
         </div>
 
-        <!-- 褶用料选择（反向）/ Pleat Depth (Reverse) -->
-        <div class="row" data-page-node-id="hh0LQVaKIwjFi1S4kOnaDv">
-          <label data-page-node-id="blMzqvoIDzcJLz5KYsIAMa">Pleat Depth / 褶用料</label>
-          <div class="pill-group" data-page-node-id="9HGcX7fzQdJSRuJBUt7crA">
-            <div class="pill" data-rev-fold="22" data-page-node-id="fA1myXYA8uBjwG8iScOtr2">22cm<span class="sub" data-page-node-id="KWDAiobGJJ0CHuPQ8ECFrC">Small</span><span class="rec" data-page-node-id="QOrzUExYucEEdsjHmllQJf">推荐</span></div>
-            <div class="pill selected" data-rev-fold="24" data-page-node-id="284HYnfbQYfF846LGxMPMu">24cm<span class="sub" data-page-node-id="6WDOHqeXQrDPDD620Px8DM">Standard ★</span><span class="rec" data-page-node-id="RQCJTNvhxliSAhU9hLPpSp">推荐</span></div>
-            <div class="pill" data-rev-fold="30" data-page-node-id="eXRjCk6uaEq063p4JzzloI">30cm<span class="sub" data-page-node-id="OCYWvn3VJw1Byb34nCDEMF">Large</span><span class="rec" data-page-node-id="RsHBN4PRaOEESgC3WuDu2z">推荐</span></div>
+        <!-- 褶用料选择（反向）/ Fold Material (Reverse) -->
+        <div class="row">
+          <label>褶用料 <span class="en">/ Fabric per Fold</span></label>
+          <div class="pill-group">
+            <div class="pill" data-rev-fold="22">22cm<span class="sub">小褶</span><span class="rec">推荐</span></div>
+            <div class="pill selected" data-rev-fold="24">24cm<span class="sub">标准褶 ★</span><span class="rec">推荐</span></div>
+            <div class="pill" data-rev-fold="30">30cm<span class="sub">大褶</span><span class="rec">推荐</span></div>
           </div>
-          <div class="tip" data-page-node-id="qeNnItPU9XE0etJnNEmnBY">褶深 = 相邻两个滑轮之间的距离（cm）/ Pleat depth = center-to-center glider spacing (cm)</div>
+          <div class="tip">褶用料 = 相邻两个褶峰之间的面料长度（cm）/ Fabric per pleat = Fabric length between adjacent pleat peaks</div>
         </div>
 
         <!-- 窗帘高度输入（反向）/ Curtain Drop (Reverse) -->
-        <div class="row" data-page-node-id="bQn8lNje98FUOLfP84kHIW">
-          <label data-page-node-id="HOKFFRi3JckGlIffQc8miI">Curtain Drop / 窗帘高度 <span style="color:#dc2626;font-size:12px;" data-page-node-id="iLAjCm3BdGMWoF6ebAGL6i">*必填 / Required</span></label>
-          <div class="ig" data-page-node-id="v5n90f2F4QFySOkxsmQ6me">
-            <input type="number" id="rev-height" min="0" step="1" value="280" inputmode="decimal" placeholder="Enter curtain drop / 输入窗帘高度" data-page-node-id="rdR8snV1XOFnGLy5SRVvGI">
-            <span class="unit-sel" style="display:flex;align-items:center;padding:0 12px;background:#f3f4f6;border:1.5px solid #e5e7eb;border-radius:10px;font-size:13px;color:#6b7280;" data-page-node-id="E52LRbmFOGF9xHLjSVGaaL">cm</span>
+        <div class="row">
+          <label>窗帘高度 <span class="en">/ Curtain Drop</span> <span style="color:#dc2626;font-size:12px;">*必填 / Required</span></label>
+          <div class="ig">
+            <input type="number" id="rev-height" min="0" step="1" value="280" inputmode="decimal" placeholder="Enter curtain drop / 输入窗帘高度">
+            <span class="unit-sel" style="display:flex;align-items:center;padding:0 12px;background:#f3f4f6;border:1.5px solid #e5e7eb;border-radius:10px;font-size:13px;color:#6b7280;">cm</span>
           </div>
-          <div class="tip" data-page-node-id="jjGdPFT4gGx59sWWqpvCsB">根据窗帘高度和褶深自动计算最大滑轮数限制</div>
+          <div class="tip">根据高度和褶用料自动计算最大滑轮数限制</div>
         </div>
 
-        <!-- 挂钩数量输入（反向）/ Glider Count Input (Reverse) -->
-        <div class="row" data-page-node-id="iSjBnHcMDOfQ1JL3NnRdSK">
-          <label data-page-node-id="dkUXzRGnshaj7QZpqQHInV">Glider Count / 滑轮数量</label>
-          <div class="ig" data-page-node-id="Vjg1loaBG5Aw3yAojrkgHN">
-            <input type="number" id="rev-runners" min="4" step="2" value="42" inputmode="numeric" placeholder="Enter glider count / 输入滑轮数量" data-page-node-id="1cxG0poiCpj4sTP5j5QEAZ">
+        <!-- 滑轮数量输入（反向）/ Glider Count Input (Reverse) -->
+        <div class="row">
+          <label>滑轮数量 <span class="en">/ Glider Count</span></label>
+          <div class="ig">
+            <input type="number" id="rev-runners" min="4" step="2" value="42" inputmode="numeric" placeholder="Enter glider count / 输入滑轮数量">
           </div>
-          <div class="tip" id="rev-runner-tip" data-page-node-id="2p0cCm9HvRQBaGEXD6StOW">Enter the actual glider count. One-way draw: even number. Center split: multiple of 4. / 单开偶数，双开4的倍数</div>
+          <div class="tip" id="rev-runner-tip">输入实际数好的滑轮数量，单开必须为偶数&nbsp;/&nbsp;双开必须为 4 的倍数 / One-way draw: even; Center split: multiple of 4</div>
         </div>
 
       </div>
     </div>
 
     <!-- ── 反向计算结果卡片 / Reverse Results Card ── -->
-    <div class="card" data-page-node-id="GioysGoh9PXfCHVwDIEqjA">
-      <div class="card-hd" style="background:linear-gradient(135deg,#059669,#047857);" data-page-node-id="BnpLvxc2voBFAZp0kkolhH">
-        <h2 data-page-node-id="LliAgZoHSTj5drskyWLCnk">📐 Reverse Results / 反向计算结果</h2>
-        <p data-page-node-id="E173HjaNjFYAiUKx2Y1dPD">滑轮数量 → 适用轨道宽度范围 / Gliders → valid track width range</p>
+    <div class="card">
+      <div class="card-hd" style="background:linear-gradient(135deg,#059669,#047857);">
+        <h2>📐 反向计算结果 / Reverse Results</h2>
+        <p>滑轮数量 → 适用轨道宽度 / Gliders → Valid track width</p>
       </div>
-      <div class="card-bd" data-page-node-id="EQenKCbMPBgOGWR8dYn2kS">
+      <div class="card-bd">
 
         <!-- 错误提示框 / Error Box -->
-        <div class="rev-error" id="rev-error" data-page-node-id="8an9iPkFWb5OJlOMXlSMul">⚠️ Invalid glider count / 滑轮数量无效</div>
+        <div class="rev-error" id="rev-error">⚠️ 输入的滑轮数量无效，请检查 / Invalid glider count</div>
 
         <!-- 设备限制警告 / Equipment Limit Warning -->
-        <div id="rev-limit-warning" data-page-node-id="V2Zk0v2BKhhTzf6NXQS3cy"></div>
+        <div id="rev-limit-warning"></div>
 
         <!-- 有效结果 / Valid Result -->
-        <div class="rev-result" id="rev-result" data-page-node-id="c72xwhPOaoPkuztkbYbvgJ">
+        <div class="rev-result" id="rev-result">
 
           <!-- 主要结果：轨道宽度范围 / Main Result: Track Width Range -->
-          <div class="rev-main" data-page-node-id="lZLFVYXwc68Z1LQHPve1TH">
-            <div class="lbl" data-page-node-id="B8itEaaIIA5zkMZhoGgS2N">Valid Track Width Range / 适用轨道宽度范围</div>
-            <div class="val" id="rev-range-val" data-page-node-id="fgNiFnNxtpVmrlp7sQZdk2">180 ~ 240 cm</div>
-            <div class="sub" id="rev-range-sub" data-page-node-id="IhwwHlr0vAaw6kxgasDB4p">Valid track width range for this glider count / 此滑轮数量对应的轨道宽度区间</div>
+          <div class="rev-main">
+            <div class="lbl">适用轨道宽度范围 / Valid Track Width Range</div>
+            <div class="val" id="rev-range-val">180 ~ 240 cm</div>
+            <div class="sub" id="rev-range-sub">此滑轮数量对应的轨道宽度区间 / Track width range for this glider count</div>
           </div>
 
           <!-- 详细公式行 / Detail Formula Lines -->
-          <div class="rev-range" id="rev-range-detail" data-page-node-id="lwlMfBpshoC7H1yurvnDc1"></div>
+          <div class="rev-range" id="rev-range-detail"></div>
 
           <!-- 中间值面料计算 / Fabric Calculation for Median -->
-          <div style="margin-top:12px; background:#fff; border:1.5px solid #a7f3d0; border-radius:10px; padding:12px 14px;" data-page-node-id="acsocH85ANIhzpEKiDFls2">
-            <div style="font-size:12px;font-weight:700;color:#065f46;margin-bottom:8px;" data-page-node-id="k8SvSHSaPy0lRaiHADqZXL">📐 Fabric Estimate at Midpoint (Reference Only) / 以中间值估算面料（仅供参考）</div>
-            <div style="display:flex; gap:8px; flex-wrap:wrap;" data-page-node-id="SfnSzH0D4bQplWXfMSJxzg">
-              <div style="flex:1;min-width:80px;background:#f0fdf4;border:1px solid #a7f3d0;border-radius:7px;padding:8px;text-align:center;" data-page-node-id="f1cIUWdPltUqi7bzdNFIvc">
-                <div style="font-size:10px;color:#6b7280;font-weight:700;" data-page-node-id="2haIIGYBAm8EBEtTxyKn03">Track Width / 轨道宽度</div>
-                <div style="font-size:20px;font-weight:800;color:#059669;margin-top:3px;" id="rev-mid-l" data-page-node-id="oZjEItlim9v1pMMEjUi0mV">210</div>
-                <div style="font-size:10px;color:#6b7280;" data-page-node-id="qJploZO3MfcvkX29oGTmCT">cm</div>
+          <div style="margin-top:12px; background:#fff; border:1.5px solid #a7f3d0; border-radius:10px; padding:12px 14px;">
+            <div style="font-size:12px;font-weight:700;color:#065f46;margin-bottom:8px;">📐 以中间值计算面料（仅供参考）/ Fabric at Median (Reference Only)</div>
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+              <div style="flex:1;min-width:80px;background:#f0fdf4;border:1px solid #a7f3d0;border-radius:7px;padding:8px;text-align:center;">
+                <div style="font-size:10px;color:#6b7280;font-weight:700;">轨道宽度 / Track</div>
+                <div style="font-size:20px;font-weight:800;color:#059669;margin-top:3px;" id="rev-mid-l">210</div>
+                <div style="font-size:10px;color:#6b7280;">cm</div>
               </div>
-              <div style="flex:1;min-width:80px;background:#f0fdf4;border:1px solid #a7f3d0;border-radius:7px;padding:8px;text-align:center;" data-page-node-id="Z2ZGzMc9AAF3amo9QcDNOZ">
-                <div style="font-size:10px;color:#6b7280;font-weight:700;" data-page-node-id="eo4KPG8JysgdoNMMXQVltZ">Pleats / 褶数</div>
-                <div style="font-size:20px;font-weight:800;color:#059669;margin-top:3px;" id="rev-mid-folds" data-page-node-id="CLSJnRViqkPgYiaZNz6IBD">21</div>
-                <div style="font-size:10px;color:#6b7280;" data-page-node-id="dP8JH3QKHFrCDMHGmS5BlL">pleats</div>
+              <div style="flex:1;min-width:80px;background:#f0fdf4;border:1px solid #a7f3d0;border-radius:7px;padding:8px;text-align:center;">
+                <div style="font-size:10px;color:#6b7280;font-weight:700;">褶数 / Pleats</div>
+                <div style="font-size:20px;font-weight:800;color:#059669;margin-top:3px;" id="rev-mid-folds">21</div>
+                <div style="font-size:10px;color:#6b7280;">个 / pleats</div>
               </div>
-              <div style="flex:1;min-width:80px;background:#f0fdf4;border:1px solid #a7f3d0;border-radius:7px;padding:8px;text-align:center;" data-page-node-id="PkaATpcY9nVs2BZ4qoXTa1">
-                <div style="font-size:10px;color:#6b7280;font-weight:700;" data-page-node-id="nCLb9cBrYGPW4C6bxzTQuo">Fabric Width / 面料宽度</div>
-                <div style="font-size:20px;font-weight:800;color:#059669;margin-top:3px;" id="rev-mid-fabric" data-page-node-id="ZGaSjiCmSDW2OH7hKY9RPF">477</div>
-                <div style="font-size:10px;color:#6b7280;" data-page-node-id="lI82qONdEc4fLno7z7vsUD">cm</div>
+              <div style="flex:1;min-width:80px;background:#f0fdf4;border:1px solid #a7f3d0;border-radius:7px;padding:8px;text-align:center;">
+                <div style="font-size:10px;color:#6b7280;font-weight:700;">面料宽度 / Fabric</div>
+                <div style="font-size:20px;font-weight:800;color:#059669;margin-top:3px;" id="rev-mid-fabric">477</div>
+                <div style="font-size:10px;color:#6b7280;">cm</div>
               </div>
-              <div style="flex:1;min-width:80px;background:#f0fdf4;border:1px solid #a7f3d0;border-radius:7px;padding:8px;text-align:center;" data-page-node-id="i0UvUmBdXMB2tCUNHDfsPT">
-                <div style="font-size:10px;color:#6b7280;font-weight:700;" data-page-node-id="g7C6GdNdCR9fC6hRqHLAke">Fullness / 丰满度</div>
-                <div style="font-size:20px;font-weight:800;color:#059669;margin-top:3px;" id="rev-mid-ratio" data-page-node-id="Z9NFKiNH0od5sKEe8r9DFz">2.3</div>
-                <div style="font-size:10px;color:#6b7280;" data-page-node-id="GAMxdvtnu3NoFhuw6EPQpZ">x</div>
+              <div style="flex:1;min-width:80px;background:#f0fdf4;border:1px solid #a7f3d0;border-radius:7px;padding:8px;text-align:center;">
+                <div style="font-size:10px;color:#6b7280;font-weight:700;">丰满度 / Fullness</div>
+                <div style="font-size:20px;font-weight:800;color:#059669;margin-top:3px;" id="rev-mid-ratio">2.3</div>
+                <div style="font-size:10px;color:#6b7280;">x</div>
               </div>
             </div>
           </div>
@@ -647,14 +647,14 @@
   <!-- ═══════════════════════════════════════════════════════════════════════
        页脚 / Footer
        ═══════════════════════════════════════════════════════════════════════ -->
-  <div class="footer" data-page-node-id="cGolmSaZP3hf4VRtCoPGjN">
-    Based on / 依据标准 <b data-page-node-id="MDMLHtKoVjxFUElwiVwqdI">S-FOLD-STD-001 · v3.0</b><br data-page-node-id="hoNZS2exDpYsrYPA0gG8bA">
-    Forward: track width → gliders/pleats/fabric &nbsp;|&nbsp; Reverse: glider count → valid track width<br data-page-node-id="kKInJC0fHBNKdpX9Duvotu">
-    Forward: track width → gliders/pleats/fabric &nbsp;|&nbsp; Reverse: glider count → valid track width range<br data-page-node-id="Grsq1PQKDrNdstGjQE1hhq">
-    Glider pitch: 5.4 / 6★ / 7 / 8 / 9 / 10 cm &nbsp;|&nbsp; Pleat depth: 22 / 24★ / 30 cm<br data-page-node-id="cTh3GrSjS7YW9p2I3O4qh0">
-    Fabric width = pleats × pleat depth + allowance (one-way +15cm / center split +30cm)<br data-page-node-id="YGUfFsCqGarvAEXKIdY6E7">
-    Fabric width = pleats × pleat depth + allowance (one-way +15cm / center split +30cm)<br data-page-node-id="8WJdktPkCeLEJSSJipn0FN">
-    <b data-page-node-id="zWXHOsVg2a5ihhAkfLtdXg">LANQUEEN · v3 Bilingual · Internal Use Only / 仅供订单参考</b>
+  <div class="footer">
+    依据标准 / Based on <b>S-FOLD-STD-001 · v3.0</b><br>
+    正向：轨道宽度 → 滑轮/褶数/面料 &nbsp;|&nbsp; 反向：滑轮数量 → 适用轨道宽度<br>
+    Forward: Track → Gliders/Pleats/Fabric &nbsp;|&nbsp; Reverse: Gliders → Valid Track Width Range<br>
+    滑轮间距（Glider Pitch）：5.4 / 6★ / 7 / 8 / 9 / 10 cm &nbsp;|&nbsp; 褶用料：22 / 24★ / 30 cm<br>
+    面料宽度 = 褶数 × 褶用料 + 损耗（单开+15cm / 双开+30cm）<br>
+    Fabric = Pleats × Fabric per Pleat + Allowance (One-way +15cm / Center split +30cm)<br>
+    <b>LANQUEEN · v3 · 仅供订单参考 / Internal Tool Only</b>
   </div>
 
 </div>
@@ -669,29 +669,29 @@
 // ───────────────────────────────────────────────────────────────────────────
 
 /** 滑轮间距（正向计算）/ Glider Pitch (Forward Calculation)
- *  相邻两颗挂钩之间的中心距离 / Center-to-center spacing of gliders/carriers */
+ *  相邻两颗滑轮之间的中心距离 / Center-to-center distance of gliders */
 var PITCH     = 6;
 
-/** 褶用料（正向计算）/ Pleat Depth (Forward Calculation)
+/** 褶用料（正向计算）/ Fabric per Pleat (Forward Calculation)
  *  每个褶所需的实际面料长度 / Actual fabric length per pleat */
 var FOLD_MAT  = 22;
 
 /** 开合方式（正向计算）/ Draw Type (Forward Calculation)
- *  'single'=单开（一幅窗帘）, 'double'=双开（两幅窗帘从中间对开）
- *  'single'=Single panel, 'double'=Two panels split from center */
+ *  'single'=One-way draw (1 panel), 'double'=Center split (2 panels)
+ *  'single'=One-way draw (1 panel), 'double'=Center split (2 panels) */
 var OPEN_TYPE = 'single';
 
 /** 滑轮间距（反向计算）/ Glider Pitch (Reverse Calculation) */
 var REV_PITCH = 6;
 
-/** 褶用料（反向计算）/ Pleat Depth (Reverse Calculation) */
+/** 褶用料（反向计算）/ Fabric per Pleat (Reverse Calculation) */
 var REV_FOLD  = 22;
 
 /** 开合方式（反向计算）/ Draw Type (Reverse Calculation) */
 var REV_OPEN  = 'single';
 
-/** 损耗加位 / Loss Allowance
- *  单开=15cm, 双开=30cm / Single=15cm, Double=30cm */
+/** 损耗加位 / Allowance Allowance
+ *  单开=15cm, 双开=30cm / One-way draw=15cm, Center split=30cm */
 var LOSS      = 15;
 
 // ───────────────────────────────────────────────────────────────────────────
@@ -700,30 +700,30 @@ var LOSS      = 15;
 
 /**
  * 最大褶位数限制表（受加工设备限制）
- * Maximum pleats limit table (restricted by processing equipment)
+ * Maximum pleat limit table (restricted by processing equipment)
  * 
  * 结构说明 / Structure:
  * { 
  *   褶用料: [ { maxHeight: 高度上限, maxFolds: 单开最大褶位数 }, ... ]
- *   foldMaterial: [ { maxHeight: height limit, maxFolds: max pleats for one-way draw }, ... ]
+ *   fabricPerPleat: [ { maxHeight: height limit, maxPleats: max pleats for one-way draw }, ... ]
  * }
  * 
- * 双开限制 = 单开限制 × 2 / Double opening limit = Single opening limit × 2
+ * 双开限制 = 单开限制 × 2 / Center split limit = One-way draw limit × 2
  */
 var MAX_FOLDS_LIMIT = {
-  // 22cm 褶用料（小褶）/ 22cm fold material (small pleat)
+  // 22cm 褶用料（小褶）/ 22cm fold material (small fold)
   22: [
     { maxHeight: 300, maxFolds: 71 },    // ≤300cm
     { maxHeight: 350, maxFolds: 50 },    // 301-350cm
     { maxHeight: Infinity, maxFolds: 32 } // >350cm
   ],
-  // 24cm 褶用料（标准褶）/ 24cm fold material (standard pleat)
+  // 24cm 褶用料（标准褶）/ 24cm fold material (standard fold)
   24: [
     { maxHeight: 300, maxFolds: 82 },    // ≤300cm
     { maxHeight: 350, maxFolds: 38 },    // 301-350cm
     { maxHeight: Infinity, maxFolds: 32 } // >350cm
   ],
-  // 30cm 褶用料（大褶）/ 30cm fold material (large pleat)
+  // 30cm 褶用料（大褶）/ 30cm fold material (large fold)
   30: [
     { maxHeight: 360, maxFolds: 52 },    // ≤360cm
     { maxHeight: Infinity, maxFolds: 34 } // >360cm（361以上）
@@ -731,24 +731,24 @@ var MAX_FOLDS_LIMIT = {
 };
 
 /**
- * 获取最大褶位数限制 / Get maximum folds limit
+ * 获取最大褶位数限制 / Get maximum pleat limit
  * 
- * @param {number} foldMat - 褶用料 / Pleat depth (22/24/30)
- * @param {number} height - 窗帘高度 / Curtain height (cm)
- * @param {boolean} isDouble - 是否双开 / Is double opening
+ * @param {number} foldMat - 褶用料 / Fabric per pleat (22/24/30)
+ * @param {number} height - 窗帘高度 / Curtain drop (cm)
+ * @param {boolean} isDouble - 是否双开 / Is center split
  * @returns {number} 最大褶位数 / Maximum pleats
  * 
  * 计算逻辑 / Calculation Logic:
- * 1. 查找对应褶用料的限制数组 / Find limit array for pleat depth
+ * 1. 查找对应褶用料的限制数组 / Find limit array for fabric per pleat
  * 2. 根据高度匹配限制档位 / Match limit tier by height
  * 3. 如果是双开，返回单开限制×2 / If center split, return one-way draw limit × 2
  */
 function getMaxFoldsLimit(foldMat, height, isDouble) {
   var limits = MAX_FOLDS_LIMIT[foldMat];
-  if (!limits) return Infinity; // 未知褶用料，无限制 / Unknown pleat depth, no limit
+  if (!limits) return Infinity; // 未知褶用料，无限制 / Unknown fabric per pleat, no limit
   
   // 遍历限制数组，找到第一个高度满足条件的档位
-  // Iterate limit array, find first tier where height is within range
+  // Iterate limit array, find first tier where curtain drop is within range
   for (var i = 0; i < limits.length; i++) {
     if (height <= limits[i].maxHeight) {
       return isDouble ? limits[i].maxFolds * 2 : limits[i].maxFolds;
@@ -765,7 +765,7 @@ function getMaxFoldsLimit(foldMat, height, isDouble) {
 /**
  * 当前显示单位 / Current display unit
  * 所有显示数字按这个单位呈现，核心算法仍以 cm 为基准
- * All display values use this unit, core algorithms still use cm as base
+ * All display values use this unit; core calculations still use cm
  */
 var CUR_UNIT = 'cm';  // 与 select 默认值保持一致 / Keep consistent with select default
 
@@ -818,49 +818,49 @@ function onUnitChange() {
 function round1(x) { return Math.round(x * 10) / 10; }
 
 /**
- * 计算初始挂钩数 N₀ / Calculate initial runner count N₀
+ * 计算初始滑轮数 N₀ / Calculate initial glider count N₀
  * 
  * 公式 / Formula: N₀ = ⌈L / P⌉
  * L = 轨道长度, P = 滑轮间距
  * 
- * @param {number} L - 轨道长度(cm) / Track width (cm)
- * @returns {number} 初始挂钩数 / Initial runner count
+ * @param {number} L - 轨道宽度(cm) / Track width (cm)
+ * @returns {number} 初始滑轮数 / Initial glider count
  */
 function calcN0(L) { return Math.ceil(L / PITCH); }
 
 /**
- * 计算挂钩数量和褶数 / Calculate runner count and folds
+ * 计算滑轮数量和褶数 / Calculate glider count and pleats
  * 
  * 正向计算核心算法 / Forward calculation core algorithm:
  * 
- * 【单开模式 / Single Opening】
+ * 【单开模式 / One-Way Draw】
  * N₁ = N₀ + 2
  * N总 = N₁ 为偶数？N₁ : N₁ + 1
  * 
- * 【双开模式 / Double Opening】
+ * 【双开模式 / Center Split】
  * N₁ = N₀ + 3
  * N基 = N₁ 为偶数？N₁ : N₁ + 1
  * N总 = (N基/2 为偶数)？N基 : N基 + 2
  * 左片 = 右片 = N总 / 2
  * 
- * @param {number} L - 轨道长度(cm) / Track width (cm)
- * @param {boolean} isDouble - 是否双开 / Is double opening
- * @returns {object} { N0: 初始挂钩数, N1: 调整后挂钩数, total: 总挂钩数, half: 双开时每片挂钩数 }
+ * @param {number} L - 轨道宽度(cm) / Track width (cm)
+ * @param {boolean} isDouble - 是否双开 / Is center split
+ * @returns {object} { N0: 初始滑轮数, N1: 调整后滑轮数, total: 总滑轮数, half: 双开时每片滑轮数 }
  */
-function calcRunners(L, isDouble) {
-  var N0   = calcN0(L);                      // 初始挂钩数 / Initial runner count
-  var N1   = isDouble ? N0 + 3 : N0 + 2;     // 调整挂钩数 / Adjusted runner count
+function calcGliders(L, isDouble) {
+  var N0   = calcN0(L);                      // 初始滑轮数 / Initial glider count
+  var N1   = isDouble ? N0 + 3 : N0 + 2;     // 调整滑轮数 / Adjusted glider count
   var total, half;
   
   if (isDouble) {
-    // 双开模式：需要确保总挂钩数为4的倍数（左右各偶数）
-    // Center split: total must be multiple of 4 (both sides even)
+    // 双开模式：需要确保总滑轮数为4的倍数（左右各偶数）
+    // Center split: Total must be multiple of 4 (each panel even)
     var base = (N1 % 2 === 0) ? N1 : N1 + 1;
     total = (Math.floor(base / 2) % 2 === 0) ? base : base + 2;
     half  = total / 2;
   } else {
-    // 单开模式：只需确保总挂钩数为偶数
-    // One-way draw: total must be even
+    // 单开模式：只需确保总滑轮数为偶数
+    // One-way draw: Total must be even
     total = (N1 % 2 === 0) ? N1 : N1 + 1;
     half  = null;
   }
@@ -868,22 +868,22 @@ function calcRunners(L, isDouble) {
 }
 
 /**
- * 计算面料宽度和褶皱比例 / Calculate fabric width and pleat ratio
+ * 计算面料宽度和丰满度 / Calculate fabric width and fullness
  * 
  * 公式 / Formulas:
- * - 褶数 = 挂钩数 ÷ 2
- * - 纯面料宽度（用于褶皱比例）= 褶数 × 褶用料
+ * - 褶数 = 滑轮数 ÷ 2
+ * - 纯面料宽度（用于丰满度）= 褶数 × 褶用料
  * - 总面料宽度（用于显示）= 纯面料宽度 + 损耗
- * - 褶皱比例 = 纯面料宽度 ÷ 轨道长度
+ * - 丰满度 = 纯面料宽度 ÷ 轨道宽度
  * 
- * 注意：损耗不计入褶皱比例计算 / Note: Allowance is NOT included in fullness ratio calculation
+ * 注意：损耗不计入丰满度计算 / Note: Allowance is NOT included in fullness calculation
  * 
- * @param {number} r_total - 总挂钩数 / Total runner count
- * @param {boolean} isDouble - 是否双开 / Is double opening
- * @returns {object} { folds: 褶数, loss: 损耗, Wf: 总面料宽度, Wf_pure: 纯面料宽度 }
+ * @param {number} r_total - 总滑轮数 / Total glider count
+ * @param {boolean} isDouble - 是否双开 / Is center split
+ * @returns {object} { pleats: 褶数, allowance: 损耗, Wf: 总面料宽度, Wf_pure: 纯面料宽度 }
  */
 function calcFabricFwd(r_total, isDouble) {
-  var folds = r_total / 2;                    // 褶数 = 挂钩数 ÷ 2
+  var folds = r_total / 2;                    // 褶数 = 滑轮数 ÷ 2
   var loss  = isDouble ? 30 : 15;             // 损耗：双开30cm，单开15cm
   var Wf_pure = folds * FOLD_MAT;             // 纯面料宽度（不含损耗）
   var Wf    = Wf_pure + loss;                 // 总面料宽度（含损耗）
@@ -905,36 +905,36 @@ function $f(id) { return document.getElementById(id); }
  * 正向计算主函数 / Forward calculation main function
  * 
  * 计算流程 / Calculation Flow:
- * 1. 读取输入参数（轨道长度、高度、单位）
- * 2. 计算挂钩数量和褶数
+ * 1. 读取输入参数（轨道宽度、高度、单位）
+ * 2. 计算滑轮数量和褶数
  * 3. 计算面料宽度和褶皱比例
  * 4. 检查设备限制
  * 5. 更新UI显示
  */
 function computeFwd() {
   // ── 读取输入参数 / Read Input Parameters ──
-  var rawLen = parseFloat($f('length').value) || 0;   // 轨道长度原始值
+  var rawLen = parseFloat($f('length').value) || 0;   // 轨道宽度原始值
   var height = parseFloat($f('height').value) || 0;   // 窗帘高度
   var unit   = $f('unit').value;                       // 单位
   CUR_UNIT  = unit;                                    // 更新全局单位
   
   // 单位转换：所有输入统一转换为 cm
   // Unit conversion: All inputs converted to cm
-  var L      = unit === 'mm' ? rawLen / 10 : rawLen;  // 轨道长度(cm)
+  var L      = unit === 'mm' ? rawLen / 10 : rawLen;  // 轨道宽度(cm)
   var isDbl  = OPEN_TYPE === 'double';                 // 是否双开
   
   // ── 获取设备限制 / Get Equipment Limits ──
   var maxFoldsLimit = getMaxFoldsLimit(FOLD_MAT, height, isDbl);
-  var maxRunnersLimit = maxFoldsLimit * 2;             // 挂钩数 = 褶位数 × 2
+  var maxRunnersLimit = maxFoldsLimit * 2;             // 滑轮数 = 褶位数 × 2
   var loss   = isDbl ? 30 : 15;                        // 损耗加位
 
   // ── 更新模式标签 / Update Mode Tag ──
-  $f('ptag').textContent = isDbl ? 'Center Split' : 'One-Way Draw';
+  $f('ptag').textContent = isDbl ? '双开 Center Split' : '单开 One-Way';
 
-  // Calculate glider count
-  var r = calcRunners(L, isDbl);
+  // ── 计算滑轮数量 / Calculate Glider Count ──
+  var r = calcGliders(L, isDbl);
   $f('total').textContent = r.total;
-  $f('total-sub').textContent = isDbl ? 'Left/Right: ' + r.half + ' gliders each' : 'Total count';
+  $f('total-sub').textContent = isDbl ? '左/右各 ' + r.half + ' 颗' : '整组数量';
 
   // ── 双开分片显示 / Panel Split for Center Split ──
   if (isDbl) {
@@ -947,15 +947,15 @@ function computeFwd() {
     $f('right').textContent = '—';
   }
 
-  // Calculate pleats
+  // ── 计算褶数 / Calculate Pleats ──
   var folds = r.total / 2;
   $f('folds-count').textContent = folds;
-  $f('folds-sub').textContent = r.total + ' gliders ÷ 2 = ' + folds + ' pleats';
+  $f('folds-sub').textContent = r.total + ' ÷ 2 = ' + folds;
 
-  // Update pleat info row
-  var foldInfo = 'Pleats = gliders ÷ 2: ' + r.total + ' ÷ 2 = ' + folds
-    + ' pleats &nbsp;|&nbsp; ' + FOLD_MAT + ' ' + CUR_UNIT + ' per pleat'
-    + ' &nbsp;|&nbsp; allowance +' + loss + ' ' + CUR_UNIT + ' (' + (isDbl ? 'center split' : 'one-way draw') + ')';
+  // ── 更新褶数信息行 / Update Pleat Info Row ──
+  var foldInfo = '褶数 = 滑轮数 ÷ 2 = ' + r.total + ' ÷ 2 = ' + folds
+    + ' 个褶 &nbsp;|&nbsp; 每褶 ' + FOLD_MAT + ' ' + CUR_UNIT
+    + ' &nbsp;|&nbsp; 损耗 = +' + loss + ' ' + CUR_UNIT + '（' + (isDbl ? '双开' : '单开') + '）';
   $f('fold-info-row').innerHTML = foldInfo;
 
   // ── 计算面料 / Calculate Fabric ──
@@ -963,64 +963,65 @@ function computeFwd() {
   $f('fab-folds').textContent = fab.folds;
   $f('fab-per').textContent   = FOLD_MAT;
   $f('fab-loss').textContent  = '+' + fab.loss;
-  $f('fab-loss-unit').textContent = isDbl ? 'cm (center split)' : 'cm (one-way draw)';
+  $f('fab-loss-unit').textContent = isDbl ? 'cm（双开）' : 'cm（单开）';
 
-  // Update fabric formula line
-  var fabFormula = 'W_f = ' + fab.folds + ' pleats × ' + FOLD_MAT + ' cm/pleat + ' + fab.loss
-    + ' cm allowance = ' + (fab.folds * FOLD_MAT) + ' + ' + fab.loss + ' = <b style="color:#4338ca;font-size:14px;">' + fab.Wf + ' cm</b>';
+  // ── 更新面料公式行 / Update Fabric Formula Line ──
+  var fabFormula = 'W_f = ' + fab.folds + ' × ' + FOLD_MAT + ' + ' + fab.loss
+    + ' = ' + (fab.folds * FOLD_MAT) + ' + ' + fab.loss + ' = <b style="color:#4338ca;font-size:14px;">' + fab.Wf + ' cm</b>';
   $f('fab-formula').innerHTML = fabFormula;
 
   // ── 更新面料宽度显示 / Update Fabric Width Display ──
   $f('fabric-val').textContent  = fab.Wf;
   $f('mult-fabric').textContent = fab.Wf;
 
-  // Calculate fullness ratio
-  // Note: use pure fabric width (without allowance) for fullness calculation
+  // ── 计算丰满度 / Calculate Fullness ──
+  // 注意：使用纯面料宽度（不含损耗）计算丰满度
+  // Note: Use pure fabric width (without allowance) for fullness calculation
   var ratio = L > 0 ? round1(fab.Wf_pure / L) : 0;
   $f('pleat-ratio').textContent = ratio + 'x';
 
-  // Check machine limits
+  // ── 检查设备限制 / Check Machine Limits ──
   var limitWarning = '';
   if (folds > maxFoldsLimit) {
-    // Exceeds limit
+    // 超出限制 / Exceeds Limit
     limitWarning = '<div style="margin-top:12px;padding:12px 14px;background:#fee2e2;border:1.5px solid #fecaca;border-radius:10px;color:#dc2626;font-size:13px;">'
-      + '<b>⚠️ Exceeds Machine Limit / 超出设备加工限制</b><br>'
-      + 'Current: pleat depth ' + FOLD_MAT + ' cm + drop ' + height + ' cm + ' + (isDbl ? 'center split' : 'one-way draw') + '<br>'
-      + 'Calculated pleats: ' + folds + ' &nbsp;|&nbsp; Limit: ' + maxFoldsLimit + '<br>'
-      + '<b>Suggestion: reduce track width, use larger pleat depth, or contact production</b><br>'
-      + '<span style="font-size:11px;color:#6b7280;">减小轨道宽度、改用更大褶深，或联系生产部门对接特殊情况</span>'
+      + '<b>⚠️ 超出设备加工限制 / Exceeds Equipment Limit</b><br>'
+      + '当前参数 / Current: fabric per pleat ' + FOLD_MAT + 'cm + 高度 ' + height + 'cm + ' + (isDbl ? '双开/Double' : '单开/Single') + '<br>'
+      + '计算褶位数 / Calculated: ' + folds + ' 个 &nbsp;|&nbsp; 限制 / Limit: ' + maxFoldsLimit + ' 个<br>'
+      + '<b>建议 / Suggestion: 减小轨道宽度、改用更大褶用料，或联系生产部门对接特殊情况</b><br>'
+      + '<span style="font-size:11px;color:#6b7280;">Reduce track width, use larger fabric per pleat, or contact production for special cases</span>'
       + '</div>';
   } else if (height > 0) {
-    // Within limit
+    // 在限制范围内 / Within Limit
     limitWarning = '<div style="margin-top:12px;padding:10px 12px;background:#d1fae5;border:1.5px solid #a7f3d0;border-radius:10px;color:#059669;font-size:12px;">'
-      + '✓ Within machine limit (max ' + maxFoldsLimit + ' pleats) / 当前参数在设备限制范围内（最大 ' + maxFoldsLimit + ' 褶）'
+      + '✓ 当前参数在设备限制范围内（最大 ' + maxFoldsLimit + ' 褶）/ Within machine limit (max ' + maxFoldsLimit + ' pleats)'
       + '</div>';
   }
   
-  // Display limit warning
+  // 显示限制警告 / Display Limit Warning
   if ($f('limit-warning')) {
     $f('limit-warning').innerHTML = limitWarning;
   }
 
-  // Generate calculation steps
+  // ── 生成计算步骤详解 / Generate Calculation Steps ──
   var stepLines = [];
-  stepLines.push('【Glider Calculation / 滑轮计算】');
+  stepLines.push('【滑轮计算 / Glider Calculation】');
   stepLines.push('N₀ = ⌈' + L + ' / ' + PITCH + '⌉ = ' + r.N0);
   stepLines.push('N₁ = N₀ + ' + (isDbl ? '3' : '2') + ' = ' + r.N1);
   if (isDbl) {
     var base = (r.N1 % 2 === 0) ? r.N1 : r.N1 + 1;
     var tot  = (Math.floor(base / 2) % 2 === 0) ? base : base + 2;
-    stepLines.push('N_base = ' + base + ' &nbsp;|&nbsp; N_total = ' + tot + ' &nbsp;|&nbsp; L/R = ' + (tot / 2) + ' gliders');
+    stepLines.push('N基 = ' + base + ' &nbsp;|&nbsp; N总 = ' + tot + ' &nbsp;|&nbsp; 左/右 = ' + (tot / 2) + '颗');
   } else {
-    stepLines.push('N₁ ' + (r.total % 2 === 0 ? 'even' : 'odd + 1') + ' → N_total = ' + r.total + ' gliders');
+    stepLines.push('N₁为' + (r.total % 2 === 0 ? '偶数/even' : '奇数+1/odd+1') + ' → N总 = ' + r.total + ' 颗');
   }
   stepLines.push('');
-  stepLines.push('【Fabric Calculation / 面料计算】');
-  stepLines.push('Pleats = gliders ÷ 2 = ' + r.total + ' ÷ 2 = ' + folds);
-  stepLines.push('W_f = ' + folds + ' × ' + FOLD_MAT + ' + ' + fab.loss + ' = ' + uFromCm(fab.Wf) + ' ' + CUR_UNIT + ' &nbsp;<span style="color:#9ca3af;font-size:11px;">(base ' + fab.Wf + ' cm)</span>');
+  stepLines.push('【面料计算 / Fabric Calculation】');
+  stepLines.push('褶数 = 滑轮数 ÷ 2 = ' + r.total + ' ÷ 2 = ' + pleats);
+  stepLines.push('W_f = ' + folds + ' × ' + FOLD_MAT + ' + ' + fab.loss + ' = ' + uFromCm(fab.Wf) + ' ' + CUR_UNIT + ' &nbsp;<span style="color:#9ca3af;font-size:11px;">（原 ' + fab.Wf + ' cm）</span>');
   stepLines.push('');
-  stepLines.push('【Fullness Ratio / 丰满度比例】');
-  stepLines.push('R = pure fabric ÷ track width = ' + fab.Wf_pure + ' ÷ ' + L + ' = ' + ratio + 'x &nbsp;<span style="color:#9ca3af;font-size:11px;">(allowance not included in fullness)</span>');
+  stepLines.push('【丰满度比例 / Fullness Ratio】');
+  stepLines.push('R = 纯面料 ÷ L = ' + fab.Wf_pure + ' ÷ ' + L + ' = ' + ratio + 'x  &nbsp;<span style="color:#9ca3af;font-size:11px;">（损耗不计入丰满度 / Allowance not included）</span>');
   $f('steps').innerHTML = stepLines.join('<br>');
 }
 
@@ -1031,22 +1032,22 @@ function computeFwd() {
 /**
  * 构建反向查找表 / Build Reverse Lookup Table
  * 
- * 遍历所有可能的轨道长度（1~4000cm），计算对应的挂钩数量
+ * 遍历所有可能的轨道宽度（1~4000cm），计算对应的滑轮数量
  * Iterate all possible track widths (1~4000cm), calculate corresponding glider counts
  * 
  * 返回结构 / Return Structure:
  * { N_total: [L1, L2, L3, ...] }
  * 例如：{ 42: [180, 181, 182, ...], 44: [190, 191, ...] }
  * 
- * @param {boolean} isDouble - 是否双开 / Is double opening
- * @param {number} pitch - 滑轮间距 / Runner pitch
- * @returns {object} 挂钩数→轨道长度数组映射 / Glider count → track length array mapping
+ * @param {boolean} isDouble - 是否双开 / Is center split
+ * @param {number} pitch - 滑轮间距 / Glider pitch
+ * @returns {object} 滑轮数→轨道宽度数组映射 / Glider count → track width array mapping
  */
 function buildRevLookup(isDouble, pitch) {
   var map = {}; // N_total -> [{L}]
   
-  // 遍历范围：1~4000cm，支持最大设备限制（164褶 × 2 = 328颗挂钩）
-  // Range: 1~4000cm, supports max equipment limit (164 folds × 2 = 328 runners)
+  // 遍历范围：1~4000cm，支持最大设备限制（164褶 × 2 = 328颗滑轮）
+  // Range: 1~4000cm, supports max equipment limit (164 pleats × 2 = 328 gliders)
   // 按最大间距10cm计算，需要约 328 × 10 = 3280cm 轨道宽度
   for (var L = 1; L <= 4000; L++) {
     var N0   = Math.ceil(L / pitch);
@@ -1070,15 +1071,15 @@ function buildRevLookup(isDouble, pitch) {
  * 反向计算主函数 / Reverse Calculation Main Function
  * 
  * 计算流程 / Calculation Flow:
- * 1. 读取挂钩数量输入
+ * 1. 读取滑轮数量输入
  * 2. 验证输入有效性（单开偶数，双开4倍数）
- * 3. 查找对应的轨道长度范围
+ * 3. 查找对应的轨道宽度范围
  * 4. 检查设备限制
  * 5. 更新UI显示
  */
 function computeRev() {
   // ── 读取输入参数 / Read Input Parameters ──
-  var N      = parseInt($f('rev-runners').value) || 0;  // 挂钩数量
+  var N      = parseInt($f('rev-runners').value) || 0;  // 滑轮数量
   var height = parseFloat($f('rev-height').value) || 0; // 窗帘高度
   var isDbl  = REV_OPEN === 'double';                   // 是否双开
   var pitch  = REV_PITCH;                               // 滑轮间距
@@ -1086,38 +1087,41 @@ function computeRev() {
   
   // ── 获取设备限制 / Get Equipment Limits ──
   var maxFoldsLimit = getMaxFoldsLimit(REV_FOLD, height, isDbl);
-  var maxRunnersLimit = maxFoldsLimit * 2;              // 挂钩数 = 褶位数 × 2
+  var maxRunnersLimit = maxFoldsLimit * 2;              // 滑轮数 = 褶位数 × 2
 
   // ── 构建查找表 / Build Lookup Table ──
   var lookup = buildRevLookup(isDbl, pitch);
-  var validLs = lookup[N] || [];                        // 查找对应的轨道长度数组
+  var validLs = lookup[N] || [];                        // 查找对应的轨道宽度数组
 
   // ── 获取DOM元素 / Get DOM Elements ──
   var errEl   = $f('rev-error');
   var resEl   = $f('rev-result');
   var detailEl= $f('rev-range-detail');
 
-  // Input validation
-  // One-way draw: even; Center split: multiple of 4
+  // ── 输入验证 / Input Validation ──
+  // 单开必须为偶数，双开必须为4的倍数
+  // One-way draw: must be even; Center split: must be multiple of 4
   var isValid = N >= 4 && (
     (!isDbl && N % 2 === 0) ||
     ( isDbl && N % 4 === 0)
   );
 
-  // Find nearest valid values
+  // ── 查找最近的合法值 / Find Nearest Valid Values ──
   var nearestBelow = null, nearestAbove = null;
-  var allRunners = Object.keys(lookup).map(Number).sort(function(a,b){return a-b;});
-
-  for (var i = 0; i < allRunners.length; i++) {
-    var rn = allRunners[i];
+  var allGliders = Object.keys(lookup).map(Number).sort(function(a,b){return a-b;});
+  
+  // 向下查找 / Search Below
+  for (var i = 0; i < allGliders.length; i++) {
+    var rn = allGliders[i];
     if (rn > N) break;
     if (isDbl ? (rn % 4 === 0 && rn >= 4) : (rn % 2 === 0 && rn >= 4)) {
       nearestBelow = rn;
     }
   }
-
-  for (var j = 0; j < allRunners.length; j++) {
-    var rn2 = allRunners[j];
+  
+  // 向上查找 / Search Above
+  for (var j = 0; j < allGliders.length; j++) {
+    var rn2 = allGliders[j];
     if (rn2 <= N) continue;
     if (isDbl ? (rn2 % 4 === 0) : (rn2 % 2 === 0)) {
       nearestAbove = rn2;
@@ -1125,25 +1129,28 @@ function computeRev() {
     }
   }
 
-  // Handle invalid input
+  // ── 处理无效输入 / Handle Invalid Input ──
   if (!isValid || validLs.length === 0) {
     var suggestHtml = '';
-    if (nearestBelow !== null) suggestHtml += '&nbsp;|&nbsp; ⬇️ Nearest below / 下方最近：<b>' + nearestBelow + '</b> gliders';
-    if (nearestAbove !== null) suggestHtml += '&nbsp;|&nbsp; ⬆️ Nearest above / 上方最近：<b>' + nearestAbove + '</b> gliders';
-
+    if (nearestBelow !== null) suggestHtml += '&nbsp;|&nbsp; ⬇️ 下方最近/Nearest below：<b>' + nearestBelow + '</b> 颗';
+    if (nearestAbove !== null) suggestHtml += '&nbsp;|&nbsp; ⬆️ 上方最近/Nearest above：<b>' + nearestAbove + '</b> 颗';
+    
     var errHtml;
     if (!isValid) {
-      var ruleText = isDbl ? 'center split must be multiple of 4 / 双开必须为4的倍数' : 'one-way draw must be even / 单开必须为偶数';
-      errHtml = '⚠️ Invalid Input / 输入无效：<b>' + N + '</b> gliders for '
-        + '<b>' + (isDbl ? 'center split' : 'one-way draw') + '</b> does not meet the rule<br>'
+      // 数字本身不符合规则 / Number itself is invalid
+      var ruleText = isDbl ? '双开必须为 4 的倍数 / Double: must be multiple of 4' : '单开必须为偶数 / Single: must be even';
+      errHtml = '⚠️ 输入无效 / Invalid Input：<b>' + N + '</b> 颗滑轮在'
+        + ' <b>' + (isDbl ? '双开/Double' : '单开/Single') + '</b> 模式下不符合规则<br>'
         + '<span style="color:#6b7280;font-weight:400;font-size:12px;display:inline-block;margin-top:6px;">'
-        + '📏 Rule / 规则：' + ruleText + suggestHtml
+        + '📏 Rule: ' + ruleText + suggestHtml
         + '</span>';
     } else {
-      var maxRunner = allRunners.length > 0 ? allRunners[allRunners.length - 1] : 0;
-      errHtml = '⚠️ Out of Range / 超出计算范围：<b>' + N + '</b> gliders exceed system range<br>'
+      // 数字符合规则，但在当前参数下无有效轨道宽度
+      // Number is valid but no matching track width found
+      var maxGlider = allGliders.length > 0 ? allGliders[allGliders.length - 1] : 0;
+      errHtml = '⚠️ 超出计算范围 / Out of Range：<b>' + N + '</b> 颗滑轮超出系统计算范围<br>'
         + '<span style="color:#6b7280;font-weight:400;font-size:12px;display:inline-block;margin-top:6px;">'
-        + '📏 Max supported / 当前参数下最大支持：<b>' + maxRunner + '</b> gliders' + suggestHtml
+        + '📏 当前参数下最大支持 / Max supported：<b>' + maxGlider + '</b> 颗滑轮' + suggestHtml
         + '</span>';
     }
     errEl.innerHTML = errHtml;
@@ -1156,51 +1163,53 @@ function computeRev() {
   errEl.classList.remove('show');
   resEl.classList.add('show');
 
-  // Check machine limits
+  // ── 检查设备限制 / Check Machine Limits ──
   var folds = N / 2;
   var revLimitWarning = '';
   if (folds > maxFoldsLimit) {
+    // 超出限制 / Exceeds Limit
     revLimitWarning = '<div style="margin:12px 0;padding:12px 14px;background:#fee2e2;border:1.5px solid #fecaca;border-radius:10px;color:#dc2626;font-size:13px;">'
-      + '<b>⚠️ Exceeds Machine Limit / 超出设备加工限制</b><br>'
-      + 'Current: pleat depth ' + REV_FOLD + ' cm + drop ' + height + ' cm + ' + (isDbl ? 'center split' : 'one-way draw') + '<br>'
-      + 'Calculated pleats: ' + folds + ' &nbsp;|&nbsp; Limit: ' + maxFoldsLimit + '<br>'
-      + '<b>Suggestion: reduce glider count, use larger pleat depth, or contact production</b><br>'
-      + '<span style="font-size:11px;color:#6b7280;">减少滑轮数量、改用更大褶深，或联系生产部门对接特殊情况</span>'
+      + '<b>⚠️ 超出设备加工限制 / Exceeds Equipment Limit</b><br>'
+      + '当前参数 / Current: fabric per pleat ' + REV_FOLD + 'cm + 高度 ' + height + 'cm + ' + (isDbl ? '双开/Double' : '单开/Single') + '<br>'
+      + '计算褶位数 / Calculated: ' + folds + ' 个 &nbsp;|&nbsp; 限制 / Limit: ' + maxFoldsLimit + ' 个<br>'
+      + '<b>建议 / Suggestion: 减少滑轮数量、改用更大褶用料，或联系生产部门对接特殊情况</b><br>'
+      + '<span style="font-size:11px;color:#6b7280;">Reduce glider count, use larger fabric per pleat, or contact production</span>'
       + '</div>';
   } else if (height > 0) {
+    // 在限制范围内 / Within Limit
     revLimitWarning = '<div style="margin:10px 0;padding:10px 12px;background:#d1fae5;border:1.5px solid #a7f3d0;border-radius:10px;color:#059669;font-size:12px;">'
-      + '✓ Within machine limit (max ' + maxFoldsLimit + ' pleats) / 当前参数在设备限制范围内（最大 ' + maxFoldsLimit + ' 褶）'
+      + '✓ 当前参数在设备限制范围内（最大 ' + maxFoldsLimit + ' 褶）/ Within machine limit (max ' + maxFoldsLimit + ' pleats)'
       + '</div>';
   }
-
-  // Display limit warning
+  
+  // 显示限制警告 / Display Limit Warning
   if ($f('rev-limit-warning')) {
     $f('rev-limit-warning').innerHTML = revLimitWarning;
   }
 
-  // Calculate track width range
-  var minL = validLs[0];
-  var maxL = validLs[validLs.length - 1];
-  var midL = validLs[Math.floor(validLs.length / 2) - 1] || validLs[0];
+  // ── 计算轨道宽度范围 / Calculate Track Width Range ──
+  var minL = validLs[0];                                        // 最小值
+  var maxL = validLs[validLs.length - 1];                       // 最大值
+  var midL = validLs[Math.floor(validLs.length / 2) - 1] || validLs[0]; // 中间值
 
-  // Update display
-  $f('rev-range-val').innerHTML = uFromCm(minL) + ' ~ ' + uFromCm(maxL) + ' ' + CUR_UNIT + ' &nbsp;<span style="color:#9ca3af;font-size:11px;">(base ' + minL + '~' + maxL + ' cm)</span>';
+  // ── 更新显示 / Update Display ──
+  $f('rev-range-val').innerHTML = uFromCm(minL) + ' ~ ' + uFromCm(maxL) + ' ' + CUR_UNIT + ' &nbsp;<span style="color:#9ca3af;font-size:11px;">（原 ' + minL + '~' + maxL + ' cm）</span>';
   $f('rev-range-sub').innerHTML =
-    validLs.length + ' valid track widths (pitch ' + pitch + ' cm) / ' + validLs.length + ' 个有效轨道宽度值（间距 ' + pitch + 'cm）'
-    + ' &nbsp;·&nbsp; <b style="color:#065f46;">' + (isDbl ? 'Center split ×4 / 双开4倍数' : 'One-way even / 单开偶数') + '</b>';
+    '共 ' + validLs.length + ' 个有效轨道宽度值（间距 ' + pitch + 'cm）/ ' + validLs.length + ' valid track widths'
+    + ' &nbsp;·&nbsp; <b style="color:#065f46;">' + (isDbl ? '双开4倍数/Center×4' : '单开偶数/One-way even') + '</b>';
 
-  // Generate detail formula
+  // ── 生成详细公式 / Generate Detail Formula ──
   var foldMat = REV_FOLD;
-  var Wf_mid_pure = folds * foldMat;           // pure fabric width (without allowance)
-  var Wf_mid = Wf_mid_pure + loss;             // total fabric width (with allowance)
-  var ratio_mid = round1(Wf_mid_pure / midL);   // fullness ratio uses pure fabric
+  var Wf_mid_pure = folds * foldMat;           // 纯面料宽度（不含损耗）
+  var Wf_mid = Wf_mid_pure + loss;             // 总面料宽度（含损耗）
+  var ratio_mid = round1(Wf_mid_pure / midL);   // 丰满度用纯面料计算
 
   var detailLines = [];
-  detailLines.push('【Gliders → Track Reverse / 滑轮→轨道逆向推导】');
-  detailLines.push('Known gliders N = ' + N + ' (' + (isDbl ? 'center split' : 'one-way draw') + ')');
-  detailLines.push('Glider pitch P = ' + pitch + ' ' + CUR_UNIT + ' &nbsp;<span style="color:#9ca3af;font-size:11px;">(base ' + pitch + ' cm)</span>');
+  detailLines.push('【滑轮 → 轨道逆向推导 / Gliders → Track Reverse】');
+  detailLines.push('已知滑轮数 / Known gliders N = ' + N + ' 颗（' + (isDbl ? '双开/Double' : '单开/Single') + '）');
+  detailLines.push('滑轮间距 / Pitch P = ' + pitch + ' ' + CUR_UNIT + ' &nbsp;<span style="color:#9ca3af;font-size:11px;">（原 ' + pitch + ' cm）</span>');
   detailLines.push('');
-  detailLines.push('Verify formula (min track width L=' + minL + ' cm):');
+  detailLines.push('验证公式（以最小值 / Verify with min L=' + minL + 'cm）:');
   var N0_ex = Math.ceil(minL / pitch);
   var N1_ex = isDbl ? N0_ex + 3 : N0_ex + 2;
   var tot_ex = isDbl
@@ -1208,12 +1217,12 @@ function computeRev() {
     : (N1_ex%2===0?N1_ex:N1_ex+1);
   detailLines.push('N₀ = ⌈' + minL + ' / ' + pitch + '⌉ = ' + N0_ex);
   detailLines.push('N₁ = N₀ + ' + (isDbl ? '3' : '2') + ' = ' + N1_ex);
-  detailLines.push('N_total = ' + tot_ex + ' gliders ✓ (matches input ' + N + ')');
+  detailLines.push('N总 = ' + tot_ex + ' 颗 ✓（与输入 ' + N + ' 颗匹配）/ Matches input');
   detailLines.push('');
-  detailLines.push('【Fabric Estimate at Midpoint L=' + midL + ' cm】');
-  detailLines.push('Pleats = ' + N + ' ÷ 2 = ' + folds);
-  detailLines.push('W_f (total) = ' + folds + ' × ' + foldMat + ' + ' + loss + ' = ' + uFromCm(Wf_mid) + ' ' + CUR_UNIT + ' &nbsp;<span style="color:#9ca3af;font-size:11px;">(base ' + Wf_mid + ' cm)</span>');
-  detailLines.push('Fullness = pure fabric ÷ track width = ' + Wf_mid_pure + ' ÷ ' + midL + ' = ' + ratio_mid + 'x &nbsp;<span style="color:#9ca3af;font-size:11px;">(allowance not included in fullness)</span>');
+  detailLines.push('【以中间值 L=' + midL + 'cm 计算面料 / Fabric at Median】');
+  detailLines.push('褶数 = ' + N + ' ÷ 2 = ' + pleats);
+  detailLines.push('W_f（总）= ' + folds + ' × ' + foldMat + ' + ' + loss + ' = ' + uFromCm(Wf_mid) + ' ' + CUR_UNIT + ' &nbsp;<span style="color:#9ca3af;font-size:11px;">（原 ' + Wf_mid + ' cm）</span>');
+  detailLines.push('丰满度 = 纯面料 ÷ L = ' + Wf_mid_pure + ' ÷ ' + midL + ' = ' + ratio_mid + 'x  &nbsp;<span style="color:#9ca3af;font-size:11px;">（损耗不计入丰满度 / Allowance not included）</span>');
   $f('rev-range-detail').innerHTML = detailLines.join('<br>');
 
   // ── 更新中间值面料信息 / Update Median Fabric Info ──
@@ -1229,7 +1238,7 @@ function computeRev() {
 
 /**
  * 切换计算模式标签 / Switch calculation mode tab
- * @param {string} tab - 'fwd' 正向计算 或 'rev' 反向计算
+ * @param {string} tab - 'fwd' forward or 'rev' reverse
  */
 function switchTab(tab) {
   document.getElementById('tab-fwd').classList.toggle('active', tab === 'fwd');
@@ -1274,7 +1283,7 @@ document.querySelectorAll('[data-pitch]').forEach(function(pill) {
   });
 });
 
-// 褶用料选择 / Pleat Depth Selection
+// 褶用料选择 / Fabric per Pleat Selection
 document.querySelectorAll('[data-fold]').forEach(function(pill) {
   pill.addEventListener('click', function() {
     document.querySelectorAll('[data-fold]').forEach(function(p){ p.classList.remove('selected'); });
@@ -1308,7 +1317,7 @@ document.querySelectorAll('[data-rev-pitch]').forEach(function(pill) {
   });
 });
 
-// 褶用料选择（反向）/ Pleat Depth Selection (Reverse)
+// 褶用料选择（反向）/ Fabric per Pleat Selection (Reverse)
 document.querySelectorAll('[data-rev-fold]').forEach(function(pill) {
   pill.addEventListener('click', function() {
     document.querySelectorAll('[data-rev-fold]').forEach(function(p){ p.classList.remove('selected'); });
@@ -1318,7 +1327,7 @@ document.querySelectorAll('[data-rev-fold]').forEach(function(pill) {
   });
 });
 
-// 挂钩数量输入事件 / Glider Count Input Events
+// 滑轮数量输入事件 / Glider Count Input Events
 $f('rev-runners').addEventListener('input', computeRev);
 $f('rev-runners').addEventListener('change', computeRev);
 
