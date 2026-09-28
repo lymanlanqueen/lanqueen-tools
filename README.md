@@ -1,2 +1,2 @@
 # lanqueen-tools
-LANQUEEN 内部工具集 - 天际帘计算器等
+LANQUEEN 内部工具集 - 天际帘参数计算器等

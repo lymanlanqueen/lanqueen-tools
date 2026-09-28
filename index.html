@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<html lang="zh" data-page-node-id="XOB7HMTAMBfLFl1fP2OSzE">
+<head data-page-node-id="8QskG9HELOI4cGfPD6LrOd">
+<meta charset="utf-8" data-page-node-id="9bbpiUYBqERrHbpiTn9DNM">
+<meta name="viewport" content="width=device-width, initial-scale=1" data-page-node-id="WC8E4VG556RpbKUmPizqhX">
 <!--
   ╔═══════════════════════════════════════════════════════════════════════════╗
-  ║  LANQUEEN 天际帘 · 褶位挂钩计算器 v3                                        ║
-  ║  LANQUEEN SWAVE Runner/Fold Calculator v3                                 ║
+  ║  LANQUEEN 天际帘 · 参数计算器 v3                                        ║
+  ║  LANQUEEN S-fold Parameter Calculator v3                             ║
   ║                                                                           ║
   ║  功能 Features:                                                           ║
   ║  - 正向计算：轨道宽度 → 挂钩数量/褶数/面料宽度                            ║
@@ -14,13 +14,13 @@
   ║  - 反向计算：挂钩数量 → 适用轨道宽度范围                                   ║
   ║    Reverse: Runner count → Valid track length range                       ║
   ║  - 设备限制检查：根据高度和褶用料自动计算最大褶位数                        ║
-  ║    Equipment limit check: Auto-calculate max folds by height & material    ║
+  ║    Equipment limit check: Auto-calculates max fold count by curtain height &amp; material  ║
   ║                                                                           ║
   ║  作者 Author: LANQUEEN R&D Team                                           ║
   ║  版本 Version: v3.0 双语注释版 / Bilingual Commented Edition               ║
   ╚═══════════════════════════════════════════════════════════════════════════╝
 -->
-<title>LANQUEEN 天际帘 · 褶位挂钩计算器 v3</title>
+<title>LANQUEEN 天际帘 · 参数计算器 v3</title>
 <style>
   /* ═══════════════════════════════════════════════════════════════════════════
      CSS 样式定义 / CSS Style Definitions
@@ -289,28 +289,28 @@
   }
 </style>
 </head>
-<body>
+<body data-page-node-id="6R6MUdNpjG4rvyfUr8cIU7">
 
-<div class="page">
+<div class="page" data-page-node-id="bggHQeH5miocaG9d8HZzzo">
 
   <!-- ═══════════════════════════════════════════════════════════════════════
        页眉 / Header
        ═══════════════════════════════════════════════════════════════════════ -->
-  <div class="header">
-    <div class="brand">LANQUEEN</div>
+  <div class="header" data-page-node-id="SriW54UaAm6LLX8eUchEQj">
+    <div class="brand" data-page-node-id="DTVU6T2qpXfxddllrq432s">LANQUEEN</div>
     <!-- 标题支持双语显示 / Bilingual Title Support -->
-    <div class="title">天际帘（SWAVE）褶位挂钩计算器</div>
-    <div class="subtitle">Runner / Fold Calculator</div>
-    <div class="ver">v3 · 正向+反向计算 / Forward+Reverse</div>
-    <div class="tag">内部工具 · 仅供订单参考 / Internal Tool Only</div>
+    <div class="title" data-page-node-id="n9atVZEwe0l7aKTwfhTXKr">天际帘（S-fold）参数计算器</div>
+    <div class="subtitle" data-page-node-id="epaAjm1mXPUeLECSmOt4PU">S-fold Parameter Calculator</div>
+    <div class="ver" data-page-node-id="mWgLjDOBeWfDkEvArI4kMM">v3 · 正向+反向计算 / Forward+Reverse</div>
+    <div class="tag" data-page-node-id="BldpnBC8U05kZB7dGeF6Lt">内部工具 · 仅供订单参考 / Internal Tool Only</div>
   </div>
 
   <!-- ═══════════════════════════════════════════════════════════════════════
        标签切换器 / Tab Switcher
        ═══════════════════════════════════════════════════════════════════════ -->
-  <div class="tab-bar">
-    <button class="tab active" id="tab-fwd" onclick="switchTab('fwd')">📐 正向计算 / Forward</button>
-    <button class="tab" id="tab-rev" onclick="switchTab('rev')">🔄 反向计算 / Reverse</button>
+  <div class="tab-bar" data-page-node-id="K0RV0pewOIlMEKDcPoC8mY">
+    <button class="tab active" id="tab-fwd" onclick="switchTab('fwd')" data-page-node-id="Pyh3SdZe8lUnY8Dblluk9T">📐 正向计算 / Forward</button>
+    <button class="tab" id="tab-rev" onclick="switchTab('rev')" data-page-node-id="F53qILfvyYpcJv570OaQGn">🔄 反向计算 / Reverse</button>
   </div>
 
   <!-- ═══════════════════════════════════════════════════════════════════════
@@ -318,189 +318,189 @@
        输入：轨道宽度 → 输出：挂钩数量、褶数、面料宽度、褶皱比例
        Input: Track length → Output: Runner count, Folds, Fabric width, Pleat Ratio
        ═══════════════════════════════════════════════════════════════════════ -->
-  <div class="sec active" id="sec-fwd">
+  <div class="sec active" id="sec-fwd" data-page-node-id="R8SMtDwEwFkGGzV284SZlo">
 
     <!-- ── 输入参数卡片 / Input Parameters Card ── -->
-    <div class="card">
-      <div class="card-hd">
-        <h2>📥 输入参数（正向）/ Input (Forward)</h2>
-        <p>已知轨道宽度 → 计算挂钩数量与面料 / Track length → Runners & Fabric</p>
+    <div class="card" data-page-node-id="Ali5UkVUOpPszdgBQl5Ayv">
+      <div class="card-hd" data-page-node-id="8llKN5kGAkhDfb199EYgP8">
+        <h2 data-page-node-id="NVEUR4jAegNiXW25S1xUAx">📥 输入参数（正向）/ Input (Forward)</h2>
+        <p data-page-node-id="ZvSzNVUgd1V9IrL8dA18wc">已知轨道宽度 → 计算挂钩数量与面料 / Track length → runner count, folds &amp; fabric width</p>
       </div>
-      <div class="card-bd">
+      <div class="card-bd" data-page-node-id="l9IYniH3Vp7KAmZVUCSfMB">
 
         <!-- 轨道总长输入 / Track Length Input -->
-        <div class="row">
-          <label>轨道总长 <span class="en">/ Track Length</span></label>
-          <div class="ig">
-            <input type="number" id="length" min="0" step="1" value="240" inputmode="decimal" placeholder="输入轨道宽度 / Enter track width">
-            <select id="unit" class="unit-sel" onchange="onUnitChange()">
-              <option value="cm" selected>cm（厘米）</option>
-              <option value="mm">mm（毫米）</option>
+        <div class="row" data-page-node-id="K13pHoOfW0DuLauyqVv63I">
+          <label data-page-node-id="HN9ZryBhbAsaPrmkGUtLBC">轨道总长 <span class="en" data-page-node-id="PRxcXMTjqVxiGhHZs21odb">/ Track Length</span></label>
+          <div class="ig" data-page-node-id="xHIsI2gvaQbmOqqB1HaN2B">
+            <input type="number" id="length" min="0" step="1" value="240" inputmode="decimal" placeholder="输入轨道宽度 / Enter track width" data-page-node-id="akIvkEA02GozgQzIepzNOr">
+            <select id="unit" class="unit-sel" onchange="onUnitChange()" data-page-node-id="EAEBy1FWljfzRkHrXroxVf">
+              <option value="cm" selected data-page-node-id="BXxD9MY89z63ayH0vdHGxl">cm（厘米）</option>
+              <option value="mm" data-page-node-id="E3xBydqGISMtv2XrsQ3ncL">mm（毫米）</option>
             </select>
           </div>
         </div>
 
         <!-- 窗帘高度输入 / Curtain Height Input -->
         <!-- 必填项，用于计算设备加工限制 / Required for equipment limit calculation -->
-        <div class="row">
-          <label>窗帘高度 <span class="en">/ Curtain Height</span> <span style="color:#dc2626;font-size:12px;">*必填 / Required</span></label>
-          <div class="ig">
-            <input type="number" id="height" min="0" step="1" value="280" inputmode="decimal" placeholder="输入窗帘高度 / Enter curtain height">
-            <span class="unit-sel" style="display:flex;align-items:center;padding:0 12px;background:#f3f4f6;border:1.5px solid #e5e7eb;border-radius:10px;font-size:13px;color:#6b7280;">cm</span>
+        <div class="row" data-page-node-id="WRE8P7inNHM1fInWfY7R7Q">
+          <label data-page-node-id="04LsQxt8CFCvsofy3guWod">窗帘高度 <span class="en" data-page-node-id="YLDrlMORpy6gl84Cd3Oo4t">/ Curtain Height</span> <span style="color:#dc2626;font-size:12px;" data-page-node-id="LpotRAyXnfFEBOsG8WCvpk">*必填 / Required</span></label>
+          <div class="ig" data-page-node-id="X8kusuWz0uti1i8HKWG198">
+            <input type="number" id="height" min="0" step="1" value="280" inputmode="decimal" placeholder="输入窗帘高度 / Enter curtain height" data-page-node-id="E4I4FrmVom0xRmaJht1f0I">
+            <span class="unit-sel" style="display:flex;align-items:center;padding:0 12px;background:#f3f4f6;border:1.5px solid #e5e7eb;border-radius:10px;font-size:13px;color:#6b7280;" data-page-node-id="ePMPJZHUwmMEFAjFkQlaae">cm</span>
           </div>
-          <div style="margin-top:6px;font-size:12px;color:#6b7280;">
-            根据高度和褶用料自动计算最大挂钩数限制 / Auto-calculate max runner limit by height & fold material
+          <div style="margin-top:6px;font-size:12px;color:#6b7280;" data-page-node-id="8D6NgEhqmOgDgTiNA738mV">
+            根据高度和褶用料自动计算最大挂钩数限制 / Auto-calculates the max runner count allowed by curtain height &amp; fold material
           </div>
         </div>
 
         <!-- 开合方式选择 / Opening Type Selection -->
         <!-- 单开=一幅窗帘，双开=两幅窗帘从中间对开 -->
-        <div class="row">
-          <label>开合方式 <span class="en">/ Opening Type</span></label>
-          <div class="pill-group">
-            <div class="pill selected" id="open-single" data-open="single">
+        <div class="row" data-page-node-id="uKJiKKlJkahVmkyBkGPmSD">
+          <label data-page-node-id="wjOAcGOwon7HToUp3CNnDj">开合方式 <span class="en" data-page-node-id="NRZ9Wz1kzoXfUvZy06eJD0">/ Opening Type</span></label>
+          <div class="pill-group" data-page-node-id="SCwidZrIFhJrcVWuHRpvFA">
+            <div class="pill selected" id="open-single" data-open="single" data-page-node-id="XThK8F7FAb4aHsWe2cpecF">
               单开
-              <span class="sub">Single</span>
-              <span class="rec">推荐</span>
+              <span class="sub" data-page-node-id="d2IZHCvxNhY04ZHh0VbJKs">Single</span>
+              <span class="rec" data-page-node-id="Qf0xR5a5448GxoKuwrJ7ei">推荐</span>
             </div>
-            <div class="pill" id="open-double" data-open="double">
+            <div class="pill" id="open-double" data-open="double" data-page-node-id="MFk2SZaP0hGDHHXXk8lFQk">
               双开
-              <span class="sub">Double</span>
-              <span class="rec">推荐</span>
+              <span class="sub" data-page-node-id="BLQ4D0dZ9EWuC59tZdLnOK">Double</span>
+              <span class="rec" data-page-node-id="gaV4MT0zDC54mlbB1QG8xf">推荐</span>
             </div>
           </div>
-          <div class="tip">单开 = 一幅窗帘；双开 = 两幅窗帘从中间对开 / Single=1 panel; Double=2 panels split from center</div>
+          <div class="tip" data-page-node-id="reB3KzxkiyiiaxITNMXadi">单开 = 一幅窗帘；双开 = 两幅窗帘从中间对开 / Single=1 panel; Double=2 panels split from center</div>
         </div>
 
         <!-- 滑轮间距选择 / Runner Pitch Selection -->
         <!-- 相邻两颗挂钩之间的中心距离 / Center distance between adjacent runners -->
-        <div class="row">
-          <label>滑轮间距 <span class="en">/ Runner Pitch</span></label>
-          <div class="pill-group">
-            <div class="pill" data-pitch="5.4">5.4cm<span class="sub">紧密/Tight</span></div>
-            <div class="pill selected" data-pitch="6">6cm<span class="sub">标准/Standard ★</span><span class="rec">推荐</span></div>
-            <div class="pill" data-pitch="7">7cm<span class="sub">适中/Medium</span></div>
-            <div class="pill" data-pitch="8">8cm<span class="sub">常规/Regular</span></div>
-            <div class="pill" data-pitch="9">9cm<span class="sub">宽松/Loose</span></div>
-            <div class="pill" data-pitch="10">10cm<span class="sub">极宽/Extra Wide</span></div>
+        <div class="row" data-page-node-id="Ab9hFCiuc1M3yDXCJyrseD">
+          <label data-page-node-id="lYOxteLvQPevd87h2xZerH">滑轮间距 <span class="en" data-page-node-id="SvBj2EyQ9RBT1H5F5ZfDBP">/ Runner Pitch</span></label>
+          <div class="pill-group" data-page-node-id="RNh3yKnhY5D7t3iVDXKJTl">
+            <div class="pill" data-pitch="5.4" data-page-node-id="VcPO6O4pZEG5gc7XwBSGw0">5.4cm<span class="sub" data-page-node-id="ZZOOHSR6po8yevBifsPCN9">紧密/Tight</span></div>
+            <div class="pill selected" data-pitch="6" data-page-node-id="u1LGFg7p9V6A8s0SLz6l3y">6cm<span class="sub" data-page-node-id="DNOcBznNLC8eDs9rp0dolK">标准/Standard ★</span><span class="rec" data-page-node-id="Dk7vS8vJPeBikiolHLs9ag">推荐</span></div>
+            <div class="pill" data-pitch="7" data-page-node-id="tXyWBBgSjpzK5JTzuODB8A">7cm<span class="sub" data-page-node-id="X5JfkkR0nHAoZwxVvPiYA9">适中/Medium</span></div>
+            <div class="pill" data-pitch="8" data-page-node-id="N6iWZrUXUV04nmFcoY5gYX">8cm<span class="sub" data-page-node-id="nHXvx1ozXhjamj5wAWIlNA">常规/Regular</span></div>
+            <div class="pill" data-pitch="9" data-page-node-id="DIbLEVzonKM7oE9wbCxjS0">9cm<span class="sub" data-page-node-id="IEI2KJ4hrkoVtORkxcV4Ju">宽松/Loose</span></div>
+            <div class="pill" data-pitch="10" data-page-node-id="uSwXgHSND7mWIczbx9Urje">10cm<span class="sub" data-page-node-id="G6ENrMBmzVjRRaHQx1o0Ns">极宽/Extra Wide</span></div>
           </div>
-          <div class="tip">相邻两颗挂钩之间的中心距（cm）/ Center distance between adjacent runners (cm)</div>
+          <div class="tip" data-page-node-id="b1sBQAUhEms78Xps9igUEa">相邻两颗挂钩之间的中心距（cm）/ Center-to-center distance between adjacent runners (cm)</div>
         </div>
 
         <!-- 褶用料选择 / Fold Material Selection -->
         <!-- 每个褶所需的实际面料长度 / Actual fabric length per fold -->
-        <div class="row">
-          <label>褶用料 <span class="en">/ Fabric per Fold</span></label>
-          <div class="pill-group">
-            <div class="pill" data-fold="22">22cm<span class="sub">小褶/Small</span><span class="rec">推荐</span></div>
-            <div class="pill selected" data-fold="24">24cm<span class="sub">标准褶/Standard ★</span><span class="rec">推荐</span></div>
-            <div class="pill" data-fold="30">30cm<span class="sub">大褶/Large</span><span class="rec">推荐</span></div>
+        <div class="row" data-page-node-id="EFyJbbi4DooTUwKCYpSKoW">
+          <label data-page-node-id="Yx2NSKDLE1KsM27WYruD4C">褶用料 <span class="en" data-page-node-id="59l15cAdOMTMQlVmudEF0F">/ Fabric per Fold</span></label>
+          <div class="pill-group" data-page-node-id="MsRSwz6RLawhWCb0WOurE8">
+            <div class="pill" data-fold="22" data-page-node-id="FNyej899qxlYS4lwDqCMdH">22cm<span class="sub" data-page-node-id="9NRfVhKGzvziFOLe7zq8hM">小褶/Small</span><span class="rec" data-page-node-id="kcYd0HOKVQKY0IFlntzcps">推荐</span></div>
+            <div class="pill selected" data-fold="24" data-page-node-id="YgXo5990vxqSag6fOriKKr">24cm<span class="sub" data-page-node-id="m1uuuFNp4n7H8Ns3aK27jz">标准褶/Standard ★</span><span class="rec" data-page-node-id="cWnJlxBy0AqwjfKi7FjfKO">推荐</span></div>
+            <div class="pill" data-fold="30" data-page-node-id="ViD1oTXGz8JzTK24d9GadQ">30cm<span class="sub" data-page-node-id="yLRvizsOmTSeXCoRGlOx7c">大褶/Large</span><span class="rec" data-page-node-id="ss1SJqnyu2YRLGUgB8nM8b">推荐</span></div>
           </div>
-          <div class="tip">相邻两个褶峰之间的实际用料数量（cm）/ Fabric used between adjacent fold peaks (cm)</div>
+          <div class="tip" data-page-node-id="azWAHm4oD6W7UQeDMubj6P">相邻两个褶峰之间的实际用料数量（cm）/ Fabric consumption per pleat (cm)</div>
         </div>
 
       </div>
     </div>
 
     <!-- ── 计算结果卡片 / Calculation Results Card ── -->
-    <div class="card">
-      <div class="card-hd">
-        <h2>📤 计算结果 / Calculation Results</h2>
-        <p>挂钩数量 · 褶数 · 面料宽度 · 褶皱比例 / Runners · Folds · Fabric · Pleat Ratio</p>
+    <div class="card" data-page-node-id="wTxY0rQ9JUzrqQGCyIwi3G">
+      <div class="card-hd" data-page-node-id="NhxKtYQSv32pE0DbHKM5LN">
+        <h2 data-page-node-id="vfcddh7kyDem4JRZXK2ts7">📤 计算结果 / Calculation Results</h2>
+        <p data-page-node-id="sEBfonNk4M0Y7Dym7xiiAA">挂钩数量 · 褶数 · 面料宽度 · 褶皱比例 / Runners · Folds · Fabric · Pleat Ratio</p>
       </div>
-      <div class="card-bd">
+      <div class="card-bd" data-page-node-id="eTASRjclvAhvtzmNrA93BK">
 
-        <div class="out">
+        <div class="out" data-page-node-id="v8hkcQSldBKqeHrIXWzKqO">
           <!-- 当前模式标签 / Current Mode Tag -->
-          <span class="panel-tag" id="ptag">单开 Single</span>
+          <span class="panel-tag" id="ptag" data-page-node-id="khcvPBDxjczSzrlNnGa1mw">单开 Single</span>
 
           <!-- 主要结果网格 / Main Results Grid -->
-          <div class="result-grid">
+          <div class="result-grid" data-page-node-id="o4Xenb5gfrUNJhw8yphHOz">
             <!-- 挂钩总数 / Total Runners -->
-            <div class="res-box highlight">
-              <div class="lbl">挂钩总数 / Total Runners</div>
-              <div class="val" id="total">42</div>
-              <div class="unit">颗 / runners</div>
-              <div class="sub" id="total-sub">整组数量 / Total count</div>
+            <div class="res-box highlight" data-page-node-id="xUiNTkiBTfuWMPRH5MVDeL">
+              <div class="lbl" data-page-node-id="Brbu1WB2wfHcf8CbXHsM4C">挂钩总数 / Total Runners</div>
+              <div class="val" id="total" data-page-node-id="DqSpqkfgvN4Wq4oaNSDwR1">42</div>
+              <div class="unit" data-page-node-id="TUfiK9sOtbOnP5TKHsdtsp">颗 / runners</div>
+              <div class="sub" id="total-sub" data-page-node-id="xObA74oOf6TuacZBA4xK1t">整组数量 / Total count</div>
             </div>
             <!-- 褶数 / Folds -->
-            <div class="res-box">
-              <div class="lbl">褶数 / Folds</div>
-              <div class="val green" id="folds-count">21</div>
-              <div class="unit">个褶 / folds</div>
-              <div class="sub" id="folds-sub">挂钩数 ÷ 2</div>
+            <div class="res-box" data-page-node-id="xxFm6HEbLPsjddBnEeoq29">
+              <div class="lbl" data-page-node-id="aftRyRYb4jAavTFsvpX8aw">褶数 / Folds</div>
+              <div class="val green" id="folds-count" data-page-node-id="2fNAPokDwKg977lHBdu7oH">21</div>
+              <div class="unit" data-page-node-id="vbRtGK14qVlLbFFU6Z2SPc">个褶 / folds</div>
+              <div class="sub" id="folds-sub" data-page-node-id="uwULAsphmnxm1mruNnG3AH">挂钩数 ÷ 2</div>
             </div>
           </div>
 
           <!-- 褶数信息行 / Fold Info Row -->
-          <div id="fold-info-row" style="margin-top:10px; background:#fff; border:1.5px dashed var(--rule); border-radius:8px; padding:9px 12px; font-size:12px; color:#475569; font-family:'Courier New',monospace; line-height:1.8;"></div>
+          <div id="fold-info-row" style="margin-top:10px; background:#fff; border:1.5px dashed var(--rule); border-radius:8px; padding:9px 12px; font-size:12px; color:#475569; font-family:'Courier New',monospace; line-height:1.8;" data-page-node-id="kovCoFbEU7iHQv2ExprAVQ"></div>
 
           <!-- 设备限制警告 / Equipment Limit Warning -->
-          <div id="limit-warning"></div>
+          <div id="limit-warning" data-page-node-id="wMjJhG8dZbu8DEgazcNWFf"></div>
 
           <!-- 双开分片显示 / Split Display for Double Opening -->
-          <div class="split-row" id="split">
-            <div class="split-box">
-              <div class="t">左片 / Left</div>
-              <div class="v" id="left">—</div>
+          <div class="split-row" id="split" data-page-node-id="s2DIhktYeNcBlUTHha9XCn">
+            <div class="split-box" data-page-node-id="xdJ3gNAIN1PQjA1JncFUpy">
+              <div class="t" data-page-node-id="gchTKnhLwI8COedA23EfPQ">左片 / Left</div>
+              <div class="v" id="left" data-page-node-id="tAsxrQ5e9gN2sUIun7ff1B">—</div>
             </div>
-            <div class="split-box">
-              <div class="t">右片 / Right</div>
-              <div class="v" id="right">—</div>
+            <div class="split-box" data-page-node-id="U9d0BwPS2z9P6Mx0HGpgNV">
+              <div class="t" data-page-node-id="VvBru91dY2nP4tNYs6n8cJ">右片 / Right</div>
+              <div class="v" id="right" data-page-node-id="PX5cGh3bTPFGVP19QYPmzN">—</div>
             </div>
           </div>
 
           <!-- 面料计算区域 / Fabric Calculation Area -->
-          <div class="fabric-strip" style="margin-top:12px;">
-            <div style="font-size:12px;font-weight:700;color:var(--indigo);margin-bottom:8px;">📐 面料计算 / Fabric Calculation</div>
-            <div class="fl">
-              <div class="fi">
-                <div class="lbl">褶数 / Folds</div>
-                <div class="v" id="fab-folds">—</div>
-                <div class="s">个 / folds</div>
+          <div class="fabric-strip" style="margin-top:12px;" data-page-node-id="O4CAQIQSI7N8pN5f6hNbBp">
+            <div style="font-size:12px;font-weight:700;color:var(--indigo);margin-bottom:8px;" data-page-node-id="heEJ0EVqyE2uQFiTqBxHTQ">📐 面料计算 / Fabric Calculation</div>
+            <div class="fl" data-page-node-id="aeorgxdJwBX75dgvgpsxRQ">
+              <div class="fi" data-page-node-id="dHMza7LTkDZvZns5Poiwps">
+                <div class="lbl" data-page-node-id="Fo8LgQRqXE28OKuju2WZUX">褶数 / Folds</div>
+                <div class="v" id="fab-folds" data-page-node-id="H3G1XloDaKtDBiUNDHN7jU">—</div>
+                <div class="s" data-page-node-id="WM9GZbpAbLHswXPjoxYTJv">个 / folds</div>
               </div>
-              <div class="fi">
-                <div class="lbl">褶用料 / Material</div>
-                <div class="v" id="fab-per">—</div>
-                <div class="s">cm/褶 / per fold</div>
+              <div class="fi" data-page-node-id="dvJrkbDwHXN2VQFzIk0VPo">
+                <div class="lbl" data-page-node-id="35AokBslWz9OZteEjZGT8s">褶用料 / Material</div>
+                <div class="v" id="fab-per" data-page-node-id="pE1Hrc5C8FFIilAz7g4gY4">—</div>
+                <div class="s" data-page-node-id="T2BwVwfeEjq0wrfWfwh6Ny">cm/褶 / per fold</div>
               </div>
-              <div class="fi">
-                <div class="lbl">损耗加位 / Loss</div>
-                <div class="v" id="fab-loss">+15</div>
-                <div class="s" id="fab-loss-unit">cm（单开）</div>
+              <div class="fi" data-page-node-id="0ofpk0FqfGg7aBKhO9E9Sw">
+                <div class="lbl" data-page-node-id="r6Zaf6CRvl7wqJUjOIiijN">损耗加位 / Loss</div>
+                <div class="v" id="fab-loss" data-page-node-id="ggQJGRyPQLcNB9Yy26djem">+15</div>
+                <div class="s" id="fab-loss-unit" data-page-node-id="A6DDXTJKYltHJfnOUbHQb4">cm（单开）</div>
               </div>
             </div>
             <!-- 公式行 / Formula Line -->
-            <div class="formula-line" id="fab-formula">W_f = 褶数 × 褶用料 + 损耗</div>
+            <div class="formula-line" id="fab-formula" data-page-node-id="CSXeyhxL9EfiEAbfIZBKza">W_f = 褶数 × 褶用料 + 损耗</div>
             <!-- 面料宽度结果 / Fabric Width Result -->
-            <div style="margin-top:10px; background:var(--soft-indigo); border:1.5px solid var(--rule); border-radius:10px; padding:12px 14px; text-align:center;">
-              <div style="font-size:11px;color:var(--muted);font-weight:700;">面料宽度 / Fabric Width (W_f)</div>
-              <div style="font-size:38px; font-weight:800; color:var(--indigo); font-variant-numeric:tabular-nums; margin-top:4px;" id="fabric-val">—</div>
-              <div style="font-size:12px; color:var(--muted); margin-top:3px;">cm</div>
+            <div style="margin-top:10px; background:var(--soft-indigo); border:1.5px solid var(--rule); border-radius:10px; padding:12px 14px; text-align:center;" data-page-node-id="tSWWXy2epGkLoHPwlnjHd0">
+              <div style="font-size:11px;color:var(--muted);font-weight:700;" data-page-node-id="KGXAvgfz2c1r1A9D8A9Z18">面料宽度 / Fabric Width (W_f)</div>
+              <div style="font-size:38px; font-weight:800; color:var(--indigo); font-variant-numeric:tabular-nums; margin-top:4px;" id="fabric-val" data-page-node-id="HOjp5rywM14BJbzjT2RYy8">—</div>
+              <div style="font-size:12px; color:var(--muted); margin-top:3px;" data-page-node-id="7uxwg5tA4wD4s3Li8YzEa7">cm</div>
             </div>
           </div>
 
           <!-- 褶皱比例区域 / Pleat Ratio Area -->
-          <div style="margin-top:12px; background:#fff; border:1.5px solid var(--rule); border-radius:10px; padding:12px 14px;">
-            <div style="display:flex; gap:10px; align-items:center;">
+          <div style="margin-top:12px; background:#fff; border:1.5px solid var(--rule); border-radius:10px; padding:12px 14px;" data-page-node-id="YvUomIdpVqbaM0aUCccl6o">
+            <div style="display:flex; gap:10px; align-items:center;" data-page-node-id="eaE16Y9kEZY3FNsCMpf6BV">
               <!-- 褶皱比例 / Pleat Ratio -->
-              <div style="flex:1; text-align:center;">
-                <div style="font-size:11px;color:var(--muted);font-weight:700;">褶皱比例 / Pleat Ratio</div>
-                <div style="font-size:30px;font-weight:800;color:var(--green);font-variant-numeric:tabular-nums;margin-top:4px;" id="pleat-ratio">2.0</div>
-                <div style="font-size:11px;color:var(--muted);">褶皱比例 = 面料宽度 ÷ 轨道宽度</div>
+              <div style="flex:1; text-align:center;" data-page-node-id="DQD9NxO0OwBtA4xuJVdKDn">
+                <div style="font-size:11px;color:var(--muted);font-weight:700;" data-page-node-id="r27niyuhczqu8Ss0DCyUdI">褶皱比例 / Pleat Ratio</div>
+                <div style="font-size:30px;font-weight:800;color:var(--green);font-variant-numeric:tabular-nums;margin-top:4px;" id="pleat-ratio" data-page-node-id="QweA8nGrYldZPo4A1cU4Uj">2.0</div>
+                <div style="font-size:11px;color:var(--muted);" data-page-node-id="IEy9ea6H1Oy1FxraNHAKrE">褶皱比例 = 面料宽度 ÷ 轨道宽度</div>
               </div>
-              <div style="width:1px;height:50px;background:var(--line);"></div>
+              <div style="width:1px;height:50px;background:var(--line);" data-page-node-id="vaSEYKMqFbAlvIxiwLGgSl"></div>
               <!-- 面料宽度 / Fabric Width -->
-              <div style="flex:1; text-align:center;">
-                <div style="font-size:11px;color:var(--muted);font-weight:700;">面料宽度 / Fabric</div>
-                <div style="font-size:30px;font-weight:800;color:var(--indigo);font-variant-numeric:tabular-nums;margin-top:4px;" id="mult-fabric">477</div>
-                <div style="font-size:11px;color:var(--muted);">cm</div>
+              <div style="flex:1; text-align:center;" data-page-node-id="kix7HHSJV8itaLs4ko8NZ3">
+                <div style="font-size:11px;color:var(--muted);font-weight:700;" data-page-node-id="HMxnuDLcGqiXztijPfQOQj">面料宽度 / Fabric</div>
+                <div style="font-size:30px;font-weight:800;color:var(--indigo);font-variant-numeric:tabular-nums;margin-top:4px;" id="mult-fabric" data-page-node-id="xPelNC5bEFPKqOTVOVYDUJ">477</div>
+                <div style="font-size:11px;color:var(--muted);" data-page-node-id="r0HW6pWmmfCbsHSc1AsOE4">cm</div>
               </div>
             </div>
           </div>
 
           <!-- 计算步骤详解 / Calculation Steps Detail -->
-          <div style="margin-top:12px; background:#fff; border:1.5px dashed var(--rule); border-radius:9px; padding:10px 13px; font-size:12px; color:#475569; font-family:'Courier New',monospace; line-height:1.8;" id="steps"></div>
+          <div style="margin-top:12px; background:#fff; border:1.5px dashed var(--rule); border-radius:9px; padding:10px 13px; font-size:12px; color:#475569; font-family:'Courier New',monospace; line-height:1.8;" id="steps" data-page-node-id="00yrrIEb5GIJQet7yjLjaJ"></div>
 
         </div>
       </div>
@@ -513,127 +513,127 @@
        输入：挂钩数量 → 输出：适用轨道宽度范围
        Input: Runner count → Output: Valid track length range
        ═══════════════════════════════════════════════════════════════════════ -->
-  <div class="sec" id="sec-rev">
+  <div class="sec" id="sec-rev" data-page-node-id="M3GBbsHoqKbMjV9eaiYyYb">
 
-    <div class="card">
-      <div class="card-hd" style="background:linear-gradient(135deg,#059669,#047857);">
-        <h2>🔄 反向计算 / Reverse Calculation</h2>
-        <p>已知挂钩数量 → 推算适用的轨道长度范围 / Runners → Valid track range</p>
+    <div class="card" data-page-node-id="HrdzGL7zgWcfsdP63LvDik">
+      <div class="card-hd" style="background:linear-gradient(135deg,#059669,#047857);" data-page-node-id="fzDuoHdhGfN8mdSfWks6ux">
+        <h2 data-page-node-id="MkSi9p9HEwakKuBfSqtQ4B">🔄 反向计算 / Reverse Calculation</h2>
+        <p data-page-node-id="9edg3c4ckHoFabGD5gn7Rv">已知挂钩数量 → 推算适用的轨道长度范围 / Runners → Valid track range</p>
       </div>
-      <div class="card-bd">
+      <div class="card-bd" data-page-node-id="0KN982uHyHuluFJyjEcUHC">
 
         <!-- 开合方式选择（反向）/ Opening Type (Reverse) -->
-        <div class="row">
-          <label>开合方式 <span class="en">/ Opening Type</span></label>
-          <div class="pill-group">
-            <div class="pill selected" id="rev-open-single" data-rev-open="single">
+        <div class="row" data-page-node-id="BedqP7Gpe7d2GdBbttOsK3">
+          <label data-page-node-id="NRFHzfGhKHX340PFR52ef0">开合方式 <span class="en" data-page-node-id="OjQ2Wuzfh3HDUSHGvAC5Rt">/ Opening Type</span></label>
+          <div class="pill-group" data-page-node-id="xcD7ibm0h5P0dHwFflWpwN">
+            <div class="pill selected" id="rev-open-single" data-rev-open="single" data-page-node-id="0y4PsCv0bDYnPmHPJrB81S">
               单开
-              <span class="sub">Single</span>
+              <span class="sub" data-page-node-id="igM2KGWddGog2dFotztDWE">Single</span>
             </div>
-            <div class="pill" id="rev-open-double" data-rev-open="double">
+            <div class="pill" id="rev-open-double" data-rev-open="double" data-page-node-id="vPgMSHyCsbZF5bhor8pLze">
               双开
-              <span class="sub">Double</span>
+              <span class="sub" data-page-node-id="fY4RlMPPafZZOljAvMoNui">Double</span>
             </div>
           </div>
-          <div class="tip">单开 = 一幅窗帘；双开 = 两幅窗帘从中间对开</div>
+          <div class="tip" data-page-node-id="X7t0BHpDbxiKemONJgvyfD">单开 = 一幅窗帘；双开 = 两幅窗帘从中间对开</div>
         </div>
 
         <!-- 滑轮间距选择（反向）/ Runner Pitch (Reverse) -->
-        <div class="row">
-          <label>滑轮间距 <span class="en">/ Runner Pitch</span></label>
-          <div class="pill-group">
-            <div class="pill" data-rev-pitch="5.4">5.4cm<span class="sub">紧密</span></div>
-            <div class="pill selected" data-rev-pitch="6">6cm<span class="sub">标准 ★</span><span class="rec">推荐</span></div>
-            <div class="pill" data-rev-pitch="7">7cm<span class="sub">适中</span></div>
-            <div class="pill" data-rev-pitch="8">8cm<span class="sub">常规</span></div>
-            <div class="pill" data-rev-pitch="9">9cm<span class="sub">宽松</span></div>
-            <div class="pill" data-rev-pitch="10">10cm<span class="sub">极宽</span></div>
+        <div class="row" data-page-node-id="qlMQV4BKGoItmRtaotaLAR">
+          <label data-page-node-id="QqvC472b94TcOWpHzXpH75">滑轮间距 <span class="en" data-page-node-id="ThqJztyEDcqSnMYyzBBKi9">/ Runner Pitch</span></label>
+          <div class="pill-group" data-page-node-id="yuJaMdpn6Weqa93NFjudHU">
+            <div class="pill" data-rev-pitch="5.4" data-page-node-id="92xcAYfcnQSdEREGklxy6w">5.4cm<span class="sub" data-page-node-id="0PjOcIvOk3KNyJuhovP06B">紧密</span></div>
+            <div class="pill selected" data-rev-pitch="6" data-page-node-id="8UiV7673E8uwBcl26Fo0m4">6cm<span class="sub" data-page-node-id="0KulySDXcLnouU1gE90BXh">标准 ★</span><span class="rec" data-page-node-id="SuWNkHqLqpVyxIuKg9QOYi">推荐</span></div>
+            <div class="pill" data-rev-pitch="7" data-page-node-id="L3bm4lFNuGn56CGKmEFUU6">7cm<span class="sub" data-page-node-id="C4TvHRnUVN8Da7hocMGsLE">适中</span></div>
+            <div class="pill" data-rev-pitch="8" data-page-node-id="GPuj9fGAGBR4Jh0z3W6k2Q">8cm<span class="sub" data-page-node-id="ucHoCtfQcEIwgoEOmXR5g2">常规</span></div>
+            <div class="pill" data-rev-pitch="9" data-page-node-id="W74oBqPChgy3Mz6FXz4fEL">9cm<span class="sub" data-page-node-id="1wyEvBzLgUcKmwIFq6EnkX">宽松</span></div>
+            <div class="pill" data-rev-pitch="10" data-page-node-id="mKKH1hV9JYSHNMogNsnXmc">10cm<span class="sub" data-page-node-id="svEVptWNhAqZeUMiZvCv5W">极宽</span></div>
           </div>
         </div>
 
         <!-- 褶用料选择（反向）/ Fold Material (Reverse) -->
-        <div class="row">
-          <label>褶用料 <span class="en">/ Fabric per Fold</span></label>
-          <div class="pill-group">
-            <div class="pill" data-rev-fold="22">22cm<span class="sub">小褶</span><span class="rec">推荐</span></div>
-            <div class="pill selected" data-rev-fold="24">24cm<span class="sub">标准褶 ★</span><span class="rec">推荐</span></div>
-            <div class="pill" data-rev-fold="30">30cm<span class="sub">大褶</span><span class="rec">推荐</span></div>
+        <div class="row" data-page-node-id="hh0LQVaKIwjFi1S4kOnaDv">
+          <label data-page-node-id="blMzqvoIDzcJLz5KYsIAMa">褶用料 <span class="en" data-page-node-id="LYuiNOcPza3qgDwDFCBBN6">/ Fabric per Fold</span></label>
+          <div class="pill-group" data-page-node-id="9HGcX7fzQdJSRuJBUt7crA">
+            <div class="pill" data-rev-fold="22" data-page-node-id="fA1myXYA8uBjwG8iScOtr2">22cm<span class="sub" data-page-node-id="KWDAiobGJJ0CHuPQ8ECFrC">小褶</span><span class="rec" data-page-node-id="QOrzUExYucEEdsjHmllQJf">推荐</span></div>
+            <div class="pill selected" data-rev-fold="24" data-page-node-id="284HYnfbQYfF846LGxMPMu">24cm<span class="sub" data-page-node-id="6WDOHqeXQrDPDD620Px8DM">标准褶 ★</span><span class="rec" data-page-node-id="RQCJTNvhxliSAhU9hLPpSp">推荐</span></div>
+            <div class="pill" data-rev-fold="30" data-page-node-id="eXRjCk6uaEq063p4JzzloI">30cm<span class="sub" data-page-node-id="OCYWvn3VJw1Byb34nCDEMF">大褶</span><span class="rec" data-page-node-id="RsHBN4PRaOEESgC3WuDu2z">推荐</span></div>
           </div>
-          <div class="tip">褶用料 = 相邻两个挂钩之间的距离（cm）/ Fabric per fold = Distance between adjacent folds</div>
+          <div class="tip" data-page-node-id="qeNnItPU9XE0etJnNEmnBY">褶用料 = 相邻两个挂钩之间的距离（cm）/ Fabric per fold = spacing between adjacent runners (cm)</div>
         </div>
 
         <!-- 窗帘高度输入（反向）/ Curtain Height (Reverse) -->
-        <div class="row">
-          <label>窗帘高度 <span class="en">/ Curtain Height</span> <span style="color:#dc2626;font-size:12px;">*必填 / Required</span></label>
-          <div class="ig">
-            <input type="number" id="rev-height" min="0" step="1" value="280" inputmode="decimal" placeholder="输入窗帘高度 / Enter curtain height">
-            <span class="unit-sel" style="display:flex;align-items:center;padding:0 12px;background:#f3f4f6;border:1.5px solid #e5e7eb;border-radius:10px;font-size:13px;color:#6b7280;">cm</span>
+        <div class="row" data-page-node-id="bQn8lNje98FUOLfP84kHIW">
+          <label data-page-node-id="HOKFFRi3JckGlIffQc8miI">窗帘高度 <span class="en" data-page-node-id="jnkTHR5CIvgq4gIyu9Dsqo">/ Curtain Height</span> <span style="color:#dc2626;font-size:12px;" data-page-node-id="iLAjCm3BdGMWoF6ebAGL6i">*必填 / Required</span></label>
+          <div class="ig" data-page-node-id="v5n90f2F4QFySOkxsmQ6me">
+            <input type="number" id="rev-height" min="0" step="1" value="280" inputmode="decimal" placeholder="输入窗帘高度 / Enter curtain height" data-page-node-id="rdR8snV1XOFnGLy5SRVvGI">
+            <span class="unit-sel" style="display:flex;align-items:center;padding:0 12px;background:#f3f4f6;border:1.5px solid #e5e7eb;border-radius:10px;font-size:13px;color:#6b7280;" data-page-node-id="E52LRbmFOGF9xHLjSVGaaL">cm</span>
           </div>
-          <div class="tip">根据高度和褶用料自动计算最大挂钩数限制</div>
+          <div class="tip" data-page-node-id="jjGdPFT4gGx59sWWqpvCsB">根据高度和褶用料自动计算最大挂钩数限制</div>
         </div>
 
         <!-- 挂钩数量输入（反向）/ Runner Count Input (Reverse) -->
-        <div class="row">
-          <label>挂钩数量 <span class="en">/ Runner Count</span></label>
-          <div class="ig">
-            <input type="number" id="rev-runners" min="4" step="2" value="42" inputmode="numeric" placeholder="输入挂钩数量 / Enter runner count">
+        <div class="row" data-page-node-id="iSjBnHcMDOfQ1JL3NnRdSK">
+          <label data-page-node-id="dkUXzRGnshaj7QZpqQHInV">挂钩数量 <span class="en" data-page-node-id="otQ3KstIdmXXCBnlnWjgEe">/ Runner Count</span></label>
+          <div class="ig" data-page-node-id="Vjg1loaBG5Aw3yAojrkgHN">
+            <input type="number" id="rev-runners" min="4" step="2" value="42" inputmode="numeric" placeholder="输入挂钩数量 / Enter runner count" data-page-node-id="1cxG0poiCpj4sTP5j5QEAZ">
           </div>
-          <div class="tip" id="rev-runner-tip">输入实际数好的挂钩数量，单开必须为偶数&nbsp;/&nbsp;双开必须为 4 的倍数 / Single: even; Double: multiple of 4</div>
+          <div class="tip" id="rev-runner-tip" data-page-node-id="2p0cCm9HvRQBaGEXD6StOW">输入实际数好的挂钩数量，单开必须为偶数&nbsp;/&nbsp;双开必须为 4 的倍数 / Single: even; Double: multiple of 4</div>
         </div>
 
       </div>
     </div>
 
     <!-- ── 反向计算结果卡片 / Reverse Results Card ── -->
-    <div class="card">
-      <div class="card-hd" style="background:linear-gradient(135deg,#059669,#047857);">
-        <h2>📐 反向计算结果 / Reverse Results</h2>
-        <p>挂钩数量 → 适用轨道长度 / Runners → Valid track range</p>
+    <div class="card" data-page-node-id="GioysGoh9PXfCHVwDIEqjA">
+      <div class="card-hd" style="background:linear-gradient(135deg,#059669,#047857);" data-page-node-id="BnpLvxc2voBFAZp0kkolhH">
+        <h2 data-page-node-id="LliAgZoHSTj5drskyWLCnk">📐 反向计算结果 / Reverse Results</h2>
+        <p data-page-node-id="E173HjaNjFYAiUKx2Y1dPD">挂钩数量 → 适用轨道长度 / Runners → Valid track range</p>
       </div>
-      <div class="card-bd">
+      <div class="card-bd" data-page-node-id="EQenKCbMPBgOGWR8dYn2kS">
 
         <!-- 错误提示框 / Error Box -->
-        <div class="rev-error" id="rev-error">⚠️ 输入的挂钩数量无效，请检查 / Invalid runner count</div>
+        <div class="rev-error" id="rev-error" data-page-node-id="8an9iPkFWb5OJlOMXlSMul">⚠️ 输入的挂钩数量无效，请检查 / Invalid runner count</div>
 
         <!-- 设备限制警告 / Equipment Limit Warning -->
-        <div id="rev-limit-warning"></div>
+        <div id="rev-limit-warning" data-page-node-id="V2Zk0v2BKhhTzf6NXQS3cy"></div>
 
         <!-- 有效结果 / Valid Result -->
-        <div class="rev-result" id="rev-result">
+        <div class="rev-result" id="rev-result" data-page-node-id="c72xwhPOaoPkuztkbYbvgJ">
 
           <!-- 主要结果：轨道宽度范围 / Main Result: Track Length Range -->
-          <div class="rev-main">
-            <div class="lbl">适用轨道宽度范围 / Valid Track Length Range</div>
-            <div class="val" id="rev-range-val">180 ~ 240 cm</div>
-            <div class="sub" id="rev-range-sub">此挂钩数量对应的轨道宽度区间 / Track range for this runner count</div>
+          <div class="rev-main" data-page-node-id="lZLFVYXwc68Z1LQHPve1TH">
+            <div class="lbl" data-page-node-id="B8itEaaIIA5zkMZhoGgS2N">适用轨道宽度范围 / Valid Track Length Range</div>
+            <div class="val" id="rev-range-val" data-page-node-id="fgNiFnNxtpVmrlp7sQZdk2">180 ~ 240 cm</div>
+            <div class="sub" id="rev-range-sub" data-page-node-id="IhwwHlr0vAaw6kxgasDB4p">此挂钩数量对应的轨道宽度区间 / Track range for this runner count</div>
           </div>
 
           <!-- 详细公式行 / Detail Formula Lines -->
-          <div class="rev-range" id="rev-range-detail"></div>
+          <div class="rev-range" id="rev-range-detail" data-page-node-id="lwlMfBpshoC7H1yurvnDc1"></div>
 
           <!-- 中间值面料计算 / Fabric Calculation for Median -->
-          <div style="margin-top:12px; background:#fff; border:1.5px solid #a7f3d0; border-radius:10px; padding:12px 14px;">
-            <div style="font-size:12px;font-weight:700;color:#065f46;margin-bottom:8px;">📐 以中间值计算面料（仅供参考）/ Fabric for Median (Reference Only)</div>
-            <div style="display:flex; gap:8px; flex-wrap:wrap;">
-              <div style="flex:1;min-width:80px;background:#f0fdf4;border:1px solid #a7f3d0;border-radius:7px;padding:8px;text-align:center;">
-                <div style="font-size:10px;color:#6b7280;font-weight:700;">轨道宽度 / Track</div>
-                <div style="font-size:20px;font-weight:800;color:#059669;margin-top:3px;" id="rev-mid-l">210</div>
-                <div style="font-size:10px;color:#6b7280;">cm</div>
+          <div style="margin-top:12px; background:#fff; border:1.5px solid #a7f3d0; border-radius:10px; padding:12px 14px;" data-page-node-id="acsocH85ANIhzpEKiDFls2">
+            <div style="font-size:12px;font-weight:700;color:#065f46;margin-bottom:8px;" data-page-node-id="k8SvSHSaPy0lRaiHADqZXL">📐 以中间值计算面料（仅供参考）/ Fabric for Median (Reference Only)</div>
+            <div style="display:flex; gap:8px; flex-wrap:wrap;" data-page-node-id="SfnSzH0D4bQplWXfMSJxzg">
+              <div style="flex:1;min-width:80px;background:#f0fdf4;border:1px solid #a7f3d0;border-radius:7px;padding:8px;text-align:center;" data-page-node-id="f1cIUWdPltUqi7bzdNFIvc">
+                <div style="font-size:10px;color:#6b7280;font-weight:700;" data-page-node-id="2haIIGYBAm8EBEtTxyKn03">轨道宽度 / Track</div>
+                <div style="font-size:20px;font-weight:800;color:#059669;margin-top:3px;" id="rev-mid-l" data-page-node-id="oZjEItlim9v1pMMEjUi0mV">210</div>
+                <div style="font-size:10px;color:#6b7280;" data-page-node-id="qJploZO3MfcvkX29oGTmCT">cm</div>
               </div>
-              <div style="flex:1;min-width:80px;background:#f0fdf4;border:1px solid #a7f3d0;border-radius:7px;padding:8px;text-align:center;">
-                <div style="font-size:10px;color:#6b7280;font-weight:700;">褶数 / Folds</div>
-                <div style="font-size:20px;font-weight:800;color:#059669;margin-top:3px;" id="rev-mid-folds">21</div>
-                <div style="font-size:10px;color:#6b7280;">个 / folds</div>
+              <div style="flex:1;min-width:80px;background:#f0fdf4;border:1px solid #a7f3d0;border-radius:7px;padding:8px;text-align:center;" data-page-node-id="Z2ZGzMc9AAF3amo9QcDNOZ">
+                <div style="font-size:10px;color:#6b7280;font-weight:700;" data-page-node-id="eo4KPG8JysgdoNMMXQVltZ">褶数 / Folds</div>
+                <div style="font-size:20px;font-weight:800;color:#059669;margin-top:3px;" id="rev-mid-folds" data-page-node-id="CLSJnRViqkPgYiaZNz6IBD">21</div>
+                <div style="font-size:10px;color:#6b7280;" data-page-node-id="dP8JH3QKHFrCDMHGmS5BlL">个 / folds</div>
               </div>
-              <div style="flex:1;min-width:80px;background:#f0fdf4;border:1px solid #a7f3d0;border-radius:7px;padding:8px;text-align:center;">
-                <div style="font-size:10px;color:#6b7280;font-weight:700;">面料宽度 / Fabric</div>
-                <div style="font-size:20px;font-weight:800;color:#059669;margin-top:3px;" id="rev-mid-fabric">477</div>
-                <div style="font-size:10px;color:#6b7280;">cm</div>
+              <div style="flex:1;min-width:80px;background:#f0fdf4;border:1px solid #a7f3d0;border-radius:7px;padding:8px;text-align:center;" data-page-node-id="PkaATpcY9nVs2BZ4qoXTa1">
+                <div style="font-size:10px;color:#6b7280;font-weight:700;" data-page-node-id="nCLb9cBrYGPW4C6bxzTQuo">面料宽度 / Fabric</div>
+                <div style="font-size:20px;font-weight:800;color:#059669;margin-top:3px;" id="rev-mid-fabric" data-page-node-id="ZGaSjiCmSDW2OH7hKY9RPF">477</div>
+                <div style="font-size:10px;color:#6b7280;" data-page-node-id="lI82qONdEc4fLno7z7vsUD">cm</div>
               </div>
-              <div style="flex:1;min-width:80px;background:#f0fdf4;border:1px solid #a7f3d0;border-radius:7px;padding:8px;text-align:center;">
-                <div style="font-size:10px;color:#6b7280;font-weight:700;">褶皱比例 / Ratio</div>
-                <div style="font-size:20px;font-weight:800;color:#059669;margin-top:3px;" id="rev-mid-ratio">2.3</div>
-                <div style="font-size:10px;color:#6b7280;">x</div>
+              <div style="flex:1;min-width:80px;background:#f0fdf4;border:1px solid #a7f3d0;border-radius:7px;padding:8px;text-align:center;" data-page-node-id="i0UvUmBdXMB2tCUNHDfsPT">
+                <div style="font-size:10px;color:#6b7280;font-weight:700;" data-page-node-id="g7C6GdNdCR9fC6hRqHLAke">褶皱比例 / Ratio</div>
+                <div style="font-size:20px;font-weight:800;color:#059669;margin-top:3px;" id="rev-mid-ratio" data-page-node-id="Z9NFKiNH0od5sKEe8r9DFz">2.3</div>
+                <div style="font-size:10px;color:#6b7280;" data-page-node-id="GAMxdvtnu3NoFhuw6EPQpZ">x</div>
               </div>
             </div>
           </div>
@@ -647,14 +647,14 @@
   <!-- ═══════════════════════════════════════════════════════════════════════
        页脚 / Footer
        ═══════════════════════════════════════════════════════════════════════ -->
-  <div class="footer">
-    依据标准 / Based on <b>SW-STD-001 · v3.0</b><br>
-    正向：轨道宽度 → 走珠/褶数/面料 &nbsp;|&nbsp; 反向：挂钩数量 → 适用轨道宽度<br>
-    Forward: Track → Runners/Folds/Fabric &nbsp;|&nbsp; Reverse: Runners → Valid Track Range<br>
-    滑轮间距（Runner Pitch）：5.4 / 6★ / 7 / 8 / 9 / 10 cm &nbsp;|&nbsp; 褶用料：22 / 24★ / 30 cm<br>
-    面料宽度 = 褶数 × 褶用料 + 损耗（单开+15cm / 双开+30cm）<br>
-    Fabric = Folds × Material + Loss (Single+15cm / Double+30cm)<br>
-    <b>LANQUEEN · v3 双语注释版 · 仅供订单参考 / Internal Tool Only</b>
+  <div class="footer" data-page-node-id="cGolmSaZP3hf4VRtCoPGjN">
+    依据标准 / Based on <b data-page-node-id="MDMLHtKoVjxFUElwiVwqdI">S-FOLD-STD-001 · v3.0</b><br data-page-node-id="hoNZS2exDpYsrYPA0gG8bA">
+    正向：轨道宽度 → 走珠/褶数/面料 &nbsp;|&nbsp; 反向：挂钩数量 → 适用轨道宽度<br data-page-node-id="kKInJC0fHBNKdpX9Duvotu">
+    Forward: Track → Runners/Folds/Fabric &nbsp;|&nbsp; Reverse: Runners → Valid Track Range<br data-page-node-id="Grsq1PQKDrNdstGjQE1hhq">
+    滑轮间距（Runner Pitch）：5.4 / 6★ / 7 / 8 / 9 / 10 cm &nbsp;|&nbsp; 褶用料：22 / 24★ / 30 cm<br data-page-node-id="cTh3GrSjS7YW9p2I3O4qh0">
+    面料宽度 = 褶数 × 褶用料 + 损耗（单开+15cm / 双开+30cm）<br data-page-node-id="YGUfFsCqGarvAEXKIdY6E7">
+    Fabric = Folds × Material + Loss (Single+15cm / Double+30cm)<br data-page-node-id="8WJdktPkCeLEJSSJipn0FN">
+    <b data-page-node-id="zWXHOsVg2a5ihhAkfLtdXg">LANQUEEN · v3 双语注释版 · 仅供订单参考 / Internal Tool Only</b>
   </div>
 
 </div>
