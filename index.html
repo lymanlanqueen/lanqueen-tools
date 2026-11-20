@@ -1017,7 +1017,7 @@ function computeFwd() {
   }
   stepLines.push('');
   stepLines.push('【面料计算 / Fabric Calculation】');
-  stepLines.push('褶数 = 滑轮数 ÷ 2 = ' + r.total + ' ÷ 2 = ' + pleats);
+  stepLines.push('褶数 = 滑轮数 ÷ 2 = ' + r.total + ' ÷ 2 = ' + folds);
   stepLines.push('W_f = ' + folds + ' × ' + FOLD_MAT + ' + ' + fab.loss + ' = ' + uFromCm(fab.Wf) + ' ' + CUR_UNIT + ' &nbsp;<span style="color:#9ca3af;font-size:11px;">（原 ' + fab.Wf + ' cm）</span>');
   stepLines.push('');
   stepLines.push('【丰满度比例 / Fullness Ratio】');
@@ -1220,7 +1220,7 @@ function computeRev() {
   detailLines.push('N总 = ' + tot_ex + ' 颗 ✓（与输入 ' + N + ' 颗匹配）/ Matches input');
   detailLines.push('');
   detailLines.push('【以中间值 L=' + midL + 'cm 计算面料 / Fabric at Median】');
-  detailLines.push('褶数 = ' + N + ' ÷ 2 = ' + pleats);
+  detailLines.push('褶数 = ' + N + ' ÷ 2 = ' + folds);
   detailLines.push('W_f（总）= ' + folds + ' × ' + foldMat + ' + ' + loss + ' = ' + uFromCm(Wf_mid) + ' ' + CUR_UNIT + ' &nbsp;<span style="color:#9ca3af;font-size:11px;">（原 ' + Wf_mid + ' cm）</span>');
   detailLines.push('丰满度 = 纯面料 ÷ L = ' + Wf_mid_pure + ' ÷ ' + midL + ' = ' + ratio_mid + 'x  &nbsp;<span style="color:#9ca3af;font-size:11px;">（损耗不计入丰满度 / Allowance not included）</span>');
   $f('rev-range-detail').innerHTML = detailLines.join('<br>');
